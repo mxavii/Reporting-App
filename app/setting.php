@@ -16,13 +16,13 @@ return [
 
 	//setting db (with doctrine)
 	'db'	=> [
-		'url'	=> 'mysql://root:root@localhost/report',
+		'url'	=> 'mysql://mit_report:masukaja123@localhost/mit_report',
 	],
 
 	'determineRouteBeforeAppMiddleware' => true,
 
 	'reporting' => [
-       'base_uri' => 'http://localhost/Reporting-App/public/api/',
+       'base_uri' => 'http://reporting-app.cpm/api/',
        'headers' => [
            'key' => @$_ENV['REPORTING_API_KEY'],
            'Accept' => 'application/json',
@@ -39,17 +39,7 @@ return [
 		]
 	],
 
-	'reporting' => [
-	   'base_uri' => 'http://localhost/Reporting-App/public/api/',
-	   'headers' => [
-		   'key' => @$_ENV['REPORTING_API_KEY'],
-		   'Accept' => 'application/json',
-		   'Content-Type' => 'application/json',
-		   'Authorization'	=>	@$_SESSION['key']['key_token'],
-	   ],
-   ],
-
-    'base_url' => "http://localhost/",
+    'base_url' => "http://reporting-app.cpm/",
     "plates_path" => "/../view",
 
     'flysystem' => [

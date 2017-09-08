@@ -1,4 +1,4 @@
-/vendor
+/vendorl
 /mysql_directory
 docker-compose.yml
 /public/assets/images
