@@ -1,0 +1,127 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} Pengaturan Profil {% endblock %}
+{% block current %} Pengaturan Profil {% endblock %}
+{% block content %}
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box" style="margin-top:0px;">
+            <a class="list-group-item active main-color-bg">
+              <span align="center" aria-hidden="true">
+              </span><i class="fa fa-cogs"></i>&nbsp; Pengaturan Profil
+            </a>
+              <div class="box box-primary">
+                <div class="box-header">
+                    <a class="btn btn-social-button btn-github pull-right"
+                    href="{{ path_for('change.password') }}">
+                    <i class="fa fa-lock"></i>&nbsp; Ubah password</a>
+           <form action="{{path_for('user.update.profile', {'id':data.id})}}" method="POST" enctype="multipart/form-data">
+            <div style="margin-top:10px;"class="col-lg-6">
+                <div class="box-body">
+                    <div class="form-group {{ errors.name ? 'has-error' : '' }}">
+                        <label>Nama:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <input type="text" name="name" class="form-control"
+                             value="{{ data.name }}" placeholder="Your Name">
+                        </div>
+                        {% if errors.name %}
+                        <span class="help-block">{{errors.name | first}}</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- <div class="form-group {{ errors.username ? 'has-error' : '' }}" >
+                        <label>Username:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <input type="text" name="username" class="form-control"
+                            value="{{ data.username }}" placeholder="Your Username">
+                        </div>
+                        {% if errors.username %}
+                        <span class="help-block">
+                            {{errors.username | first}}</span>
+                            {% endif %}
+                    </div> -->
+
+                    <div class="form-group {{ errors.gender ? 'has-error' : '' }}">
+                        <label>Jenis Kelamin :</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-universal-access"></i>
+                            </div>
+                            <select name="gender" class="form-control" id="">
+                                <option value="Laki-laki" {% if  data.gender == "Laki-laki" %}
+                                 selected="selected"{% endif %}>Laki-Laki</option>
+                                <option value="Perempuan" {% if  data.gender == "Perempuan" %}
+                                 selected="selected"{% endif %}>Perempuan</option>
+                            </select>
+                        </div>
+                        {% if errors.gender %}
+                        <span class="help-block">
+                            {{errors.gender | first}}</span>
+                            {% endif %}
+                    </div>
+
+                    <div class="form-group {{ errors.address ? 'has-error' : '' }}">
+                        <label>Alamat:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-map-marker"></i>
+                            </div>
+                            <input type="text" name="address" class="form-control"
+                             value="{{ data.address }}" placeholder="Your address">
+                        </div>
+                        {% if errors.address %}
+                        <span class="help-block">{{errors.address | first}}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group {{ errors.email ? 'has-error' : '' }}">
+                        <label>Email:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <input type="text" name="email" class="form-control"
+                            value="{{ data.email }}" placeholder="Your email">
+                        </div>
+                        {% if errors.email %}
+                        <span class="help-block">{{errors.email | first}}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group {{ errors.phone ? 'has-error' : '' }}">
+                        <label>No.Telepon:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <input type="text" class="form-control input-medium bfh-phone"
+                             data-format="+62dddddddddddd" name="phone"
+                             value="{{ data.phone }}" placeholder="Your phone">
+                        </div>
+                        {% if errors.phone %}
+                        <span class="help-block">{{errors.phone | first}}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                  <button type="submit" class="btn btn-social-button btn-tumblr pull-left" style="margin:20px">
+                  <i class="fa fa-cog"></i> Simpan perubahan</button>
+          </form>
+      </div> </div> </div> </div>
+
+     <!-- <i class="fa fa-lock"></i> Change password</button></a> -->
+
+
+    <!-- <a href="{{ path_for('user.view.profile') }}"><button type="submit"
+         class="btn btn-social-button btn-github pull-right">
+         <i class="fa fa-address-book-o"></i>&nbsp; Lihat Profil</button></a> -->
+     </div>
+    </div>
+
+
+{% endblock %}

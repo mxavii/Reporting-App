@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>404 Not found</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<!-- <link rel="stylesheet" href="css/bootstrap-responsive.min.css" /> -->
+<link rel="stylesheet" href="css/matrix-style.css" />
+<link rel="stylesheet" href="css/matrix-media.css" />
+<!-- <link href="font-awesome/css/font-awesome.css" rel="stylesheet" /> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div  class="container-fluid">
+    <div class="row-fluid">
+        <div  class="span12">
+            <div  class="widget-box">
+                <div style="padding:80px;" class="widget-content">
+                    <div class="error_ex">
+                        <h1>404</h1>
+                        <h3>Opps, Halaman tidak ditemukan. &#9785;</h3>
+                        <a class="btn btn-primary btn-big"  href="{{ back }}">
+                            <i class="fa fa-angle-double-left" aria-hidden="true">&nbsp&nbsp Kembali</i></a>
+                        <a href="{{path_for('home') }}" class="btn btn-warning btn-big">
+                            <i class="fa fa-home" aria-hidden="true">&nbsp&nbsp Beranda</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

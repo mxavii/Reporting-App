@@ -1,0 +1,51 @@
+
+<nav style="margin-bottom:10px; background:#337AB7;" class="navbar navbar-default" >
+    <div class="container">
+        <div style="margin-left:8px;  margin-right:8px;" class="navbar-header">
+            <button type="button" style=" color:#fff; padding-top:22px;" class="navbar-toggle collapsed" data-toggle="collapse"
+            data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <h3 style="color:#fff;"><span class="glyphicon glyphicon-cog" aria-hidden="true">
+        </span> Reporting App <small></small></h3>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+        <ul style="background:#d5dfe7;" class="nav navbar-nav hidden-lg">
+            <li><a href="">Profil</a></li>
+            <li><a href="">Beranda</a></li>
+            <li><a href="">Grup</a></li>
+            <li><a href="{{path_for('logout')}}">Logout</a></li>
+        </ul>
+        {% if login %}
+        <ul style="margin-top:10px;" class="nav navbar-nav navbar-right hidden-xs">
+            <li class="user-header">
+                <img width="40" height="40"src="{{ base_url() }}/assets/images/avatar.jpg"
+                class="img-circle" alt="User Image">
+
+        </li>
+            <li class="dropdown hidden-xs" id="profile-messages" >
+                <a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle">
+                    <!-- <i class="icon icon-user"></i> -->
+                    <span  style="color:#fff; font-size:20px;"class="text">
+                    {{ login.username}} <b class="caret"></b></span>
+
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{path_for('user.view.profile') }}">
+                        <span class="glyphicon glyphicon-user"
+                         aria-hidden="true"></span> My Profile</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{{path_for('logout')}}">
+                        <span class="glyphicon glyphicon-log-out"
+                         aria-hidden="true"></span> Log Out</a></li>
+                </ul>
+            </li>
+
+    </ul>
+    {% endif %}
+</div>
+</div>
+</nav>

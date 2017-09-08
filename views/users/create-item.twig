@@ -1,0 +1,114 @@
+<script type="text/javascript">
+$('#create').modal('show');
+</script>
+
+{% extends 'templates/default.twig' %}
+
+{% block title %} {{ items.name }} {% endblock %}
+
+{% block current %} Lihat detail tugas {% endblock %}
+
+{% block content %}
+<div class="widget-box" style="margin-top:0px; background:#fff;">
+<a class="list-group-item active main-color-bg">
+    <span class="" aria-hidden="true">Lihat tugas</span>
+</a>
+<div style="padding:20px; background:#fff;" class="widget-content">
+    <ul style="padding-left:10px;" class="recent-posts">
+{% if items.reported_at == null and items.creator_image != null %}
+<div class="user-thumb"> <img width="70" height="70" alt="Photo"
+    src="{{ base_url() }}/assets/images/{{ items.creator_image }}">
+    &nbsp&nbsp&nbsp<b>
+        {% if items.creator == login.username %}
+        Anda
+        {% else %}
+        {{ items.creator }}
+        {% endif %}
+    </b>
+    <i>membuat item di grup</i> <b>{{ items.group_name }}</b><br>
+
+    <span class="user-info">
+        <b> {{ items.item }} </b> <br> {{ items.reported }}
+    </span><br>
+</div>
+{% elseif items.reported_at != null and items.user_image != null %}
+<div class="user-thumb"> <img width="70" height="70" alt="Photo"
+    src="{{ base_url() }}/assets/images/{{ items.user_image }}">
+    &nbsp&nbsp&nbsp<b>
+        {% if items.user == login.username %}
+        Anda
+        {% else %}
+        {{ items.user }}
+        {% endif %}</b>
+    <i>membuat item di grup</i> <b>{{ items.group_name }}</b><br>
+
+</div>
+{% else %}
+<div class="user-thumb"> <img width="70" height="70" alt="User"
+    src="{{ base_url() }}/assets/images/avatar.png">
+    <span class="user-info">
+        <b> {{ items.name }} </b> <br>{{ items.reported }}
+    </span><br>
+</div>
+{% endif %}
+{% if items.reported_at == null %}
+<span style="font-size: 14pt;" class="user-info"> <b>
+    <span class="label label-warning">{{ items.name }}
+    </span>&nbsp > &nbsp
+    <span class="label label-success">{{ items.group_name }}
+    </span></b> <p style="font-size: 11pt;">{{ item.created_at }}</p>
+</span>
+{% else %}
+<br>
+<span style="font-size: 14pt;" class="user-info"> <b>
+    <span class="label label-warning">{{ items.name }}
+    </span>&nbsp > &nbsp
+    <span class="label label-success">{{ items.group_name }}
+    </span></b> <p style="font-size: 11pt;">{{ item.reported_at }}</p>
+</span>
+{% endif %}
+<div class="article-post">
+    <div class="widget-content"><br>
+        <div>
+            <p> {{ items.description }} </p>
+        </div>
+        {% if items.image is iterable %}
+        {% for image in items.image %}
+        <img height="200px" style="max-width: 300px;"
+        src="{{ base_url() }}/assets/images/{{ image }}">
+        {% endfor %}
+        {% else %}
+        <img height="200px" style="max-width: 300px;"
+        src="{{ base_url() }}/assets/images/{{ items.image }}">
+        {% endif %}
+
+        <hr style="border-top: 4px double #8c8b8b;">
+        <div style="background:#F6F7F9; padding: 15px;">
+            {% for comment in comment %}
+            <div class="user-thumb">
+                {% if comment.image != null %}
+                <img width="40" height="40" src="{{ comment.image }}">
+                {% endif %}
+                <b> &nbsp&nbsp{{ comment.username }}</b>&nbsp&nbsp{{ comment.comment }}
+                <br>
+                <div style="font-size:11px">
+                    {{ comment.created_at }}
+                </div>
+            </div>
+            <hr style="border-top: 1px dashed #8c8b8b;">
+            {% endfor %}
+        </div>
+        <div class="chat-message well">
+            <form action="{{path_for('post.comment')}}" method="post">
+                <span class="input-box">
+                    <input type="hidden" name="item_id" value="{{ items.id }}" />
+                    <input type="text" name="comment" style="width:80%" id="msg-box" />
+                    <button class="btn btn-success">Kirim komentar</button>
+                </span>
+            </form>
+        </div>
+    </div>
+</div></ul>
+</div>
+</div>
+{% endblock %}

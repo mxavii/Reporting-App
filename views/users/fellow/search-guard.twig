@@ -1,0 +1,98 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} Pencarian {% endblock %}
+
+{% block current %} Pencarian Wali {% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box" style="margin-top:0px;">
+            <div style="background:#ffffff" class="">
+                <a class="list-group-item active main-color-bg">
+                    <span align="center" aria-hidden="true">
+                        <i class="fa fa-newspaper-o"></i></span> Pencarian
+                </a>
+                <div class="panel-body" style="margin:0px;">
+                    <div class="widget-content tab-content">
+                        <div id="tab1" class="tab-pane active">
+                            <div class="col-lg-12">
+                                <form class="" action="{{ path_for('guard.search.user')}}" method="get">
+                                    <div class="input-group" style="padding-bottom:20px">
+                                        <input type="text" name="search" class="form-control" placeholder="No HP atau Nama"><br>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary btn-primary" type="submit">Cari</button>
+                                        </span>
+                                    </form>
+                                </div>
+                            </div>
+                            {% if count != 0 %}
+                            <span class="input-group-btn">
+                                <button class="btn btn-md btn-default" type="button">Hasil Pencarian <span class="badge">{{pagination.total_data}}</span> </button>
+                            </span>
+                            {% else %}
+                                    <center><em> Tidak ada hasil </em></center>
+                            {% endif %}
+                            <div class="row">
+                                {% for user in users %}
+                                <div class="col-sm-2 col-md-3">
+                                    <div class="panel box-body">
+                                        <center><a href="#"><img src="{{ base_url() }}/assets/images/{{ user.image }}"
+                                            height="151" width="151" style="margin-bottom:5px"></a></center>
+                                            <center>
+                                                <div class="col-lg-12" style="margin:0 auto; position:relative;">
+                                                    <span class="text-center">
+                                                        {% if user.name == null %} Anonim
+                                                        {% else %}
+                                                        {{user.name}}
+                                                        {% endif %}
+                                                        {% if user.phone == null %} <p> <i class="fa fa-phone" aria-hidden="true"></i> +62XXXXXXXXX<br>
+                                                        </p>
+                                                        {% else %}
+                                                        <p> <i class="fa fa-phone" aria-hidden="true"></i> {{user.phone}}<br>
+                                                        </p>
+                                                        {% endif %}
+                                                    </span>
+
+                                                    <input type="hidden" name="search" value="{{search}}">
+                                                    <input type="hidden" name="user_id" value="{{ guard }}">
+
+                                                    <a href="{{ path_for('web.fellow.request', {'guard':user.id})}}" class="text-center">
+                                                        <button type="submit" class="btn btn-primary  " name="guard_id" value="{{ user.id }}">Kirim permintaan</button>
+                                                    </a>
+                                            </div>
+                                        </center>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                {% if users != null %}
+                <nav aria-label="...">
+                    <ul class="pager">
+                        <div class="pagination">
+                            <ul>{% if pagination.current > 1 %}
+                                <li class="">
+                                <a href="{{ base_url() }}/pic/search/user/guard?search={{ search }}&page={{ pagination.current - 1 }}">
+                                    Sebelumnya</a></li>
+                                    {% endif %}
+                                <li class="active"> <a>{{ pagination.current }}</a></li>
+                                {% if pagination.current < pagination.total_page %}
+                                <li class="">
+                                <a href="{{ base_url() }}/pic/search/user/guard?search={{ search }}&page={{ pagination.current + 1 }}">
+                                    Selanjutnya</a></li>
+                                    {% endif %}
+                            </ul>
+                        </div>
+                    </ul>
+                </nav>
+                {% else %}
+
+                    <br>
+                {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

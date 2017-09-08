@@ -1,0 +1,97 @@
+
+{% extends 'templates/default.twig' %}
+
+{% block title %} Member Group {% endblock %}
+
+{% block current %} Pencarian {% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box" style="margin-top:0px;">
+            <div style="background:#ffffff" class="">
+                <a class="list-group-item active main-color-bg">
+                    <span align="center" aria-hidden="true">
+                        <i class="fa fa-newspaper-o"></i></span> Pencarian
+                </a>
+                <div class="panel-body" style="margin-top:40px;">
+                    <div class="widget-content tab-content">
+                                <div class="col-lg-12">
+                                    <form class="" action="{{ path_for('web.pic.search.user')}}" method="get">
+                                        <div class="input-group" style="padding-bottom:20px">
+                                            <input type="text" name="search" class="form-control" placeholder="No HP atau Nama">
+                                            <input type="hidden" name="group_id" value="{{ group_id }}">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-secondary btn-primary" type="submit">Cari</button>
+                                            </span>
+                                        </form>
+                                    </div>
+                                        {% if count != 0 %}
+                                        <br><span class="input-group-btn">
+                                            <button class="btn btn-md btn-primary" type="button">Hasil Pencarian
+                                                <span class="badge">{{pagination.total_data}}</span> </button>
+                                        </span>
+                                        {% endif %}
+                                </div><br>
+                                <div id="tab1" class="tab-pane active">
+                            <div class="row">
+                            	{% for user in users %}
+                                <form class="" action="{{path_for('group.setuser')}}" method="post">
+                            		<div class="col-sm-2 col-md-3">
+                            			<div class="panel box-body">
+                            			<center><a href="#"><img src="{{ base_url() }}/assets/images/{{ user.image }}"
+                            				 height="151" width="151" style="margin-bottom:5px"></a></center>
+                                             <center>
+                                                 <div class="col-lg-12" style="margin:0 auto; position:relative;">
+
+                                                 <span class="text-center">
+                                                     {% if user.name == null %} Anonim
+                                                     {% else %}
+                                                     {{user.name}}
+                                                     {% endif %}
+                                                     {% if user.phone == null %} <p> <i class="fa fa-phone" aria-hidden="true"></i> +62XXXXXXXXX<br>
+                                                  </p>
+                                                     {% else %}
+                                                     <p> <i class="fa fa-phone" aria-hidden="true"></i> {{user.phone}}<br>
+                                                  </p>
+                                                     {% endif %}
+                                                 </span>
+                                                    <p class="text-center">
+                                                        <input type="hidden" name="search" value="{{search}}">
+                                                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                                                        <input type="hidden" name="group_id" value="{{ group_id }}">
+                                                        <button type="submit" class="btn btn-primary" name="btn" value="{{ user.id }}">Tambahkan</button>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% if users != null %}
+                    <nav aria-label="...">
+                        <ul class="pager">
+                            <div class="pagination">
+                                <ul>
+                                    <li class="{% if pagination.current == 1 %}disabled{% endif %}">
+                                        <a href="{{ base_url() }}/pic/search/user/guard?search={{ search }}&page={{ pagination.current - 1 }}">
+                                            Sebelumnya</a></li>
+                                            <li class="active"> <a>{{ pagination.current }}</a></li>
+                                            <li class="{% if pagination.current == pagination.total_page %}disabled{% endif %}">
+                                                <a href="{{ base_url() }}/pic/search/user/guard?search={{ search }}&page={{ pagination.current + 1 }}">
+                                                    Selanjutnya</a></li>
+                                                </ul>
+                                            </div>
+                                        </ul>
+                                    </nav>
+                {% else %}
+                    <center><em> </em></center>
+                    <br>
+                {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

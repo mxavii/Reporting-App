@@ -1,0 +1,99 @@
+
+{% extends 'templates/default.twig' %}
+
+{% block title %} {{ items.name }} {% endblock %}
+
+{% block current %} Detail Tugas {% endblock %}
+
+{% block content %}
+<div class="widget-box" style="margin-top:0px; background:#fff;">
+    <a class="list-group-item active main-color-bg">
+        <span class="" aria-hidden="true">lihat item</span>
+    </a>
+    <div style="padding:20px; background:#fff;" class="widget-content">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <td>{{ items.name}}</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Perulangan</th>
+                    <td>{{ items.recurrent}}</td>
+                </tr>
+                <tr>
+                    <th>Ditugaskan untuk</th>
+                    {% if user == null %}
+                    <td>Semua Anggota Grup {{ items.group_name}}</td>
+                    {% else %}
+                    <td>{{ user }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <th>Deskripsi</th>
+                    <td>{{ items.description}}</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><a href="
+                        #"><button type="button" class="btn btn-sm btn-primary" name="button">Edit</button></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="article-post">
+            <div class="widget-content"><br>
+                {% for image in items.image %}
+                <img height="200px" style="max-width: 300px;"alt="Image item"
+                src="{{ base_url() }}/assets/images/{{ image }}">
+                {% endfor %}
+                <hr style="border-top: 4px double #8c8b8b;">
+                <div class="row">
+                    <div style="margin:0px 15px 0px 5px;" class="col-md-12">
+                        <div class="container-fluid" style="margin-top:0px;">
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <div class="widget-box" style="margin-top:0px;">
+                                        <div class="widget-content nopadding">
+                                            <ul class="recent-posts">
+                                                {% for comment in comment %}
+                                                <li>
+                                                    <div class="user-thumb">
+                                                        {% if comment.image != null %}
+                                                        <img width="40" height="40" src="{{ comment.image }}">
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="article-post">
+                                                        <div class="fr">
+                                                            <a href="#" class="tip-top" data-original-title="Delete">
+                                                                <i class="icon-remove"></i></a></div>
+                                                        <span class="user-info"><b>{{ comment.username }} </b>
+                                                            &nbsp {{ comment.created_at }} </span>
+                                                        <p>{{ comment.comment }}</p>
+                                                    </div>
+                                                </li>
+                                                {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="chat-message well">
+                    <form action="{{path_for('pic.post.comment')}}" method="post">
+                        <span class="input-box">
+                            <input type="hidden" name="item_id" value="{{ items.id }}" />
+                            <input type="text" name="comment" style="width:80%" id="msg-box" />
+                            <button class="btn btn-success">Kirim komentar</button>
+                        </span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

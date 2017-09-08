@@ -1,0 +1,352 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} Group {% endblock %}
+
+{% block script %}
+{% if errors  %}
+<script type="text/javascript">
+$('#create').modal('show');
+// $('#create').modal({"backdrop": "static"});
+</script>
+{% endif %}
+
+{% endblock %}
+
+{% block current %} Group {{group.name}} > Item belum dilaporkan {% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box" style="margin-top:0px;">
+            <div style="background:#ffffff" class="">
+                <!-- <div style="padding-bottom:0px; padding-top:0px; background:#24272E;" class="panel-heading"> -->
+                    <div class="widget-title span12">
+                        <div class="btn-group btn-group-justified">
+                          <a href="{{ base_url()}}/pic/group/{{group}}/member" class="btn btn-primary">Anggota Group</a>
+                          <a href="#" class="btn btn-primary active">Tugas</a>
+                          <a href="{{ base_url() }}/pic/items/group/{{group}}/reported" class="btn btn-primary">Laporan</a>
+                        </div>
+                    <!-- </div> -->
+                </div>
+                <div class="panel-body" style="padding-top:0px;">
+                    <div class="widget-content tab-content">
+                        <div id="tab1" class="tab-pane active">
+                            <span style="float:right; margin-top:5px;">
+                                <!-- <div class="btn-group span4"> -->
+                                <a  data-toggle="modal" data-target="#create"><i class="icon-collapse"></i> <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Tambahkan Tugas</button> </a>
+                                <!-- </div> -->
+                            </span>
+
+                        <div class="widget-box">
+                          <br>
+                              <h4>&nbsp&nbsp<i class="fa fa-list-alt" aria-hidden="true">
+                                  Tugas Grup </i></h4>
+                          <div class="widget-content nopadding">
+                            <table class="table table-striped table-bordered">
+                              <thead>
+                                <tr>
+                                  <th>No</th>
+                                  <th>Nama</th>
+                                  <th>Kepada</th>
+                                  <th>Perulangan</th>
+                                  <th>Pilihan</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                  {% for key, item in items %}
+                                  <tr>
+                                      <td class="taskDesc">
+                                          {{ (pagination.current - 1) * pagination.perpage + (key + 1) }}</td>
+                                          <td class="taskDesc">{{ item.name }}</td>
+                                          {% if item.username is null %}
+                                          <td class="taskDesc">Semua anggota</td>
+                                          {% else %}
+                                          <td class="taskDesc">{{ item.username }}</td>
+                                      {% endif %}
+                                      <td class="taskDesc">{{ item.recurrent }}
+                                      </span></td>
+                                      <td class="taskOptions">
+                                          <div class="btn-group-sm">
+                                              <a href="{{ base_url()}}/pic/items/delete/{{ item.id}}"
+                                               value="{{item.id}}"title="Hapus tugas" class="btn btn-danger">Hapus</a>
+                                              <a href="{{ base_url()}}/pic/show/item/{{ item.id}}"
+                                                value="{{item.id}}"title="Detail Tugas" class="btn btn-primary">Detail Tugas</a>
+                                          </div>
+                                          <!-- <a href="{{ base_url()}}/pic/show/item/{{ item.id}}"
+                                          value="{{item.id}}"title="Detail Tugas"
+                                          style="margin-bottom:7px">
+                                          <button class="btn btn-primary btn-md"
+                                          style="margin-right:10px">Detail</button>
+                                      </a>
+                                      <a href="{{ base_url()}}/pic/items/delete/{{ item.id}}"
+                                      value="{{item.id}}"title="Hapus tugas"
+                                      style="margin-bottom:7px">
+                                      <button class="btn btn-danger btn-md"
+                                      style="margin-right:10px">Hapus</button>
+                                  </a> -->
+                                  </td>
+                              </tr>
+                              {% endfor %}
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+      {% if items != null %}
+      <nav aria-label="...">
+          <ul class="pager">
+              <div class="pagination">
+                  <ul>
+                      {% if pagination.current > 1 %}
+                      <li>
+                          <a href="{{ base_url() }}/pic/items/group/{{group}}?page={{ pagination.current - 1 }}">
+                              Sebelumnya</a></li>
+                              {% endif %}
+                              <li class="active"> <a>{{ pagination.current }}</a></li>
+                              {% if pagination.current < pagination.total_page %}
+                              <li>
+                                  <a href="{{ base_url() }}/pic/items/group/{{group}}?page={{ pagination.current + 1 }}">
+                                      Selanjutnya</a></li>{% endif %}
+                                  </ul>
+                              </div>
+                          </ul>
+                      </nav>
+            {% else %}
+            <center><em>Tidak ada tugas</em></center>
+            {% endif %}
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+<!-- line modal items-->
+<div class="modal fade" id="create" role="dialog">
+  <div class="modal-dialog">
+    <div style="padding-left:20px;" class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h3 class="modal-title" id="lineModalLabel">Form Tambah tugas</h3>
+        </div>
+        <div class="modal-body">
+
+        <!-- content goes here -->
+        <form  action="{{ path_for('web.pic.create.item')}}"
+         method="POST" enctype="multipart/form-data">
+            {% if errors %}
+            <div class="alert alert-danger">
+                <a class="close" data-dismiss="alert" href="#">x</a>
+                Form hars diisi
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-5">
+                    <div class="form-group {{ errors.name ? 'has-error' : '' }}">
+                        <label for="name">Nama :</label>
+                        <input type="text" name="name" value="{{old.name}}" class="form-control">
+                        {% if errors.name %}
+                        <span class="help-block">{{ errors.name | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-7">
+                    <div class="form-group {{ errors.description ? 'has-error' : '' }}">
+                        <label for="description">Deskripsi :</label>
+                        <input type="text" name="description" value="{{old.description}}"class="form-control">
+                        {% if errors.description %}
+                        <span class="help-block">{{ errors.description | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-5 col-md-5">
+                    <div class="form-group {{ errors.privacy ? 'has-error' : '' }}">
+                        <label for="privacy">Privasi :</label>
+                        <select class="form-control" name="privacy" >
+                            <option value="">Pilih</option>
+                            <option {% if old.privacy == 0 %}
+                             selected="selected"{% endif %}value="0">Public</option>
+                            <option {% if old.privacy == 1 %}
+                             selected="selected"{% endif %} value="1">Pribadi</option>
+                        </select>
+                        {% if errors.public %}
+                        <span class="help-block">{{ errors.privacy | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-7">
+                    <div class="form-group {{ errors.recurrent ? 'has-error' : '' }}">
+                        <label for="recurrent">Perulangan :</label>
+                        <select class="form-control" name="recurrent" value="">
+                            <option value="">Tanpa Perulangan</option>
+                            <option {% if old.recurrent == "harian" %}
+                             selected="selected"{% endif %} value="harian">Harian</option>
+                            <option {% if old.recurrent == "mingguan" %}
+                             selected="selected"{% endif %} value="mingguan">Mingguan</option>
+                            <option {% if old.recurrent == "bulanan" %}
+                             selected="selected"{% endif %} value="bulanan">Bulanan</option>
+                            <option {% if old.recurrent == "tahunan" %}
+                             selected="selected"{% endif %} value="tahunan">Tahunan</option>
+                        </select>
+                        {% if errors.recurrent %}
+                        <span class="help-block">{{ errors.recurrent | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-5 col-md-5">
+                    <div class="form-group {{ errors.start_date ? 'has-error' : '' }}">
+                        <label for="start_date">Tanggal dimulai :</label>
+                        <input type="date" name="start_date" value="{{old.start_date}}" class="form-control">
+                        <input type="hidden" name="group" value="{{ group }}">
+                        {% if errors.start_date %}
+                        <span class="help-block">{{ errors.start_date | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-7">
+                    <div class="form-group {{ errors.user_id ? 'has-error' : '' }}">
+                        <label for="recurrent">Ditugaskan untuk :</label>
+                        <select class="form-control" name="user_id" >
+                            <option value="{{null}}">Semua Anggota</option>
+                            {% for member in member %}
+                            <option {% if old.user_id == member.id %}
+                             selected="selected"{% endif %} value="{{ member.id}}">{{ member.username}}</option>
+                            {% endfor %}
+                        </select>
+                        {% if errors.user_id %}
+                        <span class="help-block">{{ errors.user_id | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-5 col-md-12">
+                    <div class="form-group {{ errors.image ? 'has-error' : '' }}">
+                        <label for="image">Foto :</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-image"></i>
+                            </div>
+                            <input type="file" id="file" class="form-control"
+                            name="image[]" placeholder="Item image">
+                        </div>
+                        {% if errors.image %}
+                        <span class="help-block">{{errors.image | first}}</span>
+                        {% endif %}<br />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-danger"
+                         data-dismiss="modal" role="button">Tutup</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="submit" class="btn btn-primary btn-hover-green" onClick="myFunction()">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div id="" class="modal fade" role="dialog">
+    <div class="modal-dialog"> -->
+        <!-- Modal content-->
+        <!-- <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Form laporan tugas</h3>
+            </div>
+            <div class="modal-body"> -->
+
+            <!-- content goes here -->
+            <!-- <form  action="{{path_for('report.item', {item:item.id})}}"
+            method="POST" enctype="multipart/form-data" id="laporkan">
+                {% if errors %}
+                <div class="alert alert-danger">
+                    <a class="close" data-dismiss="alert" href="#">x</a>
+                    Mohon mengisi form dengan benar
+                </div>
+                {% endif %}
+                <div class="row" style="margin-left:45px;">
+                    <div class="col-xs-12 col-sm-6 col-md-10">
+                        <div class="form-group {{ errors.image ? 'has-error' : '' }}">
+                            <center>Foto :</center>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-image"></i>
+                                </div>
+                                <input type="file" id="file" class="form-control"
+                                name="image" placeholder="Item image">
+                            </div>
+                            {% if errors.image %}
+                            <span class="help-block">{{errors.image | first}}</span>
+                            {% endif %}<br />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group {{ errors.description ? 'has-error' : '' }}">
+                            <label for="description">Deskripsi :</label>
+                            <textarea rows="5" name="description" class="form-control"
+                            value="{{ item.description }}"> {{ item.description }}
+                            </textarea>
+                                    <!-- <input type="text" name="description" class="form-control" id="coba"> -->
+                            <input type="hidden" id="data-id" name="item_id"
+                             value="{{ item.id }}">
+
+                            {% if errors.description %}
+                            <span class="help-block">{{ errors.description | first }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="row">
+                    <div class="col-xs-10 col-sm-5 col-md-12">
+                        <div class="form-group {{ errors.public ? 'has-error' : '' }}">
+                            <label for="public">Item to :</label>
+                            <select class="form-control" name="public" >
+                                <option value="">Select Group</option>
+                                <option value="0">Public</option>
+                                <option value="1">Private</option>
+                            </select>
+                            {% if errors.public %}
+                            <span class="help-block">{{ errors.public | first }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="modal-footer">
+                    <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-danger"
+                             data-dismiss="modal"  role="button"><b>Tutup</b></button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="submit" class="btn btn-success btn-hover-green">
+                                <b>Laporkan</b></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- line modal report -->
+
+
+{% endblock %}

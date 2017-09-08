@@ -1,0 +1,66 @@
+{% extends 'admin/template/app.twig' %}
+{% block title %} Admin - Group{% endblock %}
+{% block current %}
+    User member list
+{% endblock %}
+{% block content %}
+<div class="panel panel-primary">
+    <div class="panel-heading main-color-bg">
+        <h3 class="panel-title">User member list</h3>
+    </div>
+    <div class="panel-body">
+    <div class="col-xs-12">
+    <a href="{{ base_url() }}/admin/group"><button class="btn btn-primary" style="border-radius:5%;"><i class="fa fa-chevron-left"></i> Kembali</button></a>
+      <div class="table-responsive"><br>
+        <table  class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama</th>
+              <th>Jenis Kelamin</th>
+              <th>Email</th>
+              <th class="col-md-1">Option</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for group in data %}    
+            <tr>
+                <td> {{ loop.index }}</td>
+                <td> {{ group.name }} </td>
+                <td> {{ group.gender }} </td>
+                <td> {{ group.email }} </td>
+                <td> 
+               <!--  <a href="" style="color:red"  data-toggle="tooltip" data-placement="top" title="delete"><i class="fa fa-times"></i></a> 
+                <a href="" style="color:#179FFC" data-toggle="tooltip" data-placement="top" title="Update"><i class="fa fa-pencil"></i></a> -->
+                <a href="" style="color:green" data-toggle="tooltip" data-placement="top" title="Set Member"><i class="fa fa-users"></i></a>
+                </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+
+            <nav aria-label="...">
+                        <ul class="pager">
+                            {% if pagination.current > pagination.first_page %}
+                                <li class="previous"><a href="{{ base_url() }}/admin/group/addMember/{id}?page={{ pagination.first_page }}">
+                                    <span aria-hidden="true">&larr;</span> Halaman pertama</a></li>
+                                <li class="previous"><a href="{{ base_url() }}/admin/group/addMember/{id}?page={{ pagination.current - 1 }}">
+                                    <span aria-hidden="true">&larr;</span> Kembali</a></li>
+                            {% endif %}
+                            {% if pagination.current < pagination.total_page %}
+                                <li class="next"><a href="{{ base_url() }}/admin/group/addMember/{id}?page={{ pagination.total_page }}">
+                                    Halaman terakhir <span aria-hidden="true">&rarr;</span></a></li>
+                                <li class="next"><a href="{{ base_url() }}/admin/group/addMember/{id}?page={{ pagination.current + 1 }}">
+                                    Selanjutnya <span aria-hidden="true">&rarr;</span></a></li>
+                            {% endif %}
+                          </ul>
+                </nav>
+                </td>
+      </div><!--end of .table-responsive-->
+    </div>
+  </div>
+</div>
+
+    </div>
+</div>
+{% endblock %}

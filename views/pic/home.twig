@@ -1,0 +1,106 @@
+
+{% extends 'templates/default.twig' %}
+
+{% block title %} Beranda {% endblock %}
+
+{% block current %} Beranda {% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box" style="margin-top:0px;">
+            <a class="list-group-item active main-color-bg">
+              <span align="center" aria-hidden="true"><i class="icon-file"></i></span> Timeline
+            </a>
+            <div class="widget-content" style="padding-left:30px; padding-right:30px;">
+                <ul class="recent-posts">
+                    {% for item in items %}
+
+                    <li>
+                        {% if item.image != null %}
+                        <div class="user-thumb"> <img width="40" height="40" alt="User"
+                            src="{{ base_url() }}/assets/images/{{ item.image }}">
+                        </div>
+                        {% else %}
+                        <div class="user-thumb"> <img width="40" height="40" alt="User"
+                            src="{{ base_url() }}/assets/images/avatar.png">
+                        </div>
+                        {% endif %}
+
+                        <div class="article-post">
+                            <div class="fr"><a href="#" class="btn btn-primary btn-mini">&#9746;</a> </div>
+                            <span class="user-info"> <b><span class="date badge badge-warning">
+                            {{ item.name }}</span> </b><br> {{ item.created_at }}
+                        </span>
+                        {% if item.image != null %}
+                        <br><br>
+                        <img width="80%" style="max-width: 500px;"alt="Image item"
+                        src="{{ base_url() }}/assets/images/{{ item.image }}">
+                        {% endif %}
+                        <br><br>
+                        <p><a href="{{ base_url() }}/item/{{item.id}}" title="Lihat detail item">
+                            {{ item.description }}</a>
+                        </p>
+                    </div>
+                </li>
+
+                {% endfor %}
+
+                <nav aria-label="...">
+                    <ul class="pager">
+                        <li class="previous"><a href="{{ base_url() }}/home?page={{ data.first_page }}">
+                            <span aria-hidden="true">&larr;</span> Halaman pertama</a></li>
+                        <li class="previous"><a href="{{ base_url() }}/home?page={{ data.current - 1 }}">
+                            <span aria-hidden="true">&larr;</span> Kembali</a></li>
+                        {% if count.item  < 1 %}
+                        <li class="next"><a href="{{ base_url() }}/home?page={{ data.total_page }}">
+                            Halaman terakhir <span aria-hidden="true">&rarr;</span></a></li>
+                        <li class="next"><a href="{{ base_url() }}/home?page={{ data.current + 1 }}">
+                            Selanjutnya <span aria-hidden="true">&rarr;</span></a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                <hr style="margin-top:10px;margin-bottom:10px;" >
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- <div class="accordion" id="collapse-group">
+<div class="accordion-group widget-box">
+<div class="accordion-heading">
+<div class="widget-title"> <a data-parent="#collapse-group" href="#collapseGOne"
+data-toggle="collapse"> <span class="icon"><i class="icon-ok"></i></span>
+<h5>Accordion option1</h5>
+</a> </div>
+</div>
+<div class="collapse in accordion-body" id="collapseGOne">
+<div class="widget-content"> This is opened by default </div>
+</div>
+</div>
+<div class="accordion-group widget-box">
+<div class="accordion-heading">
+<div class="widget-title"> <a data-parent="#collapse-group" href="#collapseGTwo"
+data-toggle="collapse"> <span class="icon"><i class="icon-circle-arrow-right"></i></span>
+<h5>Accordion closed</h5>
+</a> </div>
+</div>
+<div class="collapse accordion-body" id="collapseGTwo">
+<div class="widget-content"> Another is open </div>
+</div>
+</div>
+<div class="accordion-group widget-box">
+<div class="accordion-heading">
+<div class="widget-title"> <a data-parent="#collapse-group" href="#collapseGThree"
+data-toggle="collapse"> <span class="icon"><i class="icon-eye-open"></i></span>
+<h5>Accordion closed</h5>
+</a> </div>
+</div>
+<div class="collapse accordion-body" id="collapseGThree">
+<div class="widget-content"> Another is open </div>
+</div>
+</div>
+</div> -->
+</div>
+</div>
+
+{% endblock %}

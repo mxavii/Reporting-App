@@ -1,0 +1,10 @@
+/vendor
+/mysql_directory
+docker-compose.yml
+/public/assets/images
+/app/setting.phpm
+phinx.yml
+composer.lock
+Dockerfile
+views0/
+src/Controllers/old-web

@@ -1,0 +1,250 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} Group {% endblock %}
+
+{% block current %} Group {% endblock %}
+
+{% block content %}
+<div style="background:#fff" class="row-fluid">
+    <div class="span12">
+        <div class="widget-box" style="margin-top:0px;">
+            <a class="list-group-item active main-color-bg">
+              <span align="center" aria-hidden="true"><i class="icon-file"></i></span> Group Items
+            </a>
+            <hr>
+                <div class="btn-group" role="group">
+                    <button style="width:396px" class="btn btn-primary" id="btn2">Tugas yang belum dilaporkan </button>
+                    <a href="{{ base_url() }}/items/group/{{group_id}}/reported" style="width:396px" class="btn btn-primary">Tugas yang sudah dilaporkan</a>
+                </div>
+                <span style="float:right;">
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="#"><i class="icon-collapse"></i> Lainnya</a>
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-collapse"></i>
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="" data-toggle="modal" data-target="#squarespaceModal"><i class="icon-fixed-width icon-pencil"></i> Buat Tugas</a></li>
+                            <li><a href="#"><i class="icon-fixed-width icon-trash"></i> Info Group </a></li>
+                            <li><a href="{{ base_url() }}/group/{{ group_id }}/leave"><i class="icon-fixed-width icon-trash"></i> Tinggalkan Group </a></li>
+                        </ul>
+                    </div>
+                </span>
+            <hr>
+            <div id="panel2">
+            <div class="widget-content" style="padding-left:30px; padding-right:30px;">
+                <ul class="recent-posts">
+                    {% for data in data %}
+
+                    <li>
+                        {% if data.image != null %}
+                        <div class="user-thumb"> <img width="40" height="40" alt="User"
+                            src="{{ base_url() }}/assets/images/{{ data.image }}">
+                        </div>
+                        {% else %}
+                        <div class="user-thumb"> <img width="40" height="40" alt="User"
+                            src="{{ base_url() }}/assets/images/avatar.png">
+                        </div>
+                        {% endif %}
+                        <div class="article-post">
+                            <div class="pull-right"><a href="{{base_url()}}/items/{{data.id}}/user" class="btn btn-danger btn-mini laporkan">Hapus</a> </div>
+                            <div class="pull-right"><a href="#" class="btn btn-primary btn-mini laporkan" data-id="{{data.id}}" data-toggle="modal" data-target="#reportedModal">Laporkan</a> </div>
+                            <span class="user-info"> <b><span class="date badge badge-warning">{{ data.name }}</span> </b><br> {{ data.created_at }}
+                        </span>
+                        {% if data.image != null %}
+                        <br><br>
+                        <img width="80%" style="max-width: 500px;"alt="Image item"
+                        src="{{ base_url() }}/assets/images/{{ data.image }}">
+                        {% endif %}
+                        <br><br>
+                        <p><a href="{{ base_url() }}/item/{{data.id}}" title="Lihat detail item">
+                            {{ data.description }}</a>
+                        </p>
+                    </div>
+                </li>
+
+                {% endfor %}
+                <br>
+                 <div class="chat-message well">
+                     <span class="input-box">
+                         <input type="text" name="msg-box" style="width:80%" id="msg-box" />
+                         <button class="btn btn-success">Kirim komentar</button>
+                     </span>
+                 </div>
+                <nav aria-label="...">
+                        <ul class="pager">
+                            {% if pagination.current > pagination.first_page %}
+                                <li class="previous"><a href="{{ base_url() }}/items/group/{{group_id}}?page={{ pagination.first_page }}">
+                                    <span aria-hidden="true">&larr;</span> Halaman pertama</a></li>
+                                <li class="previous"><a href="{{ base_url() }}/items/group/{{group_id}}?page={{ pagination.current - 1 }}">
+                                    <span aria-hidden="true">&larr;</span> Kembali</a></li>
+                            {% endif %}
+                            {% if pagination.current < pagination.total_page %}
+                                <li class="next"><a href="{{ base_url() }}/items/group/{{group_id}}?page={{ pagination.total_page }}">
+                                    Halaman terakhir <span aria-hidden="true">&rarr;</span></a></li>
+                                <li class="next"><a href="{{ base_url() }}/items/group/{{group_id}}?page={{ pagination.current + 1 }}">
+                                    Selanjutnya <span aria-hidden="true">&rarr;</span></a></li>
+                            {% endif %}
+                          </ul>
+                </nav>
+                <hr style="margin-top:10px;margin-bottom:10px;" >
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- line modal items-->
+<div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Tutup</span></button>
+            <h3 class="modal-title" id="lineModalLabel">Form Tambah tugas</h3>
+        </div>
+        <div class="modal-body">
+
+        <!-- content goes here -->
+        <form  action="{{ base_url() }}/items/{{group_id}}" method="POST" enctype="multipart/form-data">
+            {% if errors %}
+            <div class="alert alert-danger">
+                <a class="close" data-dismiss="alert" href="#">x</a>
+                Mohon mengisi form dengan benar
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-5">
+                    <div class="form-group {{ errors.name ? 'has-error' : '' }}">
+                        <label for="name">Nama :</label>
+                        <input type="text" name="name" class="form-control">
+                        {% if errors.name %}
+                        <span class="help-block">{{ errors.name | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-7">
+                    <div class="form-group {{ errors.description ? 'has-error' : '' }}">
+                        <label for="description">Deskripsi :</label>
+                        <input type="text" name="description" class="form-control">
+                        {% if errors.description %}
+                        <span class="help-block">{{ errors.description | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-5 col-md-5">
+                    <div class="form-group {{ errors.public ? 'has-error' : '' }}">
+                        <label for="public">Privasi :</label>
+                        <select class="form-control" name="public" >
+                            <option value="">Pilih privasi</option>
+                            <option value="0">Publik</option>
+                            <option value="1">Privat</option>
+
+                        </select>
+                        {% if errors.public %}
+                        <span class="help-block">{{ errors.public | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-7">
+                    <div class="form-group {{ errors.recurrent ? 'has-error' : '' }}">
+                        <label for="recurrent">Pengulangan :</label>
+                        <select class="form-control" name="recurrent" value="">
+                            <option value="">Tanpa pengulangan</option>
+                            <option value="harian">Harian</option>
+                            <option value="mingguan">Mingguan</option>
+                            <option value="bulanan">Bulanan</option>
+                            <option value="tahunan">Tahunan</option>
+                        </select>
+                        {% if errors.recurrent %}
+                        <span class="help-block">{{ errors.recurrent | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group {{ errors.start_date ? 'has-error' : '' }}">
+                        <label for="start_date">Tanggal mulai :</label>
+                        <input type="date" name="start_date" class="form-control">
+                        {% if errors.start_date %}
+                        <span class="help-block">{{ errors.start_date | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"  role="button">Tutup</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="submit" class="btn btn-primary btn-hover-green">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+<!-- line modal report -->
+<div class="modal fade" id="reportedModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Tutup</span></button>
+            <h3 class="modal-title" id="lineModalLabel">Form laporan tugas</h3>
+        </div>
+        <div class="modal-body">
+
+        <!-- content goes here -->
+        <form  action="{{data.id}}" method="POST" enctype="multipart/form-data" id="laporkan">
+            {% if errors %}
+            <div class="alert alert-danger">
+                <a class="close" data-dismiss="alert" href="#">x</a> Mohon mengisi form dengan benar
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group {{ errors.description ? 'has-error' : '' }}">
+                        <label for="description">Description :</label>
+                        <input type="text" name="description" class="form-control" id="coba">
+                        <input type="hidden" id="data-id" name="" value="">
+                        {% if errors.description %}
+                        <span class="help-block">{{ errors.description | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-10 col-sm-5 col-md-12">
+                    <div class="form-group {{ errors.public ? 'has-error' : '' }}">
+                        <label for="public">Item to :</label>
+                        <select class="form-control" name="public" >
+                            <option value="">Pilih pengulangan</option>
+                            <option value="0">Publik</option>
+                            <option value="1">Privat</option>
+
+                        </select>
+                        {% if errors.public %}
+                        <span class="help-block">{{ errors.public | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"  role="button">Tutup</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="submit" class="btn btn-primary btn-hover-green" >Laporkan</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

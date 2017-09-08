@@ -1,0 +1,113 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} Group {% endblock %}
+
+{% block current %} Group Items {% endblock %}
+
+{% block content %}
+<div style="background:#fff" class="row-fluid">
+    <div class="span12">
+        <div class="widget-box" style="margin-top:0px;">
+            <a class="list-group-item active main-color-bg">
+              <span align="center" aria-hidden="true"><i class="icon-file"></i></span> Group Items
+            </a><span style="float:right;">
+                <div class="btn-group">
+                    <a class="btn btn-primary" href="#"><i class="icon-collapse"></i> Lainnya</a>
+                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-collapse"></i>
+                        <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="" title="Buat tugas baru" data-toggle="modal" data-target="#squarespaceModal">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true">
+                                 Buat Tugas</i></a></li>
+                        <li><a href="" ><i class="fa fa-info-circle" aria-hidden="true">
+                             Info Grup</i></a></li>
+                    </ul>
+                </div>
+            </span>
+            <hr>
+                <div class="btn-group hidden-xs visible-lg-*" role="group">
+                    <a href="{{ base_url() }}/items/group/{{group_id}}" style="width:396px" class="btn btn-primary">Tugas yang sudah dilaporkan</a>
+                    <button style="width:396px" type="button" class="btn btn-primary" id="btn2">Tugas yang sudah dilaporkan</button>
+                </div>
+                <div class="btn-group hidden-lg visible-xs-*">
+                    <button class="btn btn-primary">Laporkan</button>
+                    <a href="{{ base_url() }}/items/group/{{group_id}}" class="btn btn-primary">Telah dilaporkan</a>
+                </div>
+                <span style="float:right;">
+                <!-- <span style="float:right;">
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="#"><i class="icon-collapse"></i> Lainnya</a>
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-collapse"></i>
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="" data-toggle="modal" data-target="#squarespaceModal"><i class="icon-fixed-width icon-pencil"></i> Buat Tugas</a></li>
+                            <li><a href="#"><i class="icon-fixed-width icon-trash"></i> Info Group</a></li>
+                        </ul>
+                    </div>
+                </span> -->
+            <hr>
+            <div id="panel2">
+            <div class="widget-content" style="padding-left:30px; padding-right:30px;">
+                <ul class="recent-posts">
+                    {% for data in data %}
+
+                    <li>
+                        {% if data.image != null %}
+                        <div class="user-thumb"> <img width="40" height="40" alt="User"
+                            src="{{ base_url() }}/assets/images/{{ data.image }}">
+                        </div>
+                        {% else %}
+                        <div class="user-thumb"> <img width="40" height="40" alt="User"
+                            src="{{ base_url() }}/assets/images/avatar.png">
+                        </div>
+                        {% endif %}
+
+                        <div class="article-post">
+                            <div class="pull-right"><a href="{{base_url()}}/items/{{data.id}}/delete" class="btn btn-danger btn-mini">Hapus</a> </div>
+                            <span class="user-info"> <b><span class="date badge badge-warning">{{ data.name }}</span> </b><br> {{ data.created_at }}
+                        </span>
+                        {% if data.image != null %}
+                        <br><br>
+                        <img width="80%" style="max-width: 500px;"alt="Image item"
+                        src="{{ base_url() }}/assets/images/{{ data.image }}">
+                        {% endif %}
+                        <br><br>
+                        <p><a href="{{ base_url() }}/item/{{data.id}}" title="Lihat detail item">
+                            {{ data.description }}</a>
+                        </p>
+                    </div>
+                </li>
+
+                {% endfor %}
+                <br>
+                 <!-- <div class="chat-message well">
+                     <span class="input-box">
+                         <input type="text" name="msg-box" style="width:80%" id="msg-box" />
+                         <button class="btn btn-success">Kirim komentar</button>
+                     </span>
+                 </div> -->
+                <nav aria-label="...">
+                        <ul class="pager">
+                            {% if pagination.current > pagination.first_page %}
+                                <li class="previous"><a href="{{ base_url() }}/items/group/{{group_id}}?page={{ pagination.first_page }}">
+                                    <span aria-hidden="true">&larr;</span> Halaman pertama</a></li>
+                                <li class="previous"><a href="{{ base_url() }}/items/group/{{group_id}}?page={{ pagination.current - 1 }}">
+                                    <span aria-hidden="true">&larr;</span> Kembali</a></li>
+                            {% endif %}
+                            {% if pagination.current < pagination.total_page %}
+                                <li class="next"><a href="{{ base_url() }}/items/group/{{group_id}}?page={{ pagination.total_page }}">
+                                    Halaman terakhir <span aria-hidden="true">&rarr;</span></a></li>
+                                <li class="next"><a href="{{ base_url() }}/items/group/{{group_id}}?page={{ pagination.current + 1 }}">
+                                    Selanjutnya <span aria-hidden="true">&rarr;</span></a></li>
+                            {% endif %}
+                          </ul>
+                </nav>
+                <hr style="margin-top:10px;margin-bottom:10px;" >
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
+{% endblock %}

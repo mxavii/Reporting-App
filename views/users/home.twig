@@ -1,0 +1,114 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} Beranda {% endblock %}
+
+{% block current %} Beranda {% endblock %}
+
+{% block content %}
+<div class="widget-box" style="margin-top:0px; background:#fff;">
+    <a class="list-group-item active main-color-bg">
+        <span align="center" aria-hidden="true"><i class="fa fa-newspaper-o"></i></span> Timeline
+    </a>
+    <div class="widget-content" style="padding:20px;">
+        <ul style="padding-left:10px;" class="recent-posts">
+            {% for item in data %}
+            <hr style="height: 30px; border-style:solid; border-color: #8c8b8b;
+            border-width: 1px 0 0 0; border-radius: 30px; margin:0px;">
+
+            <div style="font-size:15px;" class="user-thumb">
+                {% if item.reported_at == null and item.creator_image != null %}
+                <img width="60" height="60" alt="User"
+                src="{{ base_url() }}/assets/images/{{ item.creator_image }}">
+                {% elseif item.reported_at != null and item.user_image != null %}
+                <img width="60" height="60" alt="User"
+                src="{{ base_url() }}/assets/images/{{ item.user_image }}">
+                {% else %}
+                <img width="60" height="60" alt="User"
+                src="{{ base_url() }}/assets/images/avatar.png">
+                {% endif %}
+            </div>
+            <span class="user-info" style="margin-left: 20px; font-size:14px;">
+                {% if item.reported_at == null  %}
+                &nbsp&nbsp&nbsp<b>
+                    {% if item.creator == login.username %}
+                    Anda
+                    {% else %}
+                    {{ item.creator }}
+                    {% endif %}</b>
+                    <i>membuat item di grup</i> <b>{{ item.group_name }}</b>
+                    {% else %}
+                    &nbsp&nbsp&nbsp <b>
+                    {% if item.user == login.username %}
+                    Anda
+                    {% else %}
+                    {{ item.user }}
+                    {% endif %}</b>
+                    <i>melaporkan item di grup</i> <b>{{ item.group_name }}</b>
+                    {% endif %}
+            </span>
+            <div class="article-post">
+                <br>
+                {% if item.reported_at == null %}
+                <span style="font-size: 14pt;margin-left: 30px;" class="user-info"> <b>
+                    <span class="label label-warning">{{ item.name }}
+                    </span>&nbsp > &nbsp
+                    <span class="label label-success">{{ item.group_name }}
+                    </span></b>
+                </span>
+                {% else %}
+                <span style="font-size: 14pt;margin-left: 30px;" class="user-info"> <b>
+                    <span class="label label-warning">{{ item.name }}
+                    </span>&nbsp > &nbsp
+                    <span class="label label-success">{{ item.group_name }}
+                    </span></b>
+                </span>
+                {% endif %}
+                <br>
+                <br>
+                {% if item.image != null %}
+
+                <img width="80%" style="max-width: 300px;"alt="Image item"
+                src="{{ base_url() }}/assets/images/{{ item.image[0] }}">
+                <br><br>
+                {% endif %}
+                <p>
+                    {% if item.description|length > 155 %}
+                    {{ item.description|slice(0, 155) ~ '...'}}
+                    <a href="{{ base_url() }}/item/show/{{item.id}}">selengkapnya</a>
+                    {% else %}
+                    {{ item.description }}
+                    {% endif %}
+                </p>
+                <p style="font-size: 10pt;"><i class="fa fa-clock-o" aria-hidden="true"></i>
+                    {{ item.updated_at | date('j F Y | H:i')}}</p>
+                    <br><a href="{{ base_url() }}/item/show/{{item.id}}" title="Lihat detail item"
+                    class="btn btn-primary btn-mini">{{ item.comment|length }} komentar</a>
+                    <hr style="height: 30px; margin-top: -11px; margin-bottom: 10px; border-style: solid;
+                    border-color: #8c8b8b; border-width: 0 0 1px 0; border-radius: 20px;">
+                </div>
+                {% endfor %}
+                {% if data != null %}
+                <nav aria-label="...">
+                    <ul class="pager">
+                        <div class="pagination alternate">
+                            <ul>
+                                {% if pagination.current > 1 %}
+                                <li><a href="{{ base_url() }}/home?page={{ pagination.current - 1 }}">
+                                    Sebelumnya</a></li>
+                                {% endif %}
+                                <li class="active"> <a>{{ pagination.current }}</a></li>
+                                {% if pagination.current < pagination.total_page %}
+                                <li><a href="{{ base_url() }}/home?page={{ pagination.current + 1 }}">
+                                    Selanjutnya</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </ul>
+                </nav>
+                {% else %}
+                <center>Tidak ada kiriman</center>
+                {% endif %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

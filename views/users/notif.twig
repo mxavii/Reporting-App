@@ -1,0 +1,146 @@
+
+{% extends 'templates/default.twig' %}
+
+{% block title %} Pemberitahuan {% endblock %}
+
+{% block current %} Pemberitahuan {% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box" style="margin-top:0px;">
+            <a class="list-group-item active main-color-bg">
+              <span align="center" aria-hidden="true">
+                  <i class="icon-globe"> Pemberitahuan</i></span>
+            </a>
+            <div style="margin: 0px;" class="widget-box">
+                <div class="widget-title">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#grup">Grup</a></li>
+                        <li><a data-toggle="tab" href="#wali">Wali</a></li>
+                        <li><a data-toggle="tab" href="#anak">Anak</a></li>
+                    </ul>
+                </div>
+                <div class="widget-content tab-content">
+                    <div id="grup" class="tab-pane active">
+                        <ul>
+                        {% for data in data.group %}
+                        <li>
+                            <span class="span6">
+                                <b>{{ data.user }}</b> <i>ingin bergabung di grup</i>
+                                 <b>{{ data.group_name }}</b>.
+                            </span>
+                            <span class="span1">
+                                <form  action="{{path_for('group.setuser')}}"
+                                method="POST" enctype="multipart/form-data">
+                                <input type="hidden" id="data-id" name="user_id"
+                                value="{{ data.user_id }}">
+                                <input type="hidden" id="data-id" name="group_id"
+                                value="{{ data.group_id }}">
+                                <input type="hidden" id="data-id" name="req_id"
+                                value="{{ data.id }}">
+                                <button class="label label-primary">konfirmasi</button>
+                            </form>
+                        </span>
+                        <span class="span1">
+                            <form  action="{{path_for('request.delete')}}"
+                            method="POST" enctype="multipart/form-data">
+                            <input type="hidden" id="data-id" name="req_id"
+                            value="{{ data.id }}">
+                            <button class="label label-danger">hapus permintaan</button>
+                            </form>
+                        </span>
+                    </li><br>
+                        {% endfor %}
+                    </ul>
+                    </div>
+                    <div id="wali" class="tab-pane">
+                        <ul>
+                            {% for data in data.guard %}
+                            <li>
+                                <span class="span6">
+                                <b>{{ data.guard }}</b> <i>menambahkan anda sebagai anak.</i>
+                            </span>
+                            <span class="span1" >
+                                <form  action="{{path_for('guard.setuser')}}"
+                                method="POST" enctype="multipart/form-data">
+                                <input type="hidden" id="data-id" name="user_id"
+                                value="{{ data.user_id }}">
+                                <input type="hidden" id="data-id" name="guard_id"
+                                value="{{ data.guard_id }}">
+                                <input type="hidden" id="data-id" name="req_id"
+                                value="{{ data.id }}">
+                                <button class="label label-primary">konfirmasi</button>
+                                </form>
+                            </span>
+                            <span class="span1">
+                                <form  action="{{path_for('request.delete')}}"
+                                method="POST" enctype="multipart/form-data">
+                                <input type="hidden" id="data-id" name="req_id"
+                                value="{{ data.id }}">
+                                <button class="label label-danger">hapus permintaan</button>
+                                </form>
+                            </span>
+                        </li><br>
+                            {% endfor %}
+                        </ul>
+                     </div>
+                    <div id="anak" class="tab-pane">
+                        <ul>
+                        {% for data in data.user %}
+                        <li>
+                            <span class="span6">
+                                <b>{{ data.user }}</b><i> menambahkan anda sebagai wali.</i>
+                            </span>
+                        <span class="span1"  >
+                            <form  action="{{path_for('guard.setuser')}}"
+                            method="POST" enctype="multipart/form-data">
+                            <input type="hidden" id="data-id" name="user_id"
+                            value="{{ data.user_id }}">
+                            <input type="hidden" id="data-id" name="guard_id"
+                            value="{{ data.guard_id }}">
+                            <input type="hidden" id="data-id" name="req_id"
+                            value="{{ data.id }}">
+                            <button class="label label-primary">konfirmasi</button>
+                            </form>
+                        </span>
+                        <span class="span1">
+                            <form  action="{{path_for('request.delete')}}"
+                            method="POST" enctype="multipart/form-data">
+                            <input type="hidden" id="data-id" name="req_id"
+                            value="{{ data.id }}">
+                            <button class="label label-danger">hapus permintaan</button>
+                            </form>
+                        </span>
+                    </li><br>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- </li> -->
+
+    <!-- <nav aria-label="...">
+    <ul class="pager">
+    <li class="previous"><a href="{{ base_url() }}/home?page={{ data.first_page }}">
+    <span aria-hidden="true">&larr;</span> Halaman pertama</a></li>
+    <li class="previous"><a href="{{ base_url() }}/home?page={{ data.current - 1 }}">
+    <span aria-hidden="true">&larr;</span> Kembali</a></li>
+    {% if count.item  < 1 %}
+    <li class="next"><a href="{{ base_url() }}/home?page={{ data.total_page }}">
+    Halaman terakhir <span aria-hidden="true">&rarr;</span></a></li>
+    <li class="next"><a href="{{ base_url() }}/home?page={{ data.current + 1 }}">
+    Selanjutnya <span aria-hidden="true">&rarr;</span></a></li>
+    {% endif %}
+</ul>
+</nav> -->
+<hr style="margin-top:10px;margin-bottom:10px;" >
+<!-- </li>
+</ul>
+</div> -->
+</div>
+</div>
+</div>
+
+{% endblock %}

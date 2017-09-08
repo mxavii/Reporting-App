@@ -1,0 +1,149 @@
+
+{% extends 'templates/default.twig' %}
+
+{% block title %} Group {% endblock %}
+
+{% block current %} Group {% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box" style="margin-top:0px;">
+            <div style="background:#ffffff" class="">
+                <!-- <div style="padding-bottom:0px; padding-top:0px; background:#24272E;" class="panel-heading"> -->
+                    <div class="widget-title span12">
+                        <div class="btn-group btn-group-justified">
+                          <a href="" class="btn btn-primary active">Anggota Group</a>
+                          <a href="{{ base_url()}}/pic/items/group/{{ group }}" class="btn btn-primary ">Tugas</a>
+                          <a href="{{ base_url() }}/pic/items/group/{{group}}/reported" class="btn btn-primary">Laporan</a>
+                        </div>
+
+                     </div>
+                    <span style="float:right; margin-top:5px;">
+                        <div class="btn-group span4">
+                            <a class="btn btn-primary" href="{{path_for('web.pic.search.member', {'group': group  })}}">
+                                <i class="glyphicon glyphicon-plus"></i>
+                    		Tambah Anggota</a>
+                        </div>
+                    </span><br>
+                <!-- </div> -->
+                <div class="panel-body" style="padding-top:40px;">
+                    <div class="widget-content tab-content">
+                        <div id="tab1" class="tab-pane active">
+                    {% for member in members %}
+                    <div style="padding:5px;" class="col-md-4" >
+                        <div class="well dash-box" style="background:#f2f2f2;">
+                            {% if member.image != null %}
+                            <img  style="margin-right:10px;" width="75" height="75" alt="User"
+                            src="{{ base_url() }}/assets/images/{{ member.image }}">
+                            {% else %}
+                            <img style="margin-right:10px;" width="75" height="75" alt="User"
+                            src="{{ base_url() }}/assets/images/avatar.png">
+                            {% endif %}
+                            <span style="float: right; top: 1px; ">
+                                <div class="btn-group span4">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                                    </a>
+                                    <ul style="left: -140px; top: 13px; "class="dropdown-menu">
+                                        <li>
+                                            <a href="{{path_for('web.pic.set.status', {'id':member.id, 'group':group})}}">
+                                                <i  class="icon-fixed-width icon-wrench">
+                                                    &nbsp Jadikan PIC</i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ path_for('web.pic.set.as.member', {'id':member.id, 'group':group})}}">
+                                                <i class="icon-fixed-width icon-user">
+                                                    &nbsp Jadikan anggota</i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ path_for('web.pic.search', {'id':member.id})}}" >
+                                                    <i class="icon-fixed-width icon-user-md">
+                                                    &nbsp Jadikan wali</i></a></li>
+                                                <li class="divider"></li>
+                                                <li>
+                                                    <a href="{{ path_for('web.pic.delete.member', {'id': member.id, 'group': group })}}">
+                                                    <i class="icon-fixed-width icon-remove"> &nbsp Keluarkan dari grup</i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </span>
+                                    <span style="position: absolute; float: right; font-family: Franklin Gothic Medium;">
+                                        <br><b>{{ member.username }}</b><br>
+                                        {% if member.status == 0 %}
+                                        Anggota
+                                        {% elseif member.status == 1 %}
+                                        PIC
+                                        {% elseif member.status == 2 %}
+                                        Wali
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% if members != null %}
+                    <nav aria-label="...">
+                        <ul class="pager">
+                            <div class="pagination">
+                                <ul style="padding:0px;">
+                                    {% if pagination.current > 1 %}
+                                    <li class="">
+                                        <a href="{{ base_url() }}/pic/group/{{group}}/member?page={{ pagination.current - 1 }}">
+                                    Sebelumnya</a></li>
+                                    {% endif %}
+                                    <li class="active"> <a>{{ pagination.current }}</a></li>
+                                    {% if pagination.current < pagination.total_page %}
+                                    <li class="">
+                                    <a href="{{ base_url() }}/pic/group/{{group}}/member?page={{ pagination.current + 1 }}">
+                                        Selanjutnya</a></li>{% endif %}
+                                </ul>
+                            </div>
+                        </ul>
+                    </nav>
+                {% else %}
+                    <center><em> Silahkan tambahkan anggota </em></center>
+                    <br>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--
+<div class="modal fade bs-modal-sm" id="search" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="tab-pane fade active in" id="sigin">
+                    <fieldset>
+                        <form class="form-horizontal" action="{{ path_for('web.pic.search.user')}}" method="get">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input type="text" name="search" class="form-control" placeholder="Nama atau No Handphone" required value="">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="search" ></label>
+                                <div class="controls"> -->
+                                    <!-- <input type="hidden" name="group" value="{{ group }}"> -->
+                                    <!-- <button type="submit" class="btn btn-primary btn-block btn-default"><i class="glyphicon glyphicon-search"></i> Cari</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="control-group">
+                            <label class="control-label" for="sigin"></label>
+                            <center>
+                                <div class="controls">
+                                    <button type="button" class="btn btn-large btn-block btn-default" data-dismiss="modal">Tutup</button>
+                                </div>
+                            </center>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+{% endblock %}

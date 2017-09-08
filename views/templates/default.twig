@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> {% block title %} {% endblock %}</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=2">
+    <link rel="shortcut icon" href="(http://app.unbounce.com/favicon.ico)"/>
+    <link href="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/glowing-purple-neon-icons-social-media-logos/114150-glowing-purple-neon-icon-social-media-logos-picasa.png"
+     rel="shortcut icon" type="image/x-icon" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/skins/_all-skins.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="{{ base_url() }}/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="{{ base_url() }}/css/fullcalendar.css" />
+    <link rel="stylesheet" href="{{ base_url() }}/css/matrix-style.css" />
+    <link rel="stylesheet" href="{{ base_url() }}/css/matrix-media.css" />
+    <link href="{{ base_url() }}/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ base_url() }}/css/jquery.gritter.css" />
+{% block js %}{% endblock %}
+    <!-- <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel="stylesheet" type="text/css"> -->
+</head>
+
+<body style="background:#24272e; padding:5px;">
+
+    <!-- Top content -->
+    <!-- <header id="header"> -->
+    {% include 'templates/partials/header-nav.twig' %}
+    {# {% include 'templates/partials/header.twig' %} #}
+
+    <section id="breadcrumb">
+        <div style="margin-top:25px; padding-bottom:0px;" dir=""class="container">
+            <ol class="breadcrumb">
+                <li class="active"> {% block current %} {% endblock %}</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- <section id="main" class="content"> -->
+        <div style="padding-left:5px; padding-right:5px; padding-top:0px;" class="container">
+            {% include 'templates/partials/flash.twig' %}
+            <div class="row">
+                <div style="padding-left:25px;" class="hidden-xs col-md-3">
+                    {% include 'templates/partials/sidebar-nav.twig' %}
+                </div>
+                <div style="padding:0px;" class="col-md-9">
+                    {% block content %} {% endblock %}
+                </div>
+            </div>
+        </div>
+    <!-- </section> -->
+
+    <footer style="color:white; width:100%; padding:17px;"id="footer">
+        <center><strong> &copy; 2017
+            <a href="http://blog.mitschool.co.id/"><i>MIT School</i></a>
+        </strong></center>
+    </footer>
+
+  <script>
+     CKEDITOR.replace( 'editor1' );
+ </script>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<!-- Include a polyfill for ES6 Promises (optional) for IE11 and Android browser -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/demo.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/js/bootstrap-formhelpers.min.js">
+</script>
+<script>
+   // $("#panel2").slideUp(200).delay(1000).slideDown(1000);
+        $('#btn1').on('click', function() {
+            $("#panel1").slideToggle(200);
+        });
+        $('#btn2').on('click', function() {
+            $("#panel2").slideToggle(200);
+        });
+        </script>
+<script>
+$(document).ready(function (e) {
+$("#uploadimage").on('submit',(function(e) {
+e.preventDefault();
+$("#message").empty();
+$('#loading').show();
+$.ajax({
+url: "ajax_php_file.php", // Url to which the request is send
+type: "POST",             // Type of request to be send, called as method
+data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+contentType: false,       // The content type used when sending data to the server.
+cache: false,             // To unable request pages to be cached
+processData:false,        // To send DOMDocument or non processed data file it is set to false
+success: function(data)   // A function to be called if request succeeds
+{
+$('#loading').hide();
+$("#message").html(data);
+}
+});
+}));
+
+// Function to preview image after validation
+$(function() {
+$("#file").change(function() {
+$("#message").empty(); // To remove the previous error message
+var file = this.files[0];
+var imagefile = file.type;
+var match= ["image/jpeg","image/png","image/jpg"];
+if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2])))
+{
+$('#previewing').attr('src','noimage.png');
+$("#message").html("<p id='error'>Please Select A valid Image File</p>"+"<h4>Note</h4>"+"<span id='error_message'>Only jpeg, jpg and png Images type allowed</span>");
+return false;
+}
+else
+{
+var reader = new FileReader();
+reader.onload = imageIsLoaded;
+reader.readAsDataURL(this.files[0]);
+}
+});
+});
+function imageIsLoaded(e) {
+$("#file").css("color","green");
+$('#image_preview').css("display", "block");
+$('#previewing').attr('src', e.target.result);
+$('#previewing').attr('width', '250px');
+$('#previewing').attr('height', '230px');
+};
+});
+$(document).ready(function() {
+    $('#example2').DataTable();
+} );
+</script>
+<script type="text/javascript">
+$('#infoGroup').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+});
+</script>
+
+{% block script %} {% endblock %}
+
+</body>
+</html>

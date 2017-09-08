@@ -1,0 +1,90 @@
+
+<nav style="margin-bottom:10px; background:#337AB7;" class="navbar navbar-default" >
+    <div class="container">
+        <div style="margin-left:8px;  margin-right:8px;" class="navbar-header">
+            <button type="button" style=" color:#fff; padding-top:22px;" class="navbar-toggle collapsed" data-toggle="collapse"
+            data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <h3 style="color:#fff;"><span class="glyphicon glyphicon-cog" aria-hidden="true">
+        </span> Reporting App <small></small></h3>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+        <ul style="background:#d5dfe7;" class="nav navbar-nav hidden-lg">
+            <li><a href="{{path_for('user.view.profile') }}">Profil</a></li>
+            <li><a href="{{path_for('home') }}">Beranda</a></li>
+            <li><a href="{{ path_for('group.user') }}">Grup</a></li>
+            <li><a href="{{ path_for('guard.show.user') }}">Anak</a></li>
+            <li><a href="{{ path_for('item.archive', {'id': login.id }) }}">Arsip Tugas</a></li>
+            <li><a href="{{ base_url() }}/user/profile/setting">Pengaturan</a></li>
+            <li><a href="{{path_for('logout')}}">Keluar</a></li>
+        </ul>
+        {% if login.id != null %}
+        <ul style="margin-top:10px;" class="nav navbar-nav navbar-right hidden-xs">
+
+            <li class="user-header">
+                {% if login.image != null %}
+                <img width="40" height="40" src="{{ base_url() }}/assets/images/{{ login.image }}"
+                class="img-circle" alt="User Image">
+                {% else %}
+                <img width="40" height="40"src="{{ base_url() }}/assets/images/avatar.png"
+                class="img-circle" alt="User Image">
+
+            {% endif %}
+        </li>
+            <li class="dropdown hidden-xs" id="profile-messages" >
+                <a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle">
+                    <!-- <i class="icon icon-user"></i> -->
+                    <span  style="color:#fff; font-size:20px;"class="text">
+                    {{ login.username}} <b class="caret"></b></span>
+
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a style="font-size:15px;" href="{{path_for('user.view.profile') }}">
+                        <span class="glyphicon glyphicon-user"
+                         aria-hidden="true"></span> Profil</a></li>
+                    <li class="divider"></li>
+                    <li><a style="font-size:15px;" href="{{path_for('logout')}}">
+                        <span class="glyphicon glyphicon-log-out"
+                         aria-hidden="true"></span> Keluar</a></li>
+                </ul>
+            </li>
+            {% if notif.count > 0 %}
+            <li><a title="" href="#" data-toggle="dropdown" data-target="#notif" class="dropdown-toggle">
+                <!-- <i class="icon icon-user"></i> -->
+                <span  style="color:#fff; font-size:20px;"class="text">
+                    <span class="badge badge-important"><i class="fa fa-bell" aria-hidden="true">
+                    </i>{{ notif.count }}</span><b class="caret"></b></span>
+
+                </a>
+                <ul class="dropdown-menu" style="width:217px;">
+                    {% if notif.user|length > 0 %}
+                    <li><a style="font-size:14px;"><i>Permintaan dari anak</i>
+                        <span class="pull-right"><span class="badge badge-important">
+                        {{ notif.user|length }}</span></span></a></li>
+                        {% endif %}
+                        {% if notif.guard|length > 0 %}
+
+                    <li><a style="font-size:14px;"><i>Permintaan dari wali</i>
+                        <span class="pull-right"><span class="badge badge-important">
+                        {{ notif.guard|length }}</span></span></a></li>
+                        {% endif %}
+                        {% if notif.group|length > 0 %}
+                    <li><a style="font-size:14px;"><i>Permintaan gabung grup</i>
+                        <span class="pull-right"><span class="badge badge-important">
+                        {{ notif.group|length }}</span></span></a></li>
+                        <li class="divider"></li>
+                        {% endif %}
+                    <li><a style="font-size:13px; align:center;" href="{{path_for('notification')}}">
+                        <span class="glyphicon glyphicon-hand-right"
+                        aria-hidden="true"></span><u>Lihat semua permintaan</u></a></li>
+                </ul></li>
+                {% endif %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</nav>

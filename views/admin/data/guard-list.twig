@@ -1,0 +1,71 @@
+{% extends 'admin/template/app.twig' %}
+{% block title %} Admin - Guardian{% endblock %}
+{% block current %}
+    Wali list
+{% endblock %}
+{% block content %}
+<div class="panel panel-primary">
+    <div class="panel-heading main-color-bg">
+        <h3 class="panel-title">Daftar Wali</h3>
+    </div>
+    <div class="panel-body">
+    <div class="col-xs-12">
+    <a href=""><button class="btn btn-primary" style="border-radius:10%">
+        <i class="fa fa-user-plus"></i> Tambah Wali</button></a>
+      <div class="table-responsive">
+    <br>
+        <table  class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama</th>
+              <th>Jenis Kelamin</th>
+              <th>Email</th>
+              <th>No telepon</th>
+              <th>Alamat</th>
+              <th class="col-md-1">Option</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for key, user in data %}
+            <tr>
+                <td> {{ key + 1 + (pagination.perpage * (pagination.current - 1)) }}</td>
+                <td> {{ user.name }} </td>
+                <td> {{ user.gender }} </td>
+                <td> {{ user.email }} </td>
+                <td> {{ user.phone }} </td>
+                <td> {{ user.address }} </td>
+                <td>
+                <a href="" style="color:red"  data-toggle="tooltip" data-placement="top" title="delete"><i class="fa fa-times"></i></a>
+                <a href="" style="color:#179FFC" data-toggle="tooltip" data-placement="top" title="Update"><i class="fa fa-pencil"></i></a>
+                <a href="" style="color:green" data-toggle="tooltip" data-placement="top" title="View detail"><i class="fa fa-eye"></i></a></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+
+      </div><!--end of .table-responsive-->
+      <nav aria-label="...">
+          <ul class="pager">
+              {% if pagination.current > pagination.first_page %}
+              <li class="previous"><a href="{{ base_url() }}/admin/user?page={{ pagination.first_page }}" title="halaman pertama">
+                  <i class="fa fa-fast-backward" aria-hidden="true"></i> {{ pagination.first_page }}</a></li>
+              <li class=""><a href="{{ base_url() }}/admin/user?page={{ pagination.current - 1 }}" title="halaman sebelumnya">
+                  <i class="fa fa-backward" aria-hidden="true"></i> {{ pagination.current - 1 }}</a></li>
+              {% endif %}
+              <li class=""><a>{{ pagination.current }}</a></li>
+              {% if pagination.current < pagination.total_page %}
+              <li class=""><a href="{{ base_url() }}/admin/user?page={{ pagination.current + 1 }}" title="halaman selanjutnya">
+                  {{ pagination.current + 1 }} <i class="fa fa-forward" aria-hidden="true"></i></a></li>
+              <li class="next"><a href="{{ base_url() }}/admin/user?page={{ pagination.total_page }}" title="halaman terakhir">
+                  {{ pagination.total_page }} <i class="fa fa-fast-forward" aria-hidden="true"></i></a></li>
+              {% endif %}
+          </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    </div>
+</div>
+{% endblock %}

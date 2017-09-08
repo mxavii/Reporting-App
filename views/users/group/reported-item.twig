@@ -1,0 +1,207 @@
+
+{% extends 'templates/default.twig' %}
+
+{% block title %} Group {% endblock %}
+
+{% block current %} Group {{group.name}} > Item dilaporkan{% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box" style="margin-top:0px;">
+            <div style="background:#ffffff" class="">
+                <div style="padding-bottom:0px; padding-top:0px; background:#24272E;" class="panel-heading">
+                    <div class="widget-title span12">
+                        <div class="btn-group btn-group-justified">
+                          <a href="{{path_for('unreported.item.user.group',
+                           {'group': group.id, 'user':login.id})}}" class="btn btn-primary">Tugas belum dilaporkan</a>
+                          <a href="#" class="btn btn-primary active">Tugas dilaporkan</a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="panel-body" style="padding-top:0px;">
+                    <div class="widget-content tab-content">
+                        <div id="tab2" class="tab-pane active">
+                            <span style="float:right; margin-top:5px;">
+                                <div class="btn-group span6">
+                                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <i class="icon-collapse"></i>Lainnya &nbsp<i class="fa fa-sort-desc" aria-hidden="true"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" data-toggle="modal" data-target="#squarespaceModal">
+                                            <i class="icon-fixed-width icon-pencil">
+                                                Buat tugas</i></a>
+                                            </li>
+                                            <li><a href="#"><i class="icon-fixed-width icon-pencil">
+                                                Info grup</i></a></li>
+                                                <li><a href="{{path_for('get.group.member',
+                                                {'id': group.id, 'user':login.id})}}"><i class="icon-fixed-width icon-pencil">
+                                                    Member grup</i></a></li>
+                                                    <li><a href="#" data-toggle="modal" data-target="#squarespaceModal"><i class="icon-fixed-width icon-pencil">
+                                                        Buat tugas</i></a></li>
+                                                        <li class="divider"></li>
+                                                        <li><a href="#"><i class="i"> Lihat semua tugas</i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </span>
+                            <div class="widget-box">
+                                <h3><i class="fa fa-list-alt" aria-hidden="true">
+                                    {{ group.name}} </i></h3>
+                                    <div class="widget-content nopadding">
+                                        <table class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nama</th>
+                                                    <th>Pengulangan</th>
+                                                    <th>Opsi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for key, item in data %}
+                                                <tr>
+                                                    <td class="taskDesc">
+                                                        {{ (pagination.current - 1) * pagination.perpage + (key + 1) }}</td>
+                                                    <td class="taskDesc">
+                                                        {{ item.name }}</td>
+                                                    <td class="taskStatus">
+                                                        <span class="in-progress">
+                                                        {{ item.recurrent }}</span></td>
+                                                    <td class="taskOptions">
+                                                        <a href="{{ path_for('show.item', {'id': item.id}) }}" >
+                                                            <span class="label label-primary"
+                                                             aria-hidden="true">Detail</span></a>
+                                                        <a href="#">
+                                                            <span class="label label-danger"
+                                                            >Hapus</span></a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% if data == null %}
+                        <center><h4>Tidak ada data</h4></center><hr>
+                        {% else %}
+                        <nav aria-label="...">
+                            <ul class="pager">
+                                <div class="pagination">
+                                    <ul>
+                                        {% if pagination.current > 1 %}
+                                        <li><a href="{{ base_url() }}/home/?page={{ pagination.current - 1 }}">
+                                                Sebelumnya</a></li>
+                                        {% endif %}
+                                        <li class="active"> <a>{{ pagination.current }}</a></li>
+                                        {% if pagination.current < pagination.total_page %}
+                                        <li><a href="{{ base_url() }}/home/?page={{ pagination.current + 1 }}">
+                                                Selanjutnya</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </ul>
+                        </nav>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- line modal items-->
+<div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div style="padding-left:20px;" class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h3 class="modal-title" id="lineModalLabel">Form Tambah tugass</h3>
+        </div>
+        <div class="modal-body">
+
+        <!-- content goes here -->
+        <form  action="{{path_for('web.item.user.create',
+        {'group': group.id})}}" method="POST" enctype="multipart/form-data">
+            {% if errors %}
+            <div class="alert alert-danger">
+                <a class="close" data-dismiss="alert" href="#">x</a> Mohon isi form dengan benar
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-5">
+                    <div class="form-group {{ errors.name ? 'has-error' : '' }}">
+                        <label for="name">Nama :</label>
+                        <input type="text" name="name" class="form-control">
+                        {% if errors.name %}
+                        <span class="help-block">{{ errors.name | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-7">
+                    <div class="form-group {{ errors.description ? 'has-error' : '' }}">
+                        <label for="description">Deskripsi :</label>
+                        <input type="text" name="description" class="form-control">
+                        {% if errors.description %}
+                        <span class="help-block">{{ errors.description | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-5 col-md-5">
+                    <div class="form-group {{ errors.public ? 'has-error' : '' }}">
+                        <label for="public">Privasi :</label>
+                        <select class="form-control" name="privacy" >
+                            <!-- <option value="">Select Group</option> -->
+                            <option value="0">Publik</option>
+                            <option value="1">Privat</option>
+
+                        </select>
+                        {% if errors.public %}
+                        <span class="help-block">{{ errors.public | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-7">
+                    <div class="form-group {{ errors.recurrent ? 'has-error' : '' }}">
+                        <label for="recurrent">Perulangan :</label>
+                        <select class="form-control" name="recurrent" value="">
+                            <option value="">Tanpa pperulangan</option>
+                            <option value="harian">Harian</option>
+                            <option value="mingguan">Mingguan</option>
+                            <option value="bulanan">Bulanan</option>
+                            <option value="tahunan">Tahunan</option>
+                        </select>
+                        {% if errors.recurrent %}
+                        <span class="help-block">{{ errors.recurrent | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group {{ errors.start_date ? 'has-error' : '' }}">
+                        <label for="start_date">Tanggal mulai :</label>
+                        <input type="date" name="start_date" class="form-control">
+                        {% if errors.start_date %}
+                        <span class="help-block">{{ errors.start_date | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"  role="button">Tutup</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="submit" class="btn btn-primary btn-hover-green">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

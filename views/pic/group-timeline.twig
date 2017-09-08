@@ -1,0 +1,55 @@
+
+{% extends 'templates/default.twig' %}
+
+{% block title %} Group {% endblock %}
+
+{% block current %} Group {% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box" style="margin-top:0px;">
+            <div style="background:#ffffff" class="">
+                <div style="padding-bottom:0px; margin-top:2px background;#cccccc;" class="panel-heading">
+                    <div class="widget-title span8">
+                    <ul class="nav nav-tabs">
+                        <!-- <li style="padding-right:50px;" class="active"><a data-toggle="tab" href="#tab1">Timeline</a></li> -->
+                        <li style="padding-right:50px;" class="active"><a data-toggle="tab" href="#tab2">Timeline yang belum di laporkan</a></li>
+                        <li><a data-toggle="tab" href="#tab3">Timeline yang sudah di laporkan</a></li>
+                        
+                    <span style="float:right;">
+                        <div class="btn-group span4">
+                            <a class="btn btn-primary" href="#"><i class="icon-collapse"></i> Lainnya</a>
+                            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-caret-down"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><i class="icon-fixed-width icon-pencil"></i> Info group</a></li>
+                                <li><a href="#"><i class="icon-fixed-width icon-trash"></i> Daftar member</a></li>
+                                <li><a href="#"><i class="icon-fixed-width icon-ban-circle"></i> Itemku</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#"><i class="i"></i> Make admin</a></li>
+                            </ul>
+                        </div>
+                    </span>
+                    </div>
+                </div>
+                    </ul>
+                <div class="panel-body" style="padding-top:0px;">
+                    <div class="widget-content tab-content">
+                       <!--  <div id="tab1" class="tab-pane active">
+                            <p>And is full of waffle to It has multiple paragraphs and is full of waffle to pad out the comment. Usually, you just wish these sorts of comments would come to an end.multiple paragraphs and is full of waffle to pad out the comment.</p>
+                            <img src="https://bgcdn.s3.amazonaws.com/wp-content/uploads/2013/04/5-2-God-is-in-Nature.jpg"  height="234" width="420" alt="demo-image"/></div> -->
+                            <div id="tab2" class="tab-pane active"> <img src="http://az616578.vo.msecnd.net/files/2016/05/08/635982646968672800-1766933105_fresh_nature-1280x720.jpg"  height="234" width="420" alt="demo-image"/>
+                                <p>And is full of waffle to It has multiple paragraphs and is full of waffle to pad out the comment. Usually, you just wish these sorts of comments would come to an end.multiple paragraphs and is full of waffle to pad out the comment.</p>
+                            </div>
+                            <div id="tab3" class="tab-pane">
+                                <p>And is full of waffle to It has multiple paragraphs and is full of waffle to pad out the comment. Usually, you just wish these sorts of comments would come to an end.multiple paragraphs and is full of waffle to pad out the comment. </p>
+                                <img src="img/demo/demo-image3.jpg" alt="demo-image"/></div>
+                            </div>
+                        </div>
+                    </div>
+
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Login</title><meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ base_url() }}/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{ base_url() }}/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="{{ base_url() }}/css/matrix-login.css" />
+    <link href="{{ base_url() }}/font-awesome/css/font-awesome.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="loginbox">
+        {% include 'templates/partials/flash.twig' %}
+
+        <form id="loginform" class="form-vertical" action="{{path_for('post.login')}}"
+        method="post">
+        <div class="control-group normal_text">
+            <h3><img src="{{ base_url() }}/assets/images/logo.jpg" alt="Reporting App" /></h3>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <div class="main_input_box">
+                    <span class="add-on bg_lg"><i class="icon-user"> </i></span>
+                    <input name="username" type="text" placeholder="Username" />
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <div class="main_input_box">
+                    <span class="add-on bg_ly"><i class="icon-lock"></i></span>
+                    <input name="password" type="password" placeholder="Password" />
+                </div>
+            </div>
+        </div>
+        <div style="color:#fff; margin:0px 40px 10px 18px;" class="checkbox">
+            <span class="">
+                <button style="width:100%;" type="submit" class="btn btn-success">
+                    <i class="fa fa-login"></i>Login</button></span>
+        </div>
+        <div style="color:#fff;"class="form-actions">
+            <span class="pull-left">
+                <a href="#" class="flip-link " id="to-recover">
+                    <u><font size="2px">Lupa password?</font></u></a></span>
+            <span class="pull-right">Belum mempunyai akun? &nbsp&nbsp
+                <a href="{{path_for('signup')}}" class="flip-link">
+                    <u><font size="2px">Daftar di sini</font></u></a></span>
+        </div>
+    </form>
+    <div style="color:#fff; margin:20px;">
+    </div>
+    <form id="recoverform" action="{{path_for('password.reset')}}"
+    method="post" class="form-vertical">
+		<p class="normal_text">Silakan masukkan email anda. Kami akan
+             mengirimi anda instruksi untuk menyetel ulang kata sandi.</p>
+             <div class="controls">
+                <div class="main_input_box">
+                    <span class="add-on bg_lo"><i class="icon-envelope"></i></span>
+                    <input type="text" name="email" placeholder="Alamat E-mail" />
+                </div>
+            </div>
+            <div class="form-actions">
+                <span class="pull-left"><a href="#" class="flip-link btn btn-success" id="to-login">
+                    &laquo; Kembali ke login</a></span>
+                    <span class="pull-right"><a class="btn btn-primary"/>Setel ulang sandi</a></span>
+            </div>
+        </form>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/matrix.login.js"></script>
+</body>
+</html>

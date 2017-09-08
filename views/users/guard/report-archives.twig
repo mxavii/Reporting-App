@@ -1,0 +1,130 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} Arsip Laporan {% endblock %}
+{% block js %}
+{% if query.year == null %}
+<script>window.onload = function(){
+  document.forms['archive'].submit();
+}</script>
+{% endif %}
+{% endblock %}
+
+
+{% block current %} Arsip laporan {{user.username}}{% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box" style="margin-top:0px;">
+            <div style="background:#ffffff" class="">
+                <div style="padding-bottom:0px; padding-top:0px; background:#24272E;" class="panel-heading">
+                    <!-- <div class="widget-title span8">
+                    <ul style="text-align:center" class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#">Arsip laporan </a></li>
+                        <li ><a  href="#"
+                             class="btn btn-primary">Tugas tidak dilaporkan</a></li>
+                    </ul>
+                    </div> -->
+                </div>
+                <div class="panel-body" style="padding-top:0px;">
+                    <div class="widget-content tab-content">
+                        <div id="tab1" class="tab-pane active">
+                            <div class="widget-box">
+                                <h4 style="margin-left:5px;"><i class="fa fa-list-alt" aria-hidden="true">
+                                    {% if query.month != null %}
+                                    {% if query.month == 'all' %}
+                                    Daftar Laporan Tahunan {{user.username}}
+                                    {% else %}
+                                    Daftar Laporan Bulanan {{user.username}}
+                                    {% endif %}
+                                    {% endif %}
+                                </i></h4>
+                                    <form name="archive" action="{{path_for('search.item.archive',{'id': user_id })}}"
+                                    method="POST" enctype="multipart/form-data">
+                                <div style="margin:0px 5px 0px 5px;" class="input-group">
+                                    <span style="background:#8e9b9d; color:#fff;" class="input-group-addon">Bulan&nbsp</span>
+                                    <select class="form-control" name="month" >
+                                        {% if query.year == null %}
+                                        <option value="{{"now"|date("m")}}"
+                                         selected="selected">{{"now"|date("F")}}</option>
+                                        {% else %}
+                                            <option value="all" {% if  query.month == null or query.month == "all" %}
+                                         selected="selected"{% endif %}>Semua bulan</option>
+                                         {% endif %}
+                                        <option value="1" {% if query.month == 1 %}
+                                         selected="selected"{% endif %}>Januari</option>
+                                        <option value="2" {% if query.month == 2 %}
+                                         selected="selected"{% endif %}>Februari</option>
+                                        <option value="3" {% if query.month == 3 %}
+                                         selected="selected"{% endif %}>Maret</option>
+                                        <option value="4" {% if query.month == 4 %}
+                                         selected="selected"{% endif %}>April</option>
+                                        <option value="5" {% if query.month == 5 %}
+                                         selected="selected"{% endif %}>Mei</option>
+                                        <option value="6" {% if query.month == 6 %}
+                                         selected="selected"{% endif %}>Juni</option>
+                                        <option value="7" {% if query.month == 7 %}
+                                         selected="selected"{% endif %}>Juli</option>
+                                        <option value="8" {% if query.month == 8 %}
+                                         selected="selected"{% endif %}>Agustus</option>
+                                        <option value="9" {% if query.month == 9 %}
+                                         selected="selected"{% endif %}>September</option>
+                                        <option value="10" {% if query.month == 10 %}
+                                         selected="selected"{% endif %}>Oktober</option>
+                                        <option value="11" {% if query.month == 11 %}
+                                         selected="selected"{% endif %}>November</option>
+                                        <option value="12" {% if query.month == 12 %}
+                                         selected="selected"{% endif %}>Desember</option>
+                                    </select>
+                                </div>
+                                <div style="margin:0px 5px 0px 5px;" class="input-group">
+                                    <span style="background:#8e9b9d; color:#fff;"
+                                     class="input-group-addon">Tahun</span>
+                                    <span class="input-group-addon" style="width:0px;
+                                     padding-left:0px; padding-right:0px; border:none;"></span>
+                                    <input type="number" name="year" required="required"
+                                     class="form-control" {% if query.year == null %}
+                                     value="{{"now"|date("Y")}}" {% else %} value="{{query.year}}" {% endif %}>
+                                    <span style="background:#3d8d9c; padding: 0px; color:#fff;"
+                                     class="input-group-addon">
+                                     <button type="submit" class="btn btn-primary btn-hover-green">
+                                         <b>Cari arsip</b></button></span>
+                                </div><br>
+                                <div class="widget-content nopadding">
+                                    <table id="example2" class="table table-bordered table-striped ">
+                                        <thead>
+                                            <tr>
+                                                <!-- <th>No</th> -->
+                                                <th>Nama</th>
+                                                <th>Pengulangan</th>
+                                                <th>Waktu lapor</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for key, item in data %}
+                                            <tr>
+                                                <td class="taskDesc">{{ item.name }}</td>
+                                                <td class="taskStatus">{{ item.recurrent }}</td>
+                                                <td class="taskStatus"><span class="in-progress">{{ item.reported_at }}
+                                                </span></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% for key, item in data %}
+
+{% endfor %}
+
+{% endblock %}
+{% block script %}
+
+{% endblock %}
