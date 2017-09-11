@@ -187,7 +187,7 @@ class PicController extends BaseController
         }
 
         $allComment = json_decode($comment->getBody()->getContents(), true);
-
+// var_dump($allComment);die;
         $userId = $data['data']['user_id'];
         $findUser = $user->find('id', $userId);
         // var_dump($data['data']);die();
@@ -266,6 +266,26 @@ class PicController extends BaseController
         return  $this->view->render($response, 'pic/search-user.twig', [
             'group_id' => $args['group']
         ]);
+    }
+
+    public function deleteComment($request, $response, $args)
+    {
+        try {
+            $result = $this->client->request('GET', 'comment/delete/'. $args['id']);
+        } catch (GuzzleException $e) {
+            $result = $e->getResponse();
+        }
+
+        $data = json_decode($result->getBody()->getContents(), true);
+        // var_dump($data); die();
+
+        if ($data['error'] == false) {
+            $this->flash->addMessage('success', $data['message']);
+            return $response->withRedirect($this->router->pathFor('web.pic.show.item',['id' => $data['data']['item_id']]));
+        } else {
+            $this->flash->addMessage('warning', $data['message']);
+            return $response->withRedirect($this->router->pathFor('web.pic.show.item',['id' => $data['data']['item_id']]));
+        }
     }
 
 }

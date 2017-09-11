@@ -67,7 +67,7 @@
                                                     </div>
                                                     <div class="article-post">
                                                         <div class="fr">
-                                                            <a href="#" class="tip-top" data-original-title="Delete">
+                                                            <a href="{{path_for('pic.delete.comment', {id:comment.comment_id})}}" class="tip-top" title="Hapus komentar">
                                                                 <i class="icon-remove"></i></a></div>
                                                         <span class="user-info"><b>{{ comment.username }} </b>
                                                             &nbsp {{ comment.created_at }} </span>

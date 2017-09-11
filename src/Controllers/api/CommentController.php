@@ -5,6 +5,8 @@ namespace App\Controllers\api;
 use App\Models\CommentModel;
 use App\Models\Users\UserToken;
 use App\Models\Users\UserModel;
+use App\Models\Item;
+use App\Models\UserGroupModel;
 
 class CommentController extends BaseController
 {
@@ -66,22 +68,34 @@ class CommentController extends BaseController
     //Delete comment by id
     public function deleteComment($request, $response, $args)
     {
+        $item = new Item($this->db);
         $comment = new CommentModel($this->db);
-        $findComment = $comment->find('id', $args['id']);
-        $token = $request->getHeader('Authorization')[0];
+        $userGroup = new UserGroupModel($this->db);
 
-        if ($findComment) {
+        $token = $request->getHeader('Authorization')[0];
+        $findUser = $comment->getUserByToken($token);
+        $findComment = $comment->find('id', $args['id']);
+        $findItem = $item->find('id', $findComment['item_id']);
+        $member = $userGroup->findTwo('group_id', $findItem['group_id'],
+                    'user_id', $findUser['id']);
+                    // var_dump($findUser);die();
+        if (($findComment && $member[0]['status'] == 1) || $findUser['status'] == 1) {
             $comment->hardDelete($args['id']);
             $data['id'] = $args['id'];
-            $data = $this->responseDetail(200, 'Komentar berhasil dihapus');
+            return $this->responseDetail(200, false, 'Komentar berhasil dihapus',[
+                'data' =>[
+                    'item_id'   =>  $findComment['item_id']
+                    ]
+            ]);
+        } elseif ($findComment && $member[0]['status'] != 1 ) {
+            return $this->responseDetail(401, true, 'Anda tidak boleh menghapus komentar');
         } else {
-            $data = $this->responseDetail(400, 'Data tidak ditemukan');
+            return $this->responseDetail(404, true, 'Data tidak ditemukan');
         }
 
-        return $data;
     }
 
-    //Delete by id
+    //Edit by id
     public function editComment($request, $response, $args)
     {
         $comment = new CommentModel($this->db);

@@ -31,7 +31,7 @@ class CommentModel extends BaseModel
 	public function getComment($id)
 	{
 		$qb = $this->db->createQueryBuilder();
-		$this->query = $qb->select('c.*', 'u.id', 'u.username', 'u.image')
+		$this->query = $qb->select('c.*', 'c.id as comment_id', 'u.id', 'u.username', 'u.image')
 						  ->from($this->table, 'c')
 						  ->where('item_id = :id')
 						  ->setParameter(':id', $id)

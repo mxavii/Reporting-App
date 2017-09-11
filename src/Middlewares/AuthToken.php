@@ -17,20 +17,21 @@ class AuthToken extends BaseMiddleware
         $findUser = $userToken->find('token', $token);
         $user = $users->find('id', $findUser['user_id']);
 
-        // $now = date('Y-m-d H:i:s');
-
+        $now = date('Y-m-d H:i:s');
+// var_dump($now);die();
         if (!$findUser) {
-            $data['status'] = 401;
+            $data['code'] = 401;
+            $data['error'] = true;
             $data['message'] = "Anda harus login";
 
-            return $response->withHeader('Content-type', 'application/json')->withJson($data, $data['status']);
+            return $response->withHeader('Content-type', 'application/json')->withJson($data, $data['code']);
         }
 
             $response = $next($request, $response);
 
             // Tambah Waktu Token
             $addTime['expired_date'] = date('Y-m-d H:i:s', strtotime($now. '+30 minute'));
-            // $userToken->update($addTime, 'user_id', $findUser['user_id']);
+            $userToken->update($addTime, 'user_id', $findUser['user_id']);
             return $response;
     }
 }

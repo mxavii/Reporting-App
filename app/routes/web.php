@@ -71,7 +71,6 @@ $app->group('', function() use ($app, $container) {
         $app->get('/items/group/{id}', 'App\Controllers\web\PicController:getUnreportedItem')->setName('pic.item.group');
         $app->get('/items/group/{id}/reported', 'App\Controllers\web\PicController:getReportedItem')->setName('pic.group.reported');
         $app->get('/items/delete/{id}', 'App\Controllers\web\PicController:deleteTugas')->setName('web.pic.delete.tugas');
-        // $app->get('/search/user', 'App\Controllers\web\UserController:searchUser')->setName('web.pic.search.user');
         $app->get('/search/{id}', 'App\Controllers\web\PicController:getSearchUser')->setName('web.pic.search');
         $app->get('/search/user/guard', 'App\Controllers\web\PicController:searchUser')->setName('web.pic.search.user');
         $app->get('/group/{id}/member', 'App\Controllers\web\PicController:getMemberGroup')->setName('pic.group.member');
@@ -84,6 +83,8 @@ $app->group('', function() use ($app, $container) {
         $app->post('/set/guardian', 'App\Controllers\web\GuardController:createGuardian')->setName('web.pic.set.guardian');
         $app->post('/comment', 'App\Controllers\web\CommentController:postPicComment')->setName('pic.post.comment');
         $app->get('/member/{group}', 'App\Controllers\web\PicController:getSearch')->setName('web.pic.search.member');
+        $app->get('/comment/delete/{id}', 'App\Controllers\web\PicController:deleteComment')->setName('pic.delete.comment');
+        // $app->get('/search/user', 'App\Controllers\web\UserController:searchUser')->setName('web.pic.search.user');
         // $app->post('/setguard', 'App\Controllers\web\GuardController:createGuardian')->setName('pic.setguard');
     });
 
