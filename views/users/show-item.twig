@@ -2,11 +2,102 @@
 {% extends 'templates/default.twig' %}
 
 {% block title %} {{ items.name }} {% endblock %}
-
+{% block head %}
+{{ include('templates/partials/modal.twig') }}
+{% endblock %}
 {% block current %} Lihat detail tugas {% endblock %}
 
 {% block content %}
-<div class="widget-box" style="margin-top:0px; background:#fff;">
+<div class="middle">
+<div>
+    {% if items.reported_at == null and items.creator_image != null %}
+    <img src="{{ base_url() }}/assets/images/{{ items.creator_image }}" class="img-circle-img">&nbsp;
+    {% elseif items.reported_at != null and items.user_image != null %}
+    <img src="{{ base_url() }}/assets/images/{{ items.user_image }}" class="img-circle-img">&nbsp;
+    {% else %}
+    <img src="{{ base_url() }}/assets/images/avatar.png" class="img-circle-img">&nbsp;
+    {% endif %}
+    <div class="users-data">
+        {% if items.reported_at == null  %}
+        <b>
+            {% if items.creator == login.username %}
+            Anda
+            {% else %}
+            {{ items.creator }}
+            {% endif %}</b>
+            <i>membuat item di grup</i> <b>{{ items.group_name }}</b>
+            {% else %}
+            <b>
+            {% if items.user == login.username %}
+            Anda
+            {% else %}
+            {{ items.user }}
+            {% endif %}</b>
+            <i>melaporkan item di grup</i> <b>{{ items.group_name }}</b>
+            {% endif %}
+        <p><span class="fa fa-clock-o"></span> {{ items.updated_at | date('j F Y | H:i')}}</p>
+    </div>
+
+</div>
+<br><hr>
+
+<div style="text-align:center">
+    {% if items.image is iterable %}
+    {% for image in items.image %}
+    <a class="img-thumbnail img-detail" href="#" data-image-id="2" data-toggle="modal"
+     data-image="{{ base_url() }}/assets/images/{{ image }}" data-target="#image-gallery">
+        <img class="img-thumbnail igg" src="{{ base_url() }}/assets/images/{{ image }}" alt="{{image}}">
+    </a>
+    {% endfor %}
+    {% else %}
+    <a class="img-thumbnail img-detail" href="#" data-image-id="2" data-toggle="modal"
+     data-image="{{ base_url() }}/assets/images/{{ items.image }}" data-target="#image-gallery">
+        <img class="img-thumbnail igg" src="{{ base_url() }}/assets/images/{{ items.image }}" alt="{{image}}">
+    </a>
+    {% endif %}
+
+</div>
+<!-- <hr> -->
+
+<b>{{ items.name }}</b>
+<p class="article">
+{{ items.description }}
+</p>
+<div><hr style="border-top: 4px double #8c8b8b;"></div>
+
+<h3><span class="fa fa-commenting-o"> {{ comment|length }} Komentar</span></h3>
+<!-- Element lopping comment -->
+{% for comment in comment %}
+<div>
+{% if comment.image != null %}
+<img src="{{ base_url() }}/assets/images/{{ comment.image }}" class="img-circle-img">&nbsp;
+{% endif %}
+    <div class="users-data">
+        <b>{{ comment.username }}</b>
+        <p><span class="fa fa-clock-o"></span> {{ comment.created_at }}</p>
+    </div>
+    <br><br><br>
+
+    <div class="form-group">
+        <textarea  class="form-control text-hp" rows="0" cols="75" id="comment" readonly>
+            {{ comment.comment }}
+        </textarea>
+    </div>
+</div>
+{% endfor %}
+
+<!-- end element comment -->
+
+<form action="{{path_for('post.comment')}}" method="post">
+<!-- <form class="" action="index.html" method="post"> -->
+ <input type="hidden" name="item_id" value="{{ items.id }}" />
+    <input type="text" class="form-control" name="comment" value="" placeholder="Tulis komentar ...">
+    <button style="" class="btn btn-success">Kirim komentar</button>
+</form>
+</div>
+
+
+<!-- <div class="widget-box" style="margin-top:0px; background:#fff;">
     <a class="list-group-item active main-color-bg">
         <span class="" aria-hidden="true">Lihat tugas</span>
     </a>
@@ -123,23 +214,23 @@
                 </div>
                 <div class="chat-message well">
                     <form action="{{path_for('post.comment')}}" method="post">
-                        <span class="input-box" style="margin-right:0px;">
+                        <span class="input-box" style="margin-right:0px;"> -->
                             <!-- <div class="hidden-xs"> -->
-                            <input type="hidden" name="item_id" value="{{ items.id }}" />
+                            <!-- <input type="hidden" name="item_id" value="{{ items.id }}" />
                             <input type="text" name="comment" style="margin-right:0px; width:83%" id="msg-box" />
-                                <button style="" class="btn btn-success">Kirim komentar</button>
+                                <button style="" class="btn btn-success">Kirim komentar</button> -->
                             <!-- </div>
                             <div class="visible-xs">
                                 <input type="hidden" name="item_id" value="{{ items.id }}" />
                                 <input type="text" name="comment" style="margin-right:0px; width:83%" id="msg-box" />
                                     <!-- <button style="" class="btn btn-success">Kirim komentar</button> -->
                                 <!-- <button style="float:left;" class="btn btn-success">Kirim komentars</button>
-                            </div> --> 
-                        </span>
+                            </div> -->
+                        <!-- </span>
                     </form>
                 </div>
             </div>
         </div></ul>
     </div>
-</div>
+</div> -->
 {% endblock %}

@@ -5,6 +5,71 @@
 {% block current %} Beranda {% endblock %}
 
 {% block content %}
+
+<div class="middle">
+{% for item in data %}
+<div>
+    {% if item.reported_at == null and item.creator_image != null %}
+    <img src="{{ base_url() }}/assets/images/{{ item.creator_image }}" class="img-circle-img">&nbsp;
+    {% elseif item.reported_at != null and item.user_image != null %}
+    <img src="{{ base_url() }}/assets/images/{{ item.user_image }}" class="img-circle-img">&nbsp;
+    {% else %}
+    <img src="{{ base_url() }}/assets/images/avatar.png" class="img-circle-img">&nbsp;
+    {% endif %}
+
+    <div class="users-data">
+        {% if item.reported_at == null  %}
+        <b>
+            {% if item.creator == login.username %}
+            Anda
+            {% else %}
+            {{ item.creator }}
+            {% endif %}</b>
+            <i>membuat item di grup</i> <b>{{ item.group_name }}</b>
+            {% else %}
+            <b>
+            {% if item.user == login.username %}
+            Anda
+            {% else %}
+            {{ item.user }}
+            {% endif %}</b>
+            <i>melaporkan item di grup</i> <b>{{ item.group_name }}</b>
+            {% endif %}
+        <p><span class="fa fa-clock-o"></span> {{ item.updated_at | date('j F Y | H:i')}}</p>
+    </div>
+    <br><br>
+</div>
+{% if item.image != null %}
+<!-- <img src="{{ base_url() }}/assets/images/{{ item.image[0] }}" class="img-thumbnail" alt="Cinque Terre" style="width:100%;max-height:400px;margin:0 auto;"> -->
+<hr>
+<img width="80%" style="max-width: 400px;margin : 0 auto"alt="Image item"
+src="{{ base_url() }}/assets/images/{{ item.image[0] }}">
+{% endif %}
+    <hr>
+<b>{{ item.name }}</b>
+<p class="article">
+    {% if item.description|length > 155 %}
+    {{ item.description|slice(0, 155) ~ '...'}}
+    <a href="{{ base_url() }}/item/show/{{item.id}}">selengkapnya</a>
+    {% else %}
+    {{ item.description }}
+    {% endif %}
+</p>
+<div class="comment">
+    {{ item.comment|length }}
+    <a href="{{ base_url() }}/item/show/{{item.id}}"><span class="fa fa-comment-o"></span></a>
+</div>
+<div>                <hr style="border: 0;
+  height: 2px;
+  background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0)">
+</div>
+{% endfor %}
+</div>
+
+<!--
 <div class="widget-box" style="margin-top:0px; background:#fff;">
     <a class="list-group-item active main-color-bg">
         <span align="center" aria-hidden="true"><i class="fa fa-newspaper-o"></i></span> Timeline
@@ -110,5 +175,5 @@
                 {% endif %}
         </ul>
     </div>
-</div>
+</div> -->
 {% endblock %}
