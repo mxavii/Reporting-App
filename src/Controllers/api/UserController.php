@@ -63,7 +63,7 @@ class UserController extends BaseController
                 $image->addValidations(array(
                 new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
                 'image/jpg', 'image/jpeg')),
-                new \Upload\Validation\Size('5M')
+                new \Upload\Validation\Size('512K')
                 ));
 
                 $image->upload();
@@ -176,7 +176,7 @@ class UserController extends BaseController
                 $image->addValidations(array(
                     new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
                     'image/jpg', 'image/jpeg')),
-                    new \Upload\Validation\Size('5M')
+                    new \Upload\Validation\Size('512K')
                 ));
 
                 $image->upload();
@@ -210,7 +210,7 @@ class UserController extends BaseController
         $findUser = $user->find('id', $args['id']);
         $token = $request->getHeader('Authorization')[0];
 
-        if ($findUser) {
+        if ($findUser['image']) {
             if (file_exists('assets/images/'.$findUser['image'])) {
                 unlink('assets/images/'.$findUser['image']);die();
             }

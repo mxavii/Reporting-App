@@ -10,8 +10,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="{{ base_url() }}/assets/css/style.css" />
     {% block head %}{% endblock %}
+    {% block js %}{% endblock %}
     <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
@@ -29,23 +31,23 @@
                 </a>
                 <span class="dropdown-toggle fa fa-user-o logo-avatar" data-toggle="dropdown"></span>
                 <ul class="dropdown-menu">
-                    <li><a href="?p=profile">Profile</a></li>
-                    <li><a href="?p=profile">Pengaturan</a></li>
-                    <li><a href="#">Log Out</a></li>
+                    <li><a href="{{path_for('user.view.profile') }}">Profil</a></li>
+                    <li><a href="{{ base_url() }}/user/profile/setting">Pengaturan</a></li>
+                    <li><a href="{{path_for('logout')}}">Log Out</a></li>
                 </ul>
 
             </div>
             <div class="dropdown-mobile">
                 <span class="dropdown-toggle fa fa-bars logo-avatar" data-toggle="dropdown"></span>
                 <ul class="dropdown-menu" >
-                    <li><a href="home.html" class="menu-control"><span class="fa fa-home"></span>&nbsp; Home</a></li>
-                    <li><a href="?p=group" class="menu-control"><span class="fa fa-child"></span>&nbsp; Group</a></li>
-                    <li><a href="?p=anak" class="menu-control"><span class="fa fa-child"></span>&nbsp; Anak</a></li>
-                    <li><a href="?p=arcive" class="menu-control"><span class="fa fa-file-archive-o"></span>&nbsp; Arsip</a></li>
+                    <li><a href="{{path_for('home') }}" class="menu-control"><span class="fa fa-home"></span>&nbsp; Beranda</a></li>
+                    <li><a href="{{ path_for('group.user') }}" class="menu-control"><span class="fa fa-child"></span>&nbsp; Grup</a></li>
+                    <li><a href="{{ path_for('guard.show.user') }}" class="menu-control"><span class="fa fa-child"></span>&nbsp; Anak</a></li>
+                    <li><a href="{{ path_for('item.archive', {'id': login.id }) }}" class="menu-control"><span class="fa fa-file-archive-o"></span>&nbsp; Arsip</a></li>
                     <li class="divider"></li>
-                    <li><a href="?p=profile" class="menu-control"><span class="fa fa-user"></span>&nbsp; profil</a></li>
-                    <li><a href="?p=profile" class="menu-control"><span class="fa fa-gears"></span>&nbsp; Pengaturan</a></li>
-                    <li><a href="home.html" class="menu-control"><span class="fa fa-sign-out"></span>&nbsp; Sign out</a></li>
+                    <li><a href="{{path_for('user.view.profile') }}" class="menu-control"><span class="fa fa-user"></span>&nbsp; Profil</a></li>
+                    <li><a href="{{ base_url() }}/user/profile/setting" class="menu-control"><span class="fa fa-gears"></span>&nbsp; Pengaturan</a></li>
+                    <li><a href="{{path_for('logout')}}" class="menu-control"><span class="fa fa-sign-out"></span>&nbsp; Sign out</a></li>
                     <li></li>
                 </ul>
             </div>
@@ -57,22 +59,22 @@
     <div class="menu-top">
         <ul class="menu-group">
             <p class="fa fa-home bb">
-                <a href="/" class="menu-control"><br>Home</a>
+                <a href="{{path_for('home') }}" class="menu-control"><br>Beranda</a>
             </p>
             <p class="fa fa-user-o bb">
-                <a href="?p=profile" class="menu-control"><br>Profil</a>
+                <a href="{{path_for('user.view.profile') }}" class="menu-control"><br>Profil</a>
             </p>
             <p class="fa fa-users bb">
-                <a href="?p=group" class="menu-control"><br>Group</a>
+                <a href="{{ path_for('group.user') }}" class="menu-control"><br>Grup</a>
             </p>
             <p class="fa fa-child bb">
-                <a href="?p=anak" class="menu-control"><br>Anak</a>
+                <a href="{{ path_for('guard.show.user') }}" class="menu-control"><br>Anak</a>
             </p>
             <p class="fa fa-file-archive-o bb">
-                <a href="?p=arcive" class="menu-control"><br>Arsip</a>
+                <a href="{{ path_for('item.archive', {'id': login.id }) }}" class="menu-control"><br>Arsip</a>
             </p>
             <p class="fa fa-gears bb">
-                <a href="?p=profile" class="menu-control"><br>Pengaturan</a>
+                <a href="{{ base_url() }}/user/profile/setting" class="menu-control"><br>Pengaturan</a>
             </p>
 
             <div class="clean"></div>
@@ -91,7 +93,8 @@
         </div>
 
     </div>
-
+{% block script %}
+{% endblock %}
 
 
 </body>

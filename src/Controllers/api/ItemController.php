@@ -404,17 +404,18 @@ class ItemController extends BaseController
         $token = $request->getHeader('Authorization')[0];
         $user = $item->getUserByToken($token);
         $userId = $user['id'];
-        $userStatus = $user['status'];
+        // $userStatus = $user['status'];
         $groupId  = $findItem['group_id'];
 
-        $checkGuardian = $userGroup->findTwo('user_id', $userId, 'group_id', $groupId);
-        if (!empty($checkGuardian)) {
-        $guardian = $checkGuardian[0]['status'];
+        $userStatus = $userGroup->findTwo('user_id', $userId, 'group_id', $groupId);
+        if (!empty($userStatus)) {
+        $pic = $userStatus[0]['status'];
         }
         if ($findItem) {
-            if ($userStatus == 1 || $guardian == 1) {
-                    $item->hardDelete($args['id']);
-                    $data = $this->responseDetail(200, false, 'Item telah dihapus');
+            if (($findItem['user_id'] == $user['id'] ) || ($findItem['creator'] == $user['id'] )
+            || $user['status'] == 1 || $pic == 1 ) {
+                $item->hardDelete($args['id']);
+                $data = $this->responseDetail(200, false, 'Item telah dihapus');
 
             } else {
                 $data = $this->responseDetail(401, true, 'Anda tidak berhak menghapus item ini');
@@ -926,8 +927,8 @@ class ItemController extends BaseController
             return $this->responseDetail(404, true, 'Item tidak ditemukan ');
          }
 
-         if ($reporter['status'] == 1 || $member[0]['status'] == 1 || $item['user_id'] == $reporter['id']
-         || ($item['user_id'] == null & $member[0])) {
+         if ($reporter['status'] == 1 || $member[0]['status'] == 1 ||
+          $item['user_id'] == $reporter['id'] || ($item['user_id'] == null & $member[0])) {
              $data = [
                  'description'	=>	 $request->getParsedBody()['description'],
                  'reported_at'	=>	$date,
@@ -935,7 +936,7 @@ class ItemController extends BaseController
                  'status'		=>	1,
              ];
 
-             if ($item['user_id'] == null) {
+             if ($item['user_id'] == null || ($item['user_id'] != null && $item['recurrent'] != "") ) {
 
                  $newItem = $items->create($item);
                  $items->updateData($data, $newItem);

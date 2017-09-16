@@ -61,6 +61,7 @@ class CronJob
 
         $expired = $item->expired();
         $data['status'] = 0;
+        // var_dump($expired);die;
 
         foreach ($expired as $val) {
             switch ($val['recurrent']) {
@@ -79,7 +80,6 @@ class CronJob
                 default:
                 $data['end_date'] = '';
             }
-
             $item->updateData($data, $val['id']);
             $reported = $reportedItem->find('item_id', $val['id']);
 

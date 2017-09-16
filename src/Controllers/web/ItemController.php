@@ -201,7 +201,7 @@ var_dump($content);die;
     {
     	try {
     		// $item = $this->client->request('GET', '/items/group/'.$args['group']);
-    		$data = $this->client->request('GET', 'item/'.$args['item'].
+    		$data = $this->client->request('delete', 'item/delete/'.$args['item'].
     			$request->getUri()->getQuery());
             $this->flash->addMessage('success', 'Berhasil menghapus tugas');
     	} catch (GuzzleException $e) {

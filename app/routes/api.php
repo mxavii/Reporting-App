@@ -1,6 +1,7 @@
 <?php
 
-$app->get('/task/cron/', 'App\Cron\CronJob:running');
+$app->get('/test/{id}', 'App\Controllers\api\ItemController:getItemDetail');
+$app->get('/task/cron/', 'App\Cron\CronJob:itemReappear');
 $app->get('/activateaccount/{token}', 'App\Controllers\api\UserController:activateAccount')->setName('api.activate');
 $app->group('/api', function() use ($app, $container) {
     $app->get('/', 'App\Controllers\api\UserController:index');
@@ -19,7 +20,7 @@ $app->group('/api', function() use ($app, $container) {
     $app->group('/item', function() use ($app, $container) {
         $app->get('', 'App\Controllers\api\ItemController:all')->setname('api.item.all');
         $app->get('/{id}', 'App\Controllers\api\ItemController:getItemDetail')->setname('api.item.Detail');
-        $app->delete('/{id}', 'App\Controllers\api\ItemController:deleteItem')->setname('api.item.delete');
+        $app->delete('/delete/{id}', 'App\Controllers\api\ItemController:deleteItem')->setname('api.item.delete');
         $app->delete('/{item}/user', 'App\Controllers\api\ItemController:deleteItemByUser')->setname('api.user.delete.item');
         $app->put('/{id}', 'App\Controllers\api\ItemController:updateItem')->setname('api.item.update');
         $app->post('/upload/{item}', 'App\Controllers\api\ItemController:postImage')->setname('api.item.upload');
@@ -49,6 +50,7 @@ $app->group('/api', function() use ($app, $container) {
         $this->get('/groups', 'App\Controllers\api\GroupController:getGeneralGroup');
         $this->post('/{id}/change-image', 'App\Controllers\api\UserController:postImage')->setname('api.user.image');
         $app->get('/timeline/{id}', 'App\Controllers\api\ItemController:userTimeline')->setname('api.item.timeline');
+        $app->delete('/delete/{id}', 'App\Controllers\api\UserController:deleteUser')->setname('api.item.timeline');
     });
 
     $app->group('/group', function() use ($app, $container) {

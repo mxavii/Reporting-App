@@ -152,28 +152,28 @@ src="{{ base_url() }}/assets/images/{{ item.image[0] }}">
                     border-color: #8c8b8b; border-width: 0 0 1px 0; border-radius: 20px;">
                 </div>
                 {% endfor %}
-                {% if data != null %}
-                <nav aria-label="...">
-                    <ul class="pager">
-                        <div class="pagination alternate">
-                            <ul>
-                                {% if pagination.current > 1 %}
-                                <li><a href="{{ base_url() }}/home?page={{ pagination.current - 1 }}">
-                                    Sebelumnya</a></li>
-                                {% endif %}
-                                <li class="active"> <a>{{ pagination.current }}</a></li>
-                                {% if pagination.current < pagination.total_page %}
-                                <li><a href="{{ base_url() }}/home?page={{ pagination.current + 1 }}">
-                                    Selanjutnya</a></li>
-                                {% endif %}
-                            </ul>
-                        </div>
-                    </ul>
-                </nav>
-                {% else %}
-                <center>Tidak ada kiriman</center>
-                {% endif %}
         </ul>
     </div>
 </div> -->
+{% if data != null %}
+<nav aria-label="...">
+    <ul class="pager">
+        <div class="pagination alternate">
+            <ul>
+                {% if pagination.current > 1 %}
+                <li><a href="{{ base_url() }}/home?page={{ pagination.current - 1 }}">
+                    Sebelumnya</a></li>
+                    {% endif %}
+                    <li class="active"> <a>{{ pagination.current }}</a></li>
+                    {% if pagination.current < pagination.total_page %}
+                    <li><a href="{{ base_url() }}/home?page={{ pagination.current + 1 }}">
+                        Selanjutnya</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </ul>
+        </nav>
+        {% else %}
+        <center>Tidak ada kiriman</center>
+    {% endif %}
 {% endblock %}

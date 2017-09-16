@@ -44,6 +44,7 @@ $app->group('', function() use ($app, $container) {
         $app->post('/comment', 'App\Controllers\web\CommentController:postComment')->setName('post.comment');
         $app->get('/archive/{id}', 'App\Controllers\web\ItemController:getItemArchive')->setName('item.archive');
         $app->post('/archive/{id}', 'App\Controllers\web\ItemController:searchItemArchive')->setName('search.item.archive');
+        $app->delete('/delete/{id}', 'App\Controllers\web\ItemController:deleteItem')->setName('show.item');
     });
     $app->group('/user', function() use ($app, $container) {
         $app->get('/groups', 'App\Controllers\web\GroupController:getGeneralGroup')->setName('group.user');
