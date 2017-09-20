@@ -18,19 +18,17 @@
                             <img style="width:300px" class="img-thumbnail"
                             src="{{ base_url() }}/assets/images/{{user.image}}" alt="">
                             <br><br>
-                            <div class='wrapper text-center'>
+                            <div class="wrapper text-center">
                                 <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-social-button btn-pinterest">
+                                    <button type="button" class="btn btn-success">
                                         <a href="" data-toggle="modal" data-target="#foto"
                                         value="{{user.id}}" title="View Group Details"
                                         style="color:#fff;">
-                                        Ubah foto
-                                    </a>
+                                    <i class="fa fa-refresh"> Ubah foto</i></a>
                                 </button>
-
                                 <button type="button" class="btn btn-social-button btn-github">
                                     <a style="color:#fff;" href="{{ base_url() }}/user/profile/setting">
-                                        <i class="fa fa-cogs"></i> Pengaturan
+                                        <i class="fa fa-cogs"> Pengaturan</i>
                                     </a>
                                 </button>
                             </div>
@@ -40,19 +38,20 @@
                         <div style="margin: 0px;" class="widget-box">
                             <div class="widget-title">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a data-toggle="tab" href="#1">Data diri</a></li>
-                                    <li><a data-toggle="tab" href="#2">Wali</a></li>
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#1"><b>Data diri</b></a></li>
+                                    <li><a data-toggle="tab" href="#2"><b>Wali</b></a></li>
                                 </ul>
                             </div>
                             <div style="padding-top:0px;" class="widget-content tab-content">
                                 <div id="1" class="tab-pane active"><br>
-                                    <b><span class="span4">Nama </span></b>{{user.name}}<br><br>
-                                    <b><span class="span4">Username </span></b>{{user.username}}<br><br>
-                                    <b><span class="span4">Email </span></b>{{user.email}}<br><br>
-                                    <b><span class="span4">Jenis Kelamin </span></b>{{user.gender}}<br><br>
-                                    <b><span class="span4">Alamat </span></b>{{user.address}}<br><br>
-                                    <b><span class="span4">Telepon </span></b>{{user.phone}}<br><br>
-                                    <b><span class="span4">Mulai Bergabung</span></b>{{user.created_at | date("j F Y")}}<hr>
+                                    <b><div class="col-sm-4">Nama </div></b>{{user.name}}<br><br>
+                                    <b><div class="col-sm-4">Username </div></b>{{user.username}}<br><br>
+                                    <b><div class="col-sm-4">Email </div></b>{{user.email}}<br><br>
+                                    <b><div class="col-sm-4">Jenis Kelamin </div></b>{{user.gender}}<br><br>
+                                    <b><div class="col-sm-4">Alamat </div></b>{{user.address}}<br><br>
+                                    <b><div class="col-sm-4">Telepon </div></b>{{user.phone}}<br><br>
+                                    <b><div class="col-sm-4">Mulai Bergabung </div></b>{{user.created_at | date("j F Y")}}<hr>
                                 </div>
                                 <div id="2" class="tab-pane">
                                     <h4>Daftar Wali Anda
@@ -79,11 +78,10 @@
                                             </a>
                                             <ul style="left: -140px; top: 13px; " class="dropdown-menu">
                                                 <!-- <li><a style="font-size: small" href="#"><i class="icon-fixed-width icon-pencil">
-                                                     Lihat detail</i></a></li>
-                                                <li><a style="font-size: small" href="{{ path_for('item.archive', {'id': user.id }) }}"><i class="icon-fixed-width icon-pencil">
-                                                     Lihat arsip laporan</i></a></li> -->
+                                                     Lihat detail</i></a></li>-->
                                                 <li class="divider"></li>
-                                                <li><a style="font-size: small" href="{{ path_for('guard.delete', {'id': guard.id }) }}"><i class="i"> Hapus wali</i></a></li>
+                                                <li><a style="font-size: small" href="{{ path_for('guard.delete', {'id': guard.id }) }}">
+                                                    <i class="i"> Hapus wali</i></a></li>
                                             </ul>
                                         </div>
                                     </span><br><br>
@@ -100,7 +98,7 @@
 </div>
 
 
-<div id="foto" class="modal fade" role="dialog">
+<div id="foto" class="modal fade" role="dialog" style="z-index:99999999999">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">

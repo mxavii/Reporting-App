@@ -8,7 +8,7 @@
 {% block content %}
 <div class="widget-box" style="margin-top:0px; background:#fff;">
     <a class="list-group-item active main-color-bg">
-        <span class="" aria-hidden="true">lihat item</span>
+        <span class="" aria-hidden="true">Rincian item</span>
     </a>
     <div style="padding:20px; background:#fff;" class="widget-content">
         <table class="table table-striped">
@@ -36,9 +36,13 @@
                     <td>{{ items.description}}</td>
                 </tr>
                 <tr>
+                    <th>Batas pelaporan</th>
+                    <td>{{ items.end_date | date('j F Y')}}</td>
+                </tr>
+                <tr>
                     <th></th>
-                    <td><a href="
-                        #"><button type="button" class="btn btn-sm btn-primary" name="button">Edit</button></a>
+                    <td><a href="#">
+                        <button type="button" class="btn btn-sm btn-primary" name="button">Edit</button></a>
                     </td>
                 </tr>
             </tbody>
@@ -62,7 +66,7 @@
                                                 <li>
                                                     <div class="user-thumb">
                                                         {% if comment.image != null %}
-                                                        <img width="40" height="40" src="{{ comment.image }}">
+                                                        <img width="40" height="40" src="{{ base_url() }}/assets/images/{{ comment.image }}">
                                                         {% endif %}
                                                     </div>
                                                     <div class="article-post">

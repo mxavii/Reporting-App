@@ -60,6 +60,15 @@ a:hover{
 	display: none;
 }
 
+.dropdown-g{
+	display: block;
+	margin-left:89%;margin-top:-15px
+}
+.g{
+	margin-top:-35.5%;
+	margin-left:67%;
+}
+
 .logo-avatar{
 	font-size: 25px
 }
@@ -154,10 +163,17 @@ a:hover{
 
 	.middle{
 		/*width: 1040px;*/
+
 		border: 1px solid #dedede;
 		padding: 10px;
 		margin: 10px;
 		float: left;
+	}
+
+	.middleG{
+		/*width: 1040px;*/
+		border: 1px solid #dedede;
+		width:760px;
 	}
 
 	.middle img{
@@ -299,6 +315,7 @@ background:-webkit-linear-gradient(#d7ffde, #ffffff);
 .modal-group{
 	z-index:99999;margin-top:10%
 }
+
 /************************************************************************************
 MEDIA QUERIES
 *************************************************************************************/
@@ -314,7 +331,6 @@ MEDIA QUERIES
 		background: #fff000;
 	}
 	.middle {
-		width: 98%;
 		float: right;
 	}
 
@@ -335,6 +351,12 @@ MEDIA QUERIES
 		margin-top: -50px;
 		width:100%;
 	}
+
+	.dropdown-g{
+		display: block;
+		margin-left:90%;margin-top:-15px
+	}
+
 
 	.dropdown-menu{
 		margin-top: -20px;
@@ -387,6 +409,7 @@ MEDIA QUERIES
 	}
 
 	.middle {
+
 		width: auto;
 		float: none;
 	}
@@ -413,6 +436,12 @@ MEDIA QUERIES
 
 	.dropdown-menu li a{
 		padding: 15px
+	}
+
+	.dropdown-g{
+		display: block;
+		margin-left:80%;margin-top:-15px
+
 	}
 
 	.users-data{
@@ -453,4 +482,6 @@ MEDIA QUERIES
 	.modal-group{
 		z-index:99999;margin-top:60%
 	}
+
+
 }

@@ -46,7 +46,7 @@
 src="{{ base_url() }}/assets/images/{{ item.image[0] }}">
 {% endif %}
     <hr>
-<b>{{ item.name }}</b>
+<a href="{{ base_url() }}/item/show/{{item.id}}"><b>{{ item.name }}</b></a>
 <p class="article">
     {% if item.description|length > 155 %}
     {{ item.description|slice(0, 155) ~ '...'}}
@@ -59,7 +59,7 @@ src="{{ base_url() }}/assets/images/{{ item.image[0] }}">
     {{ item.comment|length }}
     <a href="{{ base_url() }}/item/show/{{item.id}}"><span class="fa fa-comment-o"></span></a>
 </div>
-<div>                <hr style="border: 0;
+<div><hr style="border: 0;
   height: 2px;
   background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
   background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);

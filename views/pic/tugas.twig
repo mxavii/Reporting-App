@@ -15,6 +15,7 @@ $('#create').modal('show');
 {% block current %} Group {{group.name}} > Item belum dilaporkan {% endblock %}
 
 {% block content %}
+<!-- <div class="middle"> -->
 <div class="row-fluid">
     <div class="span12">
         <div class="widget-box" style="margin-top:0px;">
@@ -22,7 +23,7 @@ $('#create').modal('show');
                 <!-- <div style="padding-bottom:0px; padding-top:0px; background:#24272E;" class="panel-heading"> -->
                     <div class="widget-title span12">
                         <div class="btn-group btn-group-justified">
-                          <a href="{{ base_url()}}/pic/group/{{group}}/member" class="btn btn-primary">Anggota Group</a>
+                          <a href="{{ base_url()}}/pic/group/{{group}}/member" class="btn btn-primary">Anggota</a>
                           <a href="#" class="btn btn-primary active">Tugas</a>
                           <a href="{{ base_url() }}/pic/items/group/{{group}}/reported" class="btn btn-primary">Laporan</a>
                         </div>
@@ -41,8 +42,8 @@ $('#create').modal('show');
 
                         <div class="widget-box">
                           <br>
-                              <h4>&nbsp&nbsp<i class="fa fa-list-alt" aria-hidden="true">
-                                  Tugas Grup </i></h4>
+                              <i style="font-size:24px; margin:0px 0px 10px 0px" class="fa fa-list-alt" aria-hidden="true">
+                                  Tugas Grup </i>
                           <div class="widget-content nopadding">
                             <table class="table table-striped table-bordered">
                               <thead>
@@ -74,18 +75,6 @@ $('#create').modal('show');
                                               <a href="{{ base_url()}}/pic/show/item/{{ item.id}}"
                                                 value="{{item.id}}"title="Detail Tugas" class="btn btn-primary">Detail Tugas</a>
                                           </div>
-                                          <!-- <a href="{{ base_url()}}/pic/show/item/{{ item.id}}"
-                                          value="{{item.id}}"title="Detail Tugas"
-                                          style="margin-bottom:7px">
-                                          <button class="btn btn-primary btn-md"
-                                          style="margin-right:10px">Detail</button>
-                                      </a>
-                                      <a href="{{ base_url()}}/pic/items/delete/{{ item.id}}"
-                                      value="{{item.id}}"title="Hapus tugas"
-                                      style="margin-bottom:7px">
-                                      <button class="btn btn-danger btn-md"
-                                      style="margin-right:10px">Hapus</button>
-                                  </a> -->
                                   </td>
                               </tr>
                               {% endfor %}
@@ -104,28 +93,27 @@ $('#create').modal('show');
                       <li>
                           <a href="{{ base_url() }}/pic/items/group/{{group}}?page={{ pagination.current - 1 }}">
                               Sebelumnya</a></li>
-                              {% endif %}
-                              <li class="active"> <a>{{ pagination.current }}</a></li>
-                              {% if pagination.current < pagination.total_page %}
-                              <li>
-                                  <a href="{{ base_url() }}/pic/items/group/{{group}}?page={{ pagination.current + 1 }}">
-                                      Selanjutnya</a></li>{% endif %}
-                                  </ul>
-                              </div>
-                          </ul>
-                      </nav>
-            {% else %}
-            <center><em>Tidak ada tugas</em></center>
-            {% endif %}
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-
+                      {% endif %}
+                      <li class="active"> <a>{{ pagination.current }}</a></li>
+                      {% if pagination.current < pagination.total_page %}
+                      <li>
+                          <a href="{{ base_url() }}/pic/items/group/{{group}}?page={{ pagination.current + 1 }}">
+                              Selanjutnya</a></li>{% endif %}
+                    </ul>
+                </div>
+            </ul>
+        </nav>
+        {% else %}
+        <center><em>Tidak ada tugas</em></center>
+        {% endif %}
+    </div>
+</div>
+</div>
+</div>
+</div>
 
 <!-- line modal items-->
-<div class="modal fade" id="create" role="dialog">
+<div class="modal fade" id="create" role="dialog" style="z-index:99999999999">
   <div class="modal-dialog">
     <div style="padding-left:20px;" class="modal-content">
         <div class="modal-header">
@@ -259,6 +247,9 @@ $('#create').modal('show');
     </div>
   </div>
 </div>
+</div>
+<!-- </div> -->
+
 
 
 <!-- <div id="" class="modal fade" role="dialog">
@@ -306,7 +297,7 @@ $('#create').modal('show');
                             value="{{ item.description }}"> {{ item.description }}
                             </textarea>
                                     <!-- <input type="text" name="description" class="form-control" id="coba"> -->
-                            <input type="hidden" id="data-id" name="item_id"
+                            <!-- <input type="hidden" id="data-id" name="item_id"
                              value="{{ item.id }}">
 
                             {% if errors.description %}
@@ -315,6 +306,7 @@ $('#create').modal('show');
                         </div>
                     </div>
                 </div> -->
+                <!-- </div> -->
                 <!-- <div class="row">
                     <div class="col-xs-10 col-sm-5 col-md-12">
                         <div class="form-group {{ errors.public ? 'has-error' : '' }}">

@@ -6,11 +6,12 @@
 {% block current %} Group {{group.name}} > Item dilaporkan{% endblock %}
 
 {% block content %}
+
 <div class="row-fluid">
     <div class="span12">
         <div class="widget-box" style="margin-top:0px;">
             <div style="background:#ffffff" class="">
-                <div style="padding-bottom:0px; padding-top:0px; background:#24272E;" class="panel-heading">
+                <!-- <div style="padding-bottom:0px; padding-top:0px; background:#24272E;" class="panel-heading"> -->
                     <div class="widget-title span12">
                         <div class="btn-group btn-group-justified">
                           <a href="{{path_for('unreported.item.user.group',
@@ -19,11 +20,11 @@
                         </div>
 
                     </div>
-                </div>
+                <!-- </div> -->
                 <div class="panel-body" style="padding-top:0px;">
                     <div class="widget-content tab-content">
                         <div id="tab2" class="tab-pane active">
-                            <span style="float:right; margin-top:5px;">
+                            <span style="float:right; margin:10px 0 10px;">
                                 <div class="btn-group span6">
                                     <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
                                         <i class="icon-collapse"></i>Lainnya &nbsp<i class="fa fa-sort-desc" aria-hidden="true"></i>
@@ -32,22 +33,22 @@
                                         <li><a href="#" data-toggle="modal" data-target="#squarespaceModal">
                                             <i class="icon-fixed-width icon-pencil">
                                                 Buat tugas</i></a>
-                                            </li>
-                                            <li><a href="#"><i class="icon-fixed-width icon-pencil">
-                                                Info grup</i></a></li>
-                                                <li><a href="{{path_for('get.group.member',
-                                                {'id': group.id, 'user':login.id})}}"><i class="icon-fixed-width icon-pencil">
-                                                    Member grup</i></a></li>
-                                                    <li><a href="#" data-toggle="modal" data-target="#squarespaceModal"><i class="icon-fixed-width icon-pencil">
-                                                        Buat tugas</i></a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="i"> Lihat semua tugas</i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </span>
+                                        </li>
+                                        <li><a href="#"><i class="icon-fixed-width icon-pencil">
+                                            Info grup</i></a></li>
+                                        <li><a href="{{path_for('get.group.member',
+                                            {'id': group.id, 'user':login.id})}}"><i class="icon-fixed-width icon-pencil">
+                                            Member grup</i></a></li>
+                                        <li><a href="#" data-toggle="modal" data-target="#squarespaceModal"><i class="icon-fixed-width icon-pencil">
+                                            Buat tugas</i></a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#"><i class="i"> Lihat semua tugas</i></a></li>
+                                    </ul>
+                                </div>
+                            </span>
                             <div class="widget-box">
-                                <h3><i class="fa fa-list-alt" aria-hidden="true">
-                                    {{ group.name}} </i></h3>
+                                <i style="font-size:24px; margin:15px 0px 10px 0px" class="fa fa-list-alt" aria-hidden="true">
+                                    {{ group.name}} </i>
                                     <div class="widget-content nopadding">
                                         <table class="table table-striped table-bordered">
                                             <thead>
@@ -73,8 +74,7 @@
                                                             <span class="label label-primary"
                                                              aria-hidden="true">Detail</span></a>
                                                         <a href="#">
-                                                            <span class="label label-danger"
-                                                            >Hapus</span></a>
+                                                            <span class="label label-danger">Hapus</span></a>
                                                     </td>
                                                 </tr>
                                                 {% endfor %}
@@ -112,11 +112,13 @@
 </div>
 
 <!-- line modal items-->
-<div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog"
+ style="z-index:99999999999" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div style="padding-left:20px;" class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
             <h3 class="modal-title" id="lineModalLabel">Form Tambah tugass</h3>
         </div>
         <div class="modal-body">
@@ -204,4 +206,5 @@
     </div>
   </div>
 </div>
+
 {% endblock %}

@@ -7,10 +7,9 @@
 
 {% block content %}
 <div class="panel panel-default">
-    <a class="list-group-item active main-color-bg">
-      <span align="center" aria-hidden="true">
-          <i class="icon-file"></i></span> Daftar anggota {{group.name}}
-    </a>
+    <!-- <a class="list-group-item active main-color-bg"> -->
+    <!-- </a> -->
+    <span class="fa fa-list fa-lg">&nbsp; Daftar anggota {{group.name}}</span>
     <div class="panel-body">
         {% for member in data %}
 
@@ -36,7 +35,8 @@
                         <li><a href="#"><i class="icon-fixed-width icon-pencil">
                              Jadikan wali</i></a></li>
                         <li class="divider"></li>
-                        <li><a href="#"><i class="i"> Keluarkan dari grup</i></a></li>
+                        <li><a href=""  data-target="#{{member.id}}"
+                        value="{{member.id}}" data-toggle="modal" ><i class="i"> Keluarkan dari grup</i></a></li>
                     </ul>
                 </div>
                 </span>
@@ -55,6 +55,28 @@
         {% endfor %}
     </div>
 </div>
+
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button> -->
+{% for member in data %}
+
+<div id="{{member.id}}" style="z-index:99999999999" class="modal fade bs-example-modal-sm"  role="dialog" aria-labelledby="mySmallModalLabel">
+    <!-- <div  class="modal fade modal-group" role="dialog" style=""> -->
+     <div class="modal-dialog modal-sm">
+
+       <!-- Modal content-->
+       <div class="modal-content">
+         <div class="modal-body">
+             <div class="center">
+                 Apaka anda yakin akan mengeluarkan {{member.username}} dari grup?<br/>
+                 <center>
+                 <a href="#" class="btn btn-danger" style="margin:6px">Keluarkan</a>
+             </center>
+             </div>
+         </div>
+       </div>
+     </div>
+     {% endfor %}
+
 <!-- <div class="row-fluid">
     <div class="span12">
         <div class="widget-box" style="margin-top:0px;">
@@ -157,4 +179,5 @@
         </div>
     </div>
 </div> -->
+
 {% endblock %}

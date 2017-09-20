@@ -16,37 +16,9 @@
                            {'group': group.id, 'user':login.id}) }}" class="btn btn-primary">Tugas dilaporkan</a>
                        </div>
                    </div>
-
-                   <!-- <span style="float:right; margin-top:5px;">
-                       <div class="btn-group span4">
-                           <a class="btn btn-primary"><i class="icon-collapse"></i> Lainnya</a>
-                           <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                               <i class="fa fa-sort-desc" aria-hidden="true"></i>
-                           </a>
-                           <ul class="dropdown-menu">
-                               <li><a href="#" data-toggle="modal" data-target="#createItem">
-                                   <i class="icon-fixed-width icon-pencil">
-                                       <li> <a href="" data-toggle="modal" data-target="#create"
-                                           title="Buat tugas baru" style="margin-bottom:7px">
-                                           <i class="icon-fixed-width icon-pencil">
-                                               <li><a href="#" data-toggle="modal" data-target="#squarespaceModal"><i class="icon-fixed-width icon-pencil">
-                                                   Buat tugas</i></a></li>
-                                                   <li><a href="#"><i class="icon-fixed-width icon-pencil">
-                                                       Info grup</i></a></li>
-                                                       <li><a href="{{path_for('get.group.member',
-                                                       {'id': group.id, 'user':login.id})}}"><i class="icon-fixed-width icon-pencil">
-                                                           Member grup</i></a></li>
-                                                           <li class="divider"></li>
-                                                           <li><a href="#"><i class="i"> Lihat semua tugas</i></a></li>
-                                                       </ul>
-                                                   </div>
-                                               </span> -->
-                    <!-- unreported.item.user.group -->
-                <!-- </div> -->
                 <div class="panel-body" style="padding-top:0px;">
                     <div class="widget-content tab-content">
-                        <div id="tab1" class="tab-pane active">
-                            <span style="float:right; margin-top:5px;">
+                            <span style="float:right; margin:10px 0 10px;">
                                 <div class="btn-group span6">
                                     <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
                                         <i class="icon-collapse"></i>Lainnya &nbsp<i class="fa fa-sort-desc" aria-hidden="true"></i>
@@ -61,16 +33,17 @@
                                                 <li><a href="{{path_for('get.group.member',
                                                 {'id': group.id, 'user':login.id})}}"><i class="icon-fixed-width icon-pencil">
                                                     Member grup</i></a></li>
-                                                    <li><a href="#" data-toggle="modal" data-target="#squarespaceModal"><i class="icon-fixed-width icon-pencil">
+                                                    <li><a href="#" data-toggle="modal" data-target="#squarespaceModal">
+                                                        <i class="icon-fixed-width icon-pencil">
                                                         Buat tugas</i></a></li>
                                                         <li class="divider"></li>
                                                         <li><a href="#"><i class="i"> Lihat semua tugas</i></a></li>
                                                     </ul>
                                                 </div>
                                             </span>
-                        <div class="widget-box">
-                              <h3><i class="fa fa-list-alt" aria-hidden="true">
-                                  {{ group.name}} </i></h3>
+                        <div class="widget-box" >
+                            <i style="font-size:24px; margin:15px 0px 10px 0px" class="fa fa-list-alt" aria-hidden="true">
+                                  {{ group.name}} </i>
                           <div class="widget-content nopadding">
                             <table class="table table-striped table-bordered">
                               <thead>
@@ -103,7 +76,6 @@
                       </table>
                   </div>
               </div>
-          </div>
       </div>
       {% if data == null %}
       <center><h4>Tidak ada data</h4></center><hr>
@@ -128,7 +100,6 @@
       {% endif %}
   </div>
   </div>
-</div>
 </div>
 </div>
 </div>
@@ -260,7 +231,7 @@
 
 {% for key, item in data %}
 
-<div id="{{item.id}}" class="modal fade" role="dialog">
+<div id="{{item.id}}" style="z-index:99999999999" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content" style="padding-left:20px;">

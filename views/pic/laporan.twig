@@ -9,10 +9,10 @@
     <div class="span12">
         <div class="widget-box" style="margin-top:0px;">
             <div style="background:#ffffff" class="">
-                <div style="padding-bottom:0px; padding-top:0px; background:#24272E;" class="panel-heading">
+                <!-- <div style="padding-bottom:0px; padding-top:0px; background:#24272E;" class="panel-heading"> -->
                     <div class="widget-title span12">
                         <div class="btn-group btn-group-justified">
-                          <a href="{{ base_url()}}/pic/group/{{group}}/member" class="btn btn-primary">Anggota Group</a>
+                          <a href="{{ base_url()}}/pic/group/{{group}}/member" class="btn btn-primary">Anggota</a>
                           <a href="{{ base_url()}}/pic/items/group/{{group}}" class="btn btn-primary">Tugas</a>
                           <a href="{{ base_url() }}/pic/items/group/{{group}}/reported" class="btn btn-primary active">Laporan</a>
                         </div>
@@ -31,112 +31,112 @@
                             </ul>
                         </div>
                     </span> -->
+                    <br>
+                    <i style="font-size:24px; margin:0px 0px 10px 0px" class="fa " aria-hidden="true">
+                        &nbsp Member Grup </i>
                     </div>
-                </div>
-                <div class="panel-body" style="padding-top:0px; margin-top:29px">
+                <!-- </div> -->
+                <div class="panel-body" style="padding-top:0px; margin-top:0px">
                     <div class="widget-content tab-content">
-                        <div id="tab1" class="tab-pane active">
+                        <div class="widget-content" style="padding:20px;">
+                            <ul style="padding-left:10px;" class="recent-posts">
+                                {% for item in items %}
+                                <hr style="height: 30px; border-style:solid; border-color: #8c8b8b;
+                                border-width: 1px 0 0 0; border-radius: 30px; margin:0px;">
 
-                            <div class="widget-content" style="padding:20px;">
-                                <ul style="padding-left:10px;" class="recent-posts">
-                                    {% for item in items %}
-                                    <hr style="height: 30px; border-style:solid; border-color: #8c8b8b;
-                                    border-width: 1px 0 0 0; border-radius: 30px; margin:0px;">
+                                <div style="font-size:15px; margin-right:20px;" class="user-thumb">
+                                    {% if item.reported_at == null and item.creator_image != null %}
+                                    <img width="60" height="60" alt="User"
+                                    src="{{ base_url() }}/assets/images/{{ item.creator_image }}">
+                                    {% elseif item.reported_at != null and item.user_image != null %}
+                                    <img width="60" height="60" alt="User"
+                                    src="{{ base_url() }}/assets/images/{{ item.user_image }}">
+                                    {% else %}
+                                    <img width="60" height="60" alt="User"
+                                    src="{{ base_url() }}/assets/images/avatar.png">
+                                    {% endif %}
 
-                                        <div style="font-size:15px; margin-right:20px;" class="user-thumb">
-                                            {% if item.reported_at == null and item.creator_image != null %}
-                                            <img width="60" height="60" alt="User"
-                                            src="{{ base_url() }}/assets/images/{{ item.creator_image }}">
-                                            {% elseif item.reported_at != null and item.user_image != null %}
-                                            <img width="60" height="60" alt="User"
-                                            src="{{ base_url() }}/assets/images/{{ item.user_image }}">
-                                            {% else %}
-                                            <img width="60" height="60" alt="User"
-                                            src="{{ base_url() }}/assets/images/avatar.png">
-                                            {% endif %}
-
-                                        </div>
-                                        <span>
-                                            <br>
-                                            {% if item.reported_at == null  %}
-                                            &nbsp&nbsp&nbsp<b>{{ item.creator }}</b>
-                                            <i>melaporkan tugas</i> <b>{{ item.name}}</b>
-                                            {% else %}
-                                            &nbsp&nbsp&nbsp <b>{{ item.user }}</b>
-                                            <i>melaporkan tugas</i> <b>{{ item.name }}</b>
-                                            {% endif %}
-                                        </span>
+                                </div>
+                                <span>
+                                    <br>
+                                    {% if item.reported_at == null  %}
+                                    &nbsp&nbsp&nbsp<b>{{ item.creator }}</b>
+                                    <i>melaporkan tugas</i> <b>{{ item.name}}</b>
+                                    {% else %}
+                                    &nbsp&nbsp&nbsp <b>{{ item.user }}</b>
+                                    <i>melaporkan tugas</i> <b>{{ item.name }}</b>
+                                    {% endif %}
+                                </span>
 
 
-                                        <div class="article-post">
+                                <div class="article-post">
 
-                                            <br>
-                                            <!-- {% if item.reported_at == null %}
-                                            <span style="font-size: 14pt;" class="user-info"> <b>
-                                                <span class="label label-warning">{{ item.name }}
-                                                </span>&nbsp > &nbsp
-                                                <span class="label label-success">{{ item.group_name }}
-                                                </span></b>
-                                            </span>
-                                            {% else %}
-                                            <span style="font-size: 14pt;" class="user-info"> <b>
-                                                <span class="label label-warning">{{ item.name }}
-                                                </span>&nbsp > &nbsp
-                                                <span class="label label-success">{{ item.group_name }}
-                                                </span></b>
-                                            </span>
-                                            {% endif %}-->
-                                            <br>
+                                    <br>
+                                    <!-- {% if item.reported_at == null %}
+                                    <span style="font-size: 14pt;" class="user-info"> <b>
+                                    <span class="label label-warning">{{ item.name }}
+                                </span>&nbsp > &nbsp
+                                <span class="label label-success">{{ item.group_name }}
+                            </span></b>
+                        </span>
+                        {% else %}
+                        <span style="font-size: 14pt;" class="user-info"> <b>
+                        <span class="label label-warning">{{ item.name }}
+                    </span>&nbsp > &nbsp
+                    <span class="label label-success">{{ item.group_name }}
+                </span></b>
+            </span>
+            {% endif %}-->
+            <br>
 
-                                            <br>
-                                            <!-- <div style="margin-top:40px" class=""> -->
-                                        {% if item.image != null %}
+            <br>
+            <!-- <div style="margin-top:40px" class=""> -->
+            {% if item.image != null %}
 
-                                        <img width="80%" style="max-width: 300px;"alt="Image item"
-                                        src="{{ base_url() }}/assets/images/{{ item.image }}">
-                                        <br><br>
-                                        {% endif %}
-                                    <!-- </div> -->
-                                        <p>{{ item.description }}</p>
-                                         <p style="font-size: 10pt;"><i class="fa fa-clock-o" aria-hidden="true"></i>
-                                         {{ item.updated_at | date('j F Y | H:i')}}</p>
-                                         <br><a href="{{ base_url() }}/pic/show/item/{{item.id}}" title="Lihat detail item"
-                                         class="btn btn-primary btn-mini">{{ item.comment|length }} komentar</a>
-                                         <hr style="height: 30px; margin-top: -11px; margin-bottom: 10px; border-style: solid;
-                                         border-color: #8c8b8b; border-width: 0 0 1px 0; border-radius: 20px;">
-                                    </div>
-                                <!-- </li> -->
+            <img width="80%" style="max-width: 300px;"alt="Image item"
+            src="{{ base_url() }}/assets/images/{{ item.image }}">
+            <br><br>
+            {% endif %}
+            <!-- </div> -->
+            <p>{{ item.description }}</p>
+            <p style="font-size: 10pt;"><i class="fa fa-clock-o" aria-hidden="true"></i>
+                {{ item.updated_at | date('j F Y | H:i')}}</p>
+                <br><a href="{{ base_url() }}/pic/show/item/{{item.id}}" title="Lihat detail item"
+                class="btn btn-primary btn-mini">{{ item.comment|length }} komentar</a>
+                <hr style="height: 30px; margin-top: -11px; margin-bottom: 10px; border-style: solid;
+                border-color: #8c8b8b; border-width: 0 0 1px 0; border-radius: 20px;">
+            </div>
+            <!-- </li> -->
 
-                                {% endfor %}
-                                {% if items != null %}
-                                <nav aria-label="...">
-                                    <ul class="pager">
-                                        <div class="pagination alternate">
-                                            <ul>
-                                                <li class="{% if pagination.current <= 1 %}disabled{% endif %}">
-                                                    <a href="{{ base_url() }}/pic/items/group/{{ group}}/reported?page={{ pagination.current - 1 }}">
-                                                        Sebelumnya</a></li>
-                                                <li class="active"> <a>{{ pagination.current }}</a></li>
-                                                <li class="{% if pagination.current == pagination.total_page %}disabled{% endif %}">
-                                                    <a href="{{ base_url() }}/pic/items/group/{{ group}}/reported?page={{ pagination.current + 1 }}">
-                                                        Selanjutnya</a></li>
-                                            </ul>
-                                        </div>
-                                    </ul>
-                                </nav>
-                                {% else %}
-                                <center><em>Tidak ada laporan</em></center>
-                                {% endif %}
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+            {% endfor %}
+            {% if items != null %}
+            <nav aria-label="...">
+                <ul class="pager">
+                    <div class="pagination alternate">
+                        <ul>
+                            <li class="{% if pagination.current <= 1 %}disabled{% endif %}">
+                                <a href="{{ base_url() }}/pic/items/group/{{ group}}/reported?page={{ pagination.current - 1 }}">
+                                    Sebelumnya</a></li>
+                            <li class="active"> <a>{{ pagination.current }}</a></li>
+                            <li class="{% if pagination.current == pagination.total_page %}disabled{% endif %}">
+                                <a href="{{ base_url() }}/pic/items/group/{{ group}}/reported?page={{ pagination.current + 1 }}">
+                                    Selanjutnya</a></li>
+                            </ul>
+                        </div>
+                    </ul>
+                </nav>
+                {% else %}
+                <center><em>Tidak ada laporan</em></center>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 
-  {% for key, item in data %}
+{% for key, item in data %}
 
 <!-- line modal items-->
-<div class="modal fade" id="squarespaceModal" tabindex="-1"
+<div class="modal fade"  style="z-index:99999999999" id="squarespaceModal" tabindex="-1"
  role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -277,7 +277,7 @@
                             <textarea rows="5" name="description" class="form-control"
                             value="{{ item.description }}"> {{ item.description }}
                             </textarea>
-                                    <!-- <input type="text" name="description" class="form-control" id="coba"> -->
+                            <!-- <input type="text" name="description" class="form-control" id="coba"> -->
                             <input type="hidden" id="data-id" name="item_id"
                              value="{{ item.id }}">
 
