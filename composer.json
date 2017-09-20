@@ -29,12 +29,7 @@
         "league/flysystem": "^1.0",
         "league/fractal": "^0.15.0",
         "hassankhan/config": "^0.10.0",
-        "cocur/slugify": "^2.4",
-        "predis/predis": "^1.1",
-        "zendframework/zend-mail": "^2.7",
-        "zendframework/zend-mime": "^2.6",
-        "zendframework/zend-servicemanager": "^3.1",
-        "endroid/qrcode": "^2.2"
+        "cocur/slugify": "^2.4"
 
     },
 
