@@ -12,35 +12,24 @@
           <i class="icon-file"></i></span> Daftar anggota {{group.name}}
     </a>
     <div class="panel-body">
+        <div class="">
+        <a class="btn" href="{{path_for('unreported.item.user.group')}}">
+            <i class="fa fa-angle-double-left" aria-hidden="true">&nbsp&nbsp Kembali</i></a>
+        </div>
+
         {% for member in data %}
 
-        <div style="padding:5px;" class="col-md-4" >
+        <div style="padding:5px;" class="col-md-3" >
             <div class="well dash-box" style="background:#f2f2f2;">
                 {% if member.image != null %}
-                    <img  style="margin-right:10px;" width="75" height="75" alt="User"
+                    <img  style="margin-right:10px;" width="75" height="75" alt="Foto {{member.name}}"
                     src="{{ base_url() }}/assets/images/{{ member.image }}">
                 {% else %}
-                    <img width="75" height="75" alt="User"
+                    <img width="75" height="75" alt="Foto {{member.name}}"
                     src="{{ base_url() }}/assets/images/avatar.png">
                 {% endif %}
-                <span style="float: right; top: 1px; ">
-                    <div class="btn-group span4">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-sort-desc" aria-hidden="true"></i>
-                    </a>
-                    <ul style="left: -140px; top: 13px; " class="dropdown-menu">
-                        <li><a href="#"><i class="icon-fixed-width icon-pencil">
-                             Jadikan PIC</i></a></li>
-                        <li><a href="#"><i class="icon-fixed-width icon-pencil">
-                             Jadikan anggota</i></a></li>
-                        <li><a href="#"><i class="icon-fixed-width icon-pencil">
-                             Jadikan wali</i></a></li>
-                        <li class="divider"></li>
-                        <li><a href="#"><i class="i"> Keluarkan dari grup</i></a></li>
-                    </ul>
-                </div>
-                </span>
-                <span style="position: absolute; float: right; font-family: Franklin Gothic Medium;">
+
+                <span style="margin-left:10px; position: absolute; float: right; font-family: Franklin Gothic Medium;">
                     <br><b>{{ member.username }}</b><br>
                     {% if member.status_member == 0 %}
                     Anggota
@@ -49,6 +38,7 @@
                     {% elseif member.status_member == 2 %}
                     Wali
                     {% endif %}
+                    <br><b>{{ member.registered_at }}</b><br>
                 </span>
             </div>
         </div>

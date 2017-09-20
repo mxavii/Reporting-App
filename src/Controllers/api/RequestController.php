@@ -25,12 +25,12 @@ class RequestController extends BaseController
 		$userId = $request->getQueryParam('user_id');
         $groupId = $request->getQueryParam('group_id');
 
-        $group = $groups->find('id', 1);
-        $userGroups = $userGroups->findTwo('user_id', 2, 'group_id', 1  );
-        $userRequest = $requestModel->findTwo('user_id', 2, 'group_id', 1  );
+        $group = $groups->find('id', $groupId);
+        $userGroups = $userGroups->findTwo('user_id', $userId, 'group_id', $groupId  );
+        $userRequest = $requestModel->findTwo('user_id', $userId, 'group_id', $groupId  );
         $data = [
-            'user_id'   =>  2,
-            'group_id'  =>  1,
+            'user_id'   =>  $userId,
+            'group_id'  =>  $groupId,
             'category'  =>  0
         ];
         if ($group) {

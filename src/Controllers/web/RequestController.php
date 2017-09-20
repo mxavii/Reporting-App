@@ -13,7 +13,6 @@ class RequestController extends BaseController
 {
     public function createUserToGroup($request, $response, $args)
 	{
-		$query = $request->getQueryParams();
         try {
             $result = $this->client->request('POST', 'request/group',
                 ['query' => [
@@ -167,7 +166,7 @@ class RequestController extends BaseController
             $this->flash->addMessage('error', 'Ada kesalahan saat mengirim permintaan');
         }
         $data = json_decode($result->getBody()->getContents(), true);
-        var_dump($data);die();
+        // var_dump($data);die();
         return $this->view->render($response, 'users/group-list.twig', [
             'data'			=> $data['data'],
             'pagination'	=> $data['pagination']
@@ -202,8 +201,9 @@ class RequestController extends BaseController
 
     public function deleteRequest($request, $response)
     {
+        // die('fff');
         try {
-            $result = $this->client->request('DELETE', 'request/delete/'.$request->getParams()['req_id']);
+            $result = $this->client->request('GET', 'request/delete/'.$request->getParams()['req_id']);
         } catch (GuzzleException $e) {
             $result = $e->getResponse();
         }

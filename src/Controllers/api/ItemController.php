@@ -407,14 +407,14 @@ class ItemController extends BaseController
         $userStatus = $user['status'];
         $groupId  = $findItem['group_id'];
 
-        $checkGuardian = $userGroup->findTwo('user_id', $userId, 'group_id', $groupId);
-        if (!empty($checkGuardian)) {
-        $guardian = $checkGuardian[0]['status'];
+        $checkPic = $userGroup->findTwo('user_id', $userId, 'group_id', $groupId);
+        if (!empty($checkPic)) {
+        $pic = $checkPic[0]['status'];
         }
         if ($findItem) {
-            if ($userStatus == 1 || $guardian == 1) {
-                    $item->hardDelete($args['id']);
-                    $data = $this->responseDetail(200, false, 'Item telah dihapus');
+            if ($userStatus == 1 || $pic == 1) {
+                $item->hardDelete($args['id']);
+                $data = $this->responseDetail(200, false, 'Item telah dihapus');
 
             } else {
                 $data = $this->responseDetail(401, true, 'Anda tidak berhak menghapus item ini');

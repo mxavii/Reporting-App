@@ -38,7 +38,7 @@ class GuardController extends BaseController
     public function deleteGuardian(Request $request, Response $response, $args)
     {
         try {
-            $result = $this->client->request('DELETE', 'guard/delete/'.$args['id']);
+            $result = $this->client->request('GET', 'guard/delete/'.$args['id']);
             $content = json_decode($result->getBody()->getContents(), true);
         } catch (GuzzleException $e) {
             $content = json_decode($e->getResponse()->getBody()->getContents(), true);
@@ -72,7 +72,7 @@ class GuardController extends BaseController
         if ($data['code'] == 201 ) {
             if (!empty($user= $request->getParam('req_id'))) {
                 try {
-                    $result = $this->client->request('DELETE', 'request/delete/'.$request->getParam('req_id'));
+                    $result = $this->client->request('GET', 'request/delete/'.$request->getParam('req_id'));
                 } catch (GuzzleException $e) {
                     $result = $e->getResponse();
                 }
@@ -181,7 +181,7 @@ class GuardController extends BaseController
     public function deleteUser(Request $request, Response $response, $args)
     {
         try {
-            $result = $this->client->request('DELETE', 'guard/delete/user/'.$args['id']);
+            $result = $this->client->request('GET', 'guard/delete/user/'.$args['id']);
             $content = json_decode($result->getBody()->getContents(), true);
         } catch (GuzzleException $e) {
             $content = json_decode($e->getResponse()->getBody()->getContents(), true);

@@ -33,9 +33,9 @@ class AdminController extends BaseController
         if ($data['code'] == 200) {
             $_SESSION['key'] = $data['key'];
             $_SESSION['login'] = $data['data'];
-            if (!empty($request->getParams()['guard'])) {
-                $_SESSION['guard'] = $_SESSION['login']['id'];
-            }
+            // if (!empty($request->getParams()['guard'])) {
+            //     $_SESSION['guard'] = $_SESSION['login']['id'];
+            // }
             if ($_SESSION['login']['status'] == 1) {
                 $_SESSION['user_group'] = $groups;
                 $this->flash->addMessage('success', 'Selamat datang, '. $login['username']);

@@ -172,16 +172,16 @@ var_dump($content);die;
 
         $content = json_decode($result->getBody()->getContents(), true);
 // var_dump($content);die();
-    	return $response->withRedirect("http://localhost/Reporting-App/public/items/group/".$args['group'].'/reported');
+    	// return $response->withRedirect("http://localhost/Reporting-App/public/items/group/".$args['group'].'/reported');
 
-        if ($data['error'] == false) {
-            $this->flash->addMessage('success', $data['message']);
+        if ($content['error'] == false) {
+            $this->flash->addMessage('success', $content['message']);
             return $response->withRedirect($this->router->pathFor('unreported.item.user.group', [
                 'group' => 	$request->getParam('group_id'),
                 'user'  => 	$_SESSION['login']['id']
             ]));
         } else {
-            $this->flash->addMessage('error', $data['message']);
+            $this->flash->addMessage('error', $content['message']);
 
             return $response->withRedirect($this->router->pathFor('unreported.item.user.group', [
                 'group' => 	$request->getParam('group_id'),
@@ -212,7 +212,7 @@ var_dump($content);die;
 		$dataDetailItem = json_decode($data->getBody()->getContents(), true);
 
     	try {
-    		$result = $this->client->request('DELETE', 'item/'.$args['item'].'/user'.
+    		$result = $this->client->request('GET', 'item/'.$args['item'].'/user'.
     			$request->getUri()->getQuery());
             $this->flash->addMessage('success', 'Berhasil menghapus tugas');
     	} catch (GuzzleException $e) {
@@ -243,7 +243,7 @@ var_dump($content);die;
 		$dataDetailItem = json_decode($data->getBody()->getContents(), true);
 
     	try {
-    		$result = $this->client->request('DELETE', 'items/'.$args['item'].'/delete'.
+    		$result = $this->client->request('GET', 'items/'.$args['item'].'/delete'.
     			$request->getUri()->getQuery());
             $this->flash->addMessage('succes', 'Berhasil menghapus tugas yang telah dilaporkan');
     	} catch (GuzzleException $e) {
@@ -315,25 +315,25 @@ var_dump($content);die;
     }
 
     //Get group item reported
-    public function getReportedUserGroupItem($request, $response, $args)
+    public function getReportedUserGroupItem($request, $response)
     {
         // $userId = $_SESSION['login']['id'];
         // $groupId = $args['id'];
         try {
             $result = $this->client->request('GET', 'item/group/user/reported',[
                 'query' => [
-                    'user_id' =>  $args['user'],
-                    'group_id' =>  $args['group'],
+                    'user_id' =>  $_SESSION['login']['id'],
+                    'group_id' =>  $_SESSION['group']['id'],
                     'perpage' => 10,
                     'page' => $request->getQueryParam('page')
                     ]]);
 
-                try {
-                    $findGroup = $this->client->request('GET', 'group/find/'. $args['group']);
-                } catch (GuzzleException $e) {
-                    $findGroup = $e->getResponse();
-                }
-                $dataGroup = json_decode($findGroup->getBody()->getContents(), true);
+                // try {
+                //     $findGroup = $this->client->request('GET', 'group/find/'. $args['group']);
+                // } catch (GuzzleException $e) {
+                //     $findGroup = $e->getResponse();
+                // }
+                // $dataGroup = json_decode($findGroup->getBody()->getContents(), true);
         } catch (GuzzleException $e) {
             $result = $e->getResponse();
         }
@@ -343,28 +343,28 @@ var_dump($content);die;
         return $this->view->render($response, 'users/group/reported-item.twig', [
             'data'			=>	$data['data'],
             'pagination'	=>	$data['pagination'],
-            'group' 		=> 	$dataGroup['data'],
+            // 'group' 		=> 	$dataGroup['data'],
         ]);
     }
 
     //Get group item reported
-    public function getUnreportedUserGroupItem($request, $response, $args)
+    public function getUnreportedUserGroupItem($request, $response)
     {
         try {
             $result = $this->client->request('GET', 'item/group/user/unreported',[
                 'query' => [
-                    'user_id' =>  $args['user'],
-                    'group_id' =>  $args['group'],
+                    'user_id' =>  $_SESSION['login']['id'],
+                    'group_id' => $_SESSION['group']['id'],
                     'perpage' => 10,
                     'page' => $request->getQueryParam('page')
                     ]]);
 
-                    try {
-                        $findGroup = $this->client->request('GET', 'group/find/'. $args['group']);
-                    } catch (GuzzleException $e) {
-                        $findGroup = $e->getResponse();
-                    }
-                    $dataGroup = json_decode($findGroup->getBody()->getContents(), true);
+                    // try {
+                    //     $findGroup = $this->client->request('GET', 'group/find/'. $args['group']);
+                    // } catch (GuzzleException $e) {
+                    //     $findGroup = $e->getResponse();
+                    // }
+                    // $dataGroup = json_decode($findGroup->getBody()->getContents(), true);
         } catch (GuzzleException $e) {
             $result = $e->getResponse();
         }
@@ -373,7 +373,7 @@ var_dump($content);die;
         return $this->view->render($response, 'users/group/unreported-item.twig', [
             'data'			=>	$data['data'],
             'pagination'	=>	$data['pagination'],
-            'group' 		=> 	$dataGroup['data'],
+            // 'group' 		=> 	$dataGroup['data'],
         ]);
     }
 

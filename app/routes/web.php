@@ -26,9 +26,9 @@ $app->group('', function() use ($app, $container) {
         $app->post('/create', 'App\Controllers\web\GroupController:add')->setName('web.group.add');
         $app->post('/group/create', 'App\Controllers\web\GroupController:createByUser')->setName('pic.create.group');
         $app->get('/{id}/leave', 'App\Controllers\web\GroupController:leaveGroup')->setName('web.leave.group');
-        $app->get('/{user}/{group}/item/reported', 'App\Controllers\web\ItemController:getReportedUserGroupItem')->setName('reported.item.user.group');
-        $app->get('/{user}/{group}/item/unreported', 'App\Controllers\web\ItemController:getUnreportedUserGroupItem')->setName('unreported.item.user.group');
-        $app->get('/{id}/members', 'App\Controllers\web\GroupController:getAllGroupMember')->setName('get.group.member');
+        $app->get('/user/item/reported', 'App\Controllers\web\ItemController:getReportedUserGroupItem')->setName('reported.item.user.group');
+        $app->get('/user/item/unreported', 'App\Controllers\web\ItemController:getUnreportedUserGroupItem')->setName('unreported.item.user.group');
+        $app->get('/member/all', 'App\Controllers\web\GroupController:getAllGroupMember')->setName('get.group.member');
         $app->post('/search', 'App\Controllers\web\GroupController:searchGroup')->setName('web.search.group');
         $app->get('/join/{id}', 'App\Controllers\web\GroupController:joinGroup')->setName('web.join.group');
         $app->post('/setuser', 'App\Controllers\web\GroupController:setUserGroup')->setName('group.setuser');
@@ -68,12 +68,12 @@ $app->group('', function() use ($app, $container) {
 
 
     $app->group('/pic', function() use ($app, $container){
-        $app->get('/items/group/{id}', 'App\Controllers\web\PicController:getUnreportedItem')->setName('pic.item.group');
-        $app->get('/items/group/{id}/reported', 'App\Controllers\web\PicController:getReportedItem')->setName('pic.group.reported');
+        $app->get('/items/group', 'App\Controllers\web\PicController:getUnreportedItem')->setName('pic.item.group');
+        $app->get('/items/group/reported', 'App\Controllers\web\PicController:getReportedItem')->setName('pic.group.reported');
         $app->get('/items/delete/{id}', 'App\Controllers\web\PicController:deleteTugas')->setName('web.pic.delete.tugas');
         $app->get('/search/{id}', 'App\Controllers\web\PicController:getSearchUser')->setName('web.pic.search');
         $app->get('/search/user/guard', 'App\Controllers\web\PicController:searchUser')->setName('web.pic.search.user');
-        $app->get('/group/{id}/member', 'App\Controllers\web\PicController:getMemberGroup')->setName('pic.group.member');
+        $app->get('/group/member', 'App\Controllers\web\PicController:getMemberGroup')->setName('pic.group.member');
         $app->post('/set/member', 'App\Controllers\web\GroupController:setMemberGroup')->setName('web.pic.set.member');
         $app->get('/delete/member/{id}/{group}', 'App\Controllers\web\GroupController:deleteUser')->setName('web.pic.delete.member');
         $app->get('/set/status/{id}/{group}', 'App\Controllers\web\GroupController:setAsPicGroup')->setName('web.pic.set.status');

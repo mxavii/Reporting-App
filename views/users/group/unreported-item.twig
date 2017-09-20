@@ -13,37 +13,10 @@
                     <div class="widget-title span12">
                         <div class="btn-group btn-group-justified">
                             <a href="#" class="btn btn-primary active">Tugas belum dilaporkan</a>
-                          <a href="{{ path_for('reported.item.user.group',
-                           {'group': group.id, 'user':login.id}) }}" class="btn btn-primary">Tugas dilaporkan</a>
+                          <a href="{{ path_for('reported.item.user.group') }}" class="btn btn-primary">Tugas dilaporkan</a>
                        </div>
                    </div>
 
-                   <!-- <span style="float:right; margin-top:5px;">
-                       <div class="btn-group span4">
-                           <a class="btn btn-primary"><i class="icon-collapse"></i> Lainnya</a>
-                           <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                               <i class="fa fa-sort-desc" aria-hidden="true"></i>
-                           </a>
-                           <ul class="dropdown-menu">
-                               <li><a href="#" data-toggle="modal" data-target="#createItem">
-                                   <i class="icon-fixed-width icon-pencil">
-                                       <li> <a href="" data-toggle="modal" data-target="#create"
-                                           title="Buat tugas baru" style="margin-bottom:7px">
-                                           <i class="icon-fixed-width icon-pencil">
-                                               <li><a href="#" data-toggle="modal" data-target="#squarespaceModal"><i class="icon-fixed-width icon-pencil">
-                                                   Buat tugas</i></a></li>
-                                                   <li><a href="#"><i class="icon-fixed-width icon-pencil">
-                                                       Info grup</i></a></li>
-                                                       <li><a href="{{path_for('get.group.member',
-                                                       {'id': group.id, 'user':login.id})}}"><i class="icon-fixed-width icon-pencil">
-                                                           Member grup</i></a></li>
-                                                           <li class="divider"></li>
-                                                           <li><a href="#"><i class="i"> Lihat semua tugas</i></a></li>
-                                                       </ul>
-                                                   </div>
-                                               </span> -->
-                    <!-- unreported.item.user.group -->
-                <!-- </div> -->
             </div>
                 <div class="panel-body" style="padding-top:0px;">
                     <div class="widget-content tab-content">
@@ -60,8 +33,7 @@
                                             </li>
                                             <li><a href="#"><i class="icon-fixed-width icon-pencil">
                                                 Info grup</i></a></li>
-                                                <li><a href="{{path_for('get.group.member',
-                                                {'id': group.id, 'user':login.id})}}"><i class="icon-fixed-width icon-pencil">
+                                                <li><a href="{{path_for('get.group.member')}}"><i class="icon-fixed-width icon-pencil">
                                                     Member grup</i></a></li>
                                                     <li><a href="#" data-toggle="modal" data-target="#squarespaceModal"><i class="icon-fixed-width icon-pencil">
                                                         Buat tugas</i></a></li>
@@ -133,10 +105,10 @@
 </div>
 </div>
 </div>
-</div>
+<!-- </div> -->
 
 
-<div class="modal fade" id="create" tabindex="-1"
+<!-- <div class="modal fade" id="create" tabindex="-1"
  role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div style="padding-left:20px;" class="modal-content">
@@ -147,7 +119,7 @@
         </div>
         <div class="modal-body">
 
-        <!-- content goes here -->
+
          <form  action="{{ path_for('web.item.user.create',
          {'group': group.id}) }}"
          method="POST" enctype="multipart/form-data">
@@ -179,7 +151,7 @@
                         {% endif %}
                     </div>
                      <div class="form-group {{ errors.description ? 'has-error' : '' }}">
-                        <label for="description">Deskripsi :</label> -->
+                        <label for="description">Deskripsi :</label>
                      <input type="text" name="description" class="form-control">
                          <textarea rows="5" name="description" class="form-control">
                         </textarea>
@@ -226,7 +198,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group {{ errors.description ? 'has-error' : '' }}">
-                        <label for="description">Deskripsi :</label> -->
+                        <label for="description">Deskripsi :</label>
                         <input type="text" name="description" class="form-control">
                         <textarea rows="4" name="description" class="form-control">
                         </textarea>
@@ -257,6 +229,148 @@
             </div>
         </form>
     </div>
+</div>
+</div>
+</div> -->
+
+<!-- line modal items-->
+<div class="modal fade" id="create" role="dialog">
+  <div class="modal-dialog">
+    <div style="padding-left:20px;" class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h3 class="modal-title" id="lineModalLabel">Form Tambah tugas</h3>
+        </div>
+        <div class="modal-body">
+
+        <!-- content goes here -->
+        <form  action="{{ path_for('web.pic.create.item')}}"
+         method="POST" enctype="multipart/form-data">
+            {% if errors %}
+            <div class="alert alert-danger">
+                <a class="close" data-dismiss="alert" href="#">x</a>
+                Form hars diisi
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-5">
+                    <div class="form-group {{ errors.name ? 'has-error' : '' }}">
+                        <label for="name">Nama :</label>
+                        <input type="text" name="name" value="{{old.name}}" class="form-control">
+                        {% if errors.name %}
+                        <span class="help-block">{{ errors.name | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-7">
+                    <div class="form-group {{ errors.description ? 'has-error' : '' }}">
+                        <label for="description">Deskripsi :</label>
+                        <input type="text" name="description" value="{{old.description}}"class="form-control">
+                        {% if errors.description %}
+                        <span class="help-block">{{ errors.description | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-5 col-md-5">
+                    <div class="form-group {{ errors.privacy ? 'has-error' : '' }}">
+                        <label for="privacy">Privasi :</label>
+                        <select class="form-control" name="privacy" >
+                            <option value="">Pilih</option>
+                            <option {% if old.privacy == 0 %}
+                             selected="selected"{% endif %}value="0">Public</option>
+                            <option {% if old.privacy == 1 %}
+                             selected="selected"{% endif %} value="1">Pribadi</option>
+                        </select>
+                        {% if errors.public %}
+                        <span class="help-block">{{ errors.privacy | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-7">
+                    <div class="form-group {{ errors.recurrent ? 'has-error' : '' }}">
+                        <label for="recurrent">Perulangan :</label>
+                        <select class="form-control" name="recurrent" value="">
+                            <option value="">Tanpa Perulangan</option>
+                            <option {% if old.recurrent == "harian" %}
+                             selected="selected"{% endif %} value="harian">Harian</option>
+                            <option {% if old.recurrent == "mingguan" %}
+                             selected="selected"{% endif %} value="mingguan">Mingguan</option>
+                            <option {% if old.recurrent == "bulanan" %}
+                             selected="selected"{% endif %} value="bulanan">Bulanan</option>
+                            <option {% if old.recurrent == "tahunan" %}
+                             selected="selected"{% endif %} value="tahunan">Tahunan</option>
+                        </select>
+                        {% if errors.recurrent %}
+                        <span class="help-block">{{ errors.recurrent | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-5 col-md-5">
+                    <div class="form-group {{ errors.start_date ? 'has-error' : '' }}">
+                        <label for="start_date">Tanggal dimulai :</label>
+                        <input type="date" name="start_date" value="{{old.start_date}}" class="form-control">
+                        <input type="hidden" name="group" value="{{ group }}">
+                        {% if errors.start_date %}
+                        <span class="help-block">{{ errors.start_date | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- <div class="col-xs-12 col-sm-6 col-md-7">
+                    <div class="form-group {{ errors.user_id ? 'has-error' : '' }}">
+                        <label for="recurrent">Ditugaskan untuk :</label>
+                        <select class="form-control" name="user_id" >
+                            <option value="">Semua Anggota</option>
+                            {% for member in member %}
+                            <option {% if old.user_id == member.id %}
+                             selected="selected"{% endif %} value="{{ member.id}}">{{ member.username}}</option>
+                            {% endfor %}
+                        </select>
+                        {% if errors.user_id %}
+                        <span class="help-block">{{ errors.user_id | first }}</span>
+                        {% endif %}
+                    </div>
+                </div> -->
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-5 col-md-12">
+                    <div class="form-group {{ errors.image ? 'has-error' : '' }}">
+                        <label for="image">Foto :</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-image"></i>
+                            </div>
+                            <input type="file" id="file" class="form-control"
+                            name="image" placeholder="Item image">
+                        </div>
+                        {% if errors.image %}
+                        <span class="help-block">{{errors.image | first}}</span>
+                        {% endif %}<br />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+                    <div class="btn-group" role="group">
+                        <input type="hidden" id="data-id" name="user_id"
+                         value="{{ login.id }}">
+                         <input type="hidden" id="data-id" name="member"
+                          value="{{ login.id }}">
+                         <button type="button" class="btn btn-danger"
+                         data-dismiss="modal" role="button">Tutup</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="submit" class="btn btn-primary btn-hover-green" onClick="myFunction()">Buat</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>
 </div>
 </div>
 
@@ -333,7 +447,8 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
+<!-- </div> -->
 
 <!-- line modal report -->
 

@@ -7,12 +7,13 @@ use GuzzleHttp\Exception\BadResponseException as GuzzleException;
 class PicController extends BaseController
 {
 
-    public function getMemberGroup($request, $response, $args)
+    public function getMemberGroup($request, $response)
 	{
 		// $query = $request->getQueryParams();
         // $userGroup = new \App\Models\UserGroupModel($this->db);
+        $id = $_SESSION['group']['id'];
         try {
-            $result = $this->client->request('GET', 'group/'.$args['id'].'/member', [
+            $result = $this->client->request('GET', 'group/'.$id.'/member', [
                 'query' => [
                     'perpage' => 9,
                     'page'    => $request->getQueryParam('page')
@@ -29,7 +30,7 @@ class PicController extends BaseController
         if ($data['error'] == false) {
             return $this->view->render($response, 'pic/group-member.twig', [
                 'members'	=> $data['data'],
-                'group'	    => $args['id'],
+                'group'	    => $id,
                 'pagination'=> $data['pagination'],
             ]);
         } else {
@@ -40,13 +41,13 @@ class PicController extends BaseController
         // var_dump($data->reporting->results);die();
     }
 
-    public function getUnreportedItem($request, $response, $args)
+    public function getUnreportedItem($request, $response)
     {
         // $userGroup = new \App\Models\UserGroupModel($this->db);
         // $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
-
+        $id = $_SESSION['group']['id'];
         try {
-            $result = $this->client->request('GET', 'item/group/'. $args['id'], [
+            $result = $this->client->request('GET', 'item/group/'. $id, [
                 'query' => [
                     'page'    => $request->getQueryparam('page'),
                     'perpage' => 10,
@@ -54,7 +55,7 @@ class PicController extends BaseController
                 ]);
 
                 try {
-                    $result2 = $this->client->request('GET', 'group/'.$args['id'].'/member', [
+                    $result2 = $this->client->request('GET', 'group/'.$id.'/member', [
                         'query' => [
                             'perpage' => 9,
                             'page'    => $request->getQueryParam('page')
@@ -76,16 +77,17 @@ class PicController extends BaseController
         // var_dump($data); die();
         return $this->view->render($response, 'pic/tugas.twig', [
             'items'	=> $data['data'],
-            'group'	=> $args['id'],
+            // 'group'	=> $args['id'],
             'member'	=> $data2['data'],
             'pagination'	=> $data['pagination'],
         ]);
     }
 
-    public function getReportedItem($request, $response, $args)
+    public function getReportedItem($request, $response)
     {
+        $id = $_SESSION['group']['id'];
         try {
-            $result = $this->client->request('GET', 'item/group/'. $args['id'].'/all-reported', [
+            $result = $this->client->request('GET', 'item/group/'. $id.'/all-reported', [
                 'query' => [
                     'page'    => $request->getQueryparam('page'),
                     'perpage' => 5,
@@ -99,27 +101,29 @@ class PicController extends BaseController
         // var_dump($data); die();
         return $this->view->render($response, 'pic/laporan.twig', [
             'items'	=> $data['data'],
-            'group'	=> $args['id'],
+            // 'group'	=> $args['id'],
             'pagination'	=> $data['pagination'],
         ]);
     }
 
     public function deleteTugas($request, $response, $args)
 	{
-        $item = new \App\Models\Item($this->db);
-        $findItem = $item->find('id', $args['id']);
+        // $item = new \App\Models\Item($this->db);
+        // $findItem = $item->find('id', $args['id']);
 		try {
-			$client = $this->client->request('DELETE', 'item/'.$args['id']);
-
+			$client = $this->client->request('GET', 'item/delete/'.$args['id']);
 			$content = json_decode($client->getBody()->getContents(), true);
-            $this->flash->addMessage('success', 'Tugas telah berhasil dihapus');
 		} catch (GuzzleException $e) {
 			$content = json_decode($e->getResponse()->getBody()->getContents(), true );
-			$this->flash->addMessage('warning', 'Anda tidak diizinkan menghapus tugas ini ');
 		}
-		// return $this->view->render($response, 'pic/tugas.twig');
-        // var_dump($content); die();
-        return $response->withRedirect($this->router->pathFor('pic.item.group',['id' => $findItem['group_id']]));
+// var_dump($content);die;
+        if ($content['error'] == false) {
+            $this->flash->addMessage('success', 'Tugas telah berhasil dihapus');
+        } else {
+            $this->flash->addMessage('warning', 'Anda tidak diizinkan menghapus tugas ini ');
+        }
+
+        return $response->withRedirect($this->router->pathFor('pic.item.group'));
 	}
 
     public function createItem($request, $response)
@@ -130,7 +134,6 @@ class PicController extends BaseController
             $user_id = $request->getParam('user_id');
         }
 
-        $group = $request->getParam('group');
         try {
             $result = $this->client->request('POST', 'item/create', [
                 'form_params' => [
@@ -139,7 +142,7 @@ class PicController extends BaseController
                     'recurrent'     => $request->getParam('recurrent'),
                     'start_date'    => $request->getParam('start_date'),
                     'user_id'    	=> $user_id,
-                    'group_id'      => $request->getParam('group'),
+                    'group_id'      => $_SESSION['group']['id'],
                     'creator'    	=> $_SESSION['login']['id'],
                     'privacy'       => $request->getParam('privacy'),
                 ]
@@ -153,13 +156,16 @@ class PicController extends BaseController
         // var_dump($contents); die();
         if ($contents['code'] == 201) {
             $this->flash->addMessage('success', $contents['message']);
-            return $response->withRedirect($this->router->pathFor('pic.item.group',['id' => $group ]));
         } else {
             // foreach ($contents['message'] as $value ) {
             // }
             $_SESSION['errors'] = $contents['message'];
             $_SESSION['old']    = $request->getParams();
             // var_dump($_SESSION['errors']); die();
+        }
+        if (!empty($request->getParam('member'))) {
+            return $response->withRedirect($this->router->pathFor('unreported.item.user.group'));
+        } else {
             return $response->withRedirect($this->router->pathFor('pic.item.group',['id' => $group ]));
         }
 
@@ -247,7 +253,7 @@ class PicController extends BaseController
         $item = new \App\Models\Item($this->db);
         $findItem = $item->find('id', $args['id']);
 		try {
-			$client = $this->client->request('DELETE', 'request/'.$args['id']);
+			$client = $this->client->request('GET', 'request/'.$args['id']);
 
 			$content = json_decode($client->getBody()->getContents(), true);
             $this->flash->addMessage('success', 'Tugas telah berhasil dihapus');

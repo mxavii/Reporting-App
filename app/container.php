@@ -54,6 +54,10 @@ $container['view'] = function ($container) {
 		unset($_SESSION['search']);
 	}
 
+	if (@$_SESSION['group']) {
+		$view->getEnvironment()->addGlobal('group', $_SESSION['group']);
+	}
+
 	if (@$_SESSION['back']) {
 		$view->getEnvironment()->addGlobal('back', $_SESSION['back']);
 	}

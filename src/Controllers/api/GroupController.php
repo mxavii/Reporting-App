@@ -118,22 +118,22 @@ class GroupController extends BaseController
 		return $data;
 	}
 
-	//Delete group
-	public function delete(Request $request, Response $response, $args)
-	{
-		$group = new \App\Models\GroupModel($this->db);
-		$findGroup = $group->find('id', $args['id']);
-		$query = $request->getQueryParams();
-
-		if ($findGroup) {
-			$group->hardDelete($args['id']);
-			$data = $this->responseDetail(200, false, 'Berhasil menghapus data');
-		} else {
-			$data = $this->responseDetail(404, true, 'Data tidak ditemukan');
-		}
-
-		return $data;
-	}
+	// //Delete group
+	// public function delete(Request $request, Response $response, $args)
+	// {
+	// 	$group = new \App\Models\GroupModel($this->db);
+	// 	$findGroup = $group->find('id', $args['id']);
+	// 	$query = $request->getQueryParams();
+	//
+	// 	if ($findGroup) {
+	// 		$group->hardDelete($args['id']);
+	// 		$data = $this->responseDetail(200, false, 'Berhasil menghapus data');
+	// 	} else {
+	// 		$data = $this->responseDetail(404, true, 'Data tidak ditemukan');
+	// 	}
+	//
+	// 	return $data;
+	// }
 
 	//Set user as member of group
 	public function setUserGroup(Request $request, Response $response)
@@ -240,12 +240,12 @@ class GroupController extends BaseController
 	public function deleteUser(Request $request, Response $response, $args)
 	{
 		$userGroup = new \App\Models\UserGroupModel($this->db);
-		$finduserGroup = $userGroup->findUser('user_id', $args['id'], 'group_id', $args['group']);
-		$finduserGroup = $userGroup->find('id', $args['id']);
-		$query = $request->getQueryParams();
+		$finduserGroups = $userGroup->findTwo('user_id', $args['id'], 'group_id', $args['group']);
+		// $finduserGroup = $userGroup->find('id', $args['id']);
+		// $query = $request->getQueryParams();
 
-		if ($finduserGroup) {
-			$userGroup->hardDelete($finduserGroup['id']);
+		if ($finduserGroups) {
+			$userGroup->hardDelete($finduserGroups[0]['id']);
 
 			$data = $this->responseDetail(200, false, 'User berhasil dikeluarkan dari group', [
 					'data'	=>	$userGroup
