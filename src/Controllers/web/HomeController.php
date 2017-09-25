@@ -69,7 +69,7 @@ class HomeController extends BaseController
 
     public function showItem($request, $response, $args)
     {
-        // $id = $_SESSION['login']['id'];
+        $_SESSION['item_id'] = $args['id'];
         try {
             $result = $this->client->request('GET', 'item/show/'.$args['id'].'?'
             . $request->getUri()->getQuery());

@@ -115,16 +115,36 @@ class GroupController extends BaseController
 		return $this->view->render($response, 'admin/group/edit.twig', $data);
 	}
 	//Edit group
-	public function update($request, $response, $args)
+	public function update($request, $response)
 	{
-		try {
-			$client = $this->client->request('GET',
-						$this->router->pathFor('api.group.update', ['id' => $args['id']]));
-			$content = json_decode($client->getBody()->getContents());
-		} catch (GuzzleException $e) {
-			$content = json_decode($client->getResponse()->getBody()->getContents());
-		}
+		$id = $_SESSION['group']['id'];
+// 		var_dump($_SESSION['group']['id']);
+// var_dump($request->getParams());die;
+        try {
+            $result = $this->client->request('POST', 'group/update',
+            ['form_params' =>  [
+				'id'     		=> $id,
+                'name'      	=> $request->getParam('name'),
+				'description'  	=> $request->getParam('description')
+			]
+		]);
+        } catch (GuzzleException $e) {
+            $result = $e->getResponse();
+        }
+
+        $data = json_decode($result->getBody()->getContents(), true);
+        // var_dump($data);die();
+        if ($data['code'] == 201) {
+            $this->flash->addMessage('success',  $data['message']);
+            // return $response->withRedirect($this->router->pathFor('user.setting.profile'));
+            $_SESSION['group'] = $data['data'];
+        } else {
+            $_SESSION['old'] = $request->getParams();
+            $this->flash->addMessage('error', $data['message']);
+        }
+		return $response->withRedirect($this->router->pathFor('get.group.detail'));
 	}
+
 	//Set inactive/soft delete group
 	public function setInactive($request, $response, $args)
 	{
@@ -616,4 +636,55 @@ class GroupController extends BaseController
 			return $response->withRedirect($this->router->pathFor('unreported.item.user.group'));
 		}
 	}
+
+	public function getDetail($request, $response)
+	{
+		return  $this->view->render($response, 'pic/group-info.twig');
+	}
+
+	public function changeImage($request, $response)
+    {
+        // var_dump($_FILES);die();
+        $path = $_FILES['image']['tmp_name'];
+        $mime = $_FILES['image']['type'];
+        $name  = $_FILES['image']['name'];
+        $id = $_SESSION['group']['id'];
+
+        try {
+            $result = $this->client->request('POST', 'group/change/photo/'.$id, [
+                'multipart' => [
+                    [
+                        'name'     => 'image',
+                        'filename' => $name,
+                        'Mime-Type'=> $mime,
+                        'contents' => fopen( $path, 'r' )
+                    ]
+                ]
+            ]);
+        } catch (GuzzleException $e) {
+            $result = $e->getResponse();
+        }
+
+        try {
+            $group = $this->client->request('GET', 'group/find/'.$id);
+        } catch (GuzzleException $e) {
+            $group = $e->getResponse();
+        }
+
+        $data = json_decode($result->getBody()->getContents(), true);
+        $newGroup = json_decode($group->getBody()->getContents(), true);
+
+        // var_dump($data);die();
+        if ($data['code'] == 200) {
+            $this->flash->addMessage('success', 'Foto grup berhasil diubah');
+			if ($newGroup['code'] == 200) {
+				$_SESSION['group'] = $newGroup['data'];
+			}
+            return $response->withRedirect($this->router->pathFor('get.group.detail'));
+        } else {
+            $this->flash->addMessage('warning', $data['message']);
+            return $response->withRedirect($this->router->pathFor('get.group.detail'));
+        }
+    }
+
 }

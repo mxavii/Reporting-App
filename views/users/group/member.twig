@@ -20,6 +20,65 @@
         {% for member in data %}
 
         <div style="padding:5px;" class="col-md-3" >
+            <div style="margin-top: 5px;" class="widget-box">
+                <!-- <div class="widget-title"> -->
+                    <!-- <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#1">Detail Grup</a></li>
+                        <li><a data-toggle="tab" href="#2">Pengaturan</a></li>
+                    </ul> -->
+                    <!-- <h4 style="font-align:center;">
+                        Info Group
+                    </h4>
+                </div> -->
+                <div style="padding-top:0px;" class="widget-content tab-content">
+                    <div id="1" class="tab-pane active"><br>
+                        <center> <b>Info Grup</b> <br>
+                            <a href="#"><img src="{{ base_url() }}/assets/images/{{ group.image }}"
+                             height="151" width="151" style="margin-bottom:5px"></a></center>
+                        <b>{{group.name}}</b><br><br>
+                         {{group.description}}<br><br>
+
+                    </div>
+                    <div id="2" class="tab-pane">
+                        <form action="{{path_for('group.update')}}" method="POST" enctype="multipart/form-data">
+                             <div class="box-body">
+                                 <div class="form-group {{ errors.name ? 'has-error' : '' }}">
+                                     <label>Nama:</label>
+                                     <div class="input-group">
+                                         <div class="input-group-addon" style="background:#706767" >
+                                             <!-- <i class="fa fa-pencil-square-o"></i> -->
+                                         </div>
+                                         <input type="text" name="name" class="form-control"
+                                          value="{{ group.name }}" placeholder="Nama grup">
+                                     </div>
+                                     {% if errors.name %}
+                                     <span class="help-block">{{errors.name | first}}</span>
+                                     {% endif %}
+                                 </div>
+
+                                 <div class="form-group {{ errors.description ? 'has-error' : '' }}">
+                                     <label>Deskripsi:</label>
+                                     <div class="input-group">
+                                         <div class="input-group-addon" style="background:#706767">
+                                             <!-- <i class="fa fa-edit"></i> -->
+                                         </div>
+                                          <textarea name="description" class="form-control"
+                                           rows="5">{{ group.description }}</textarea>
+                                     </div>
+                                     {% if errors.description %}
+                                     <span class="help-block">{{errors.description | first}}</span>
+                                     {% endif %}
+                                 </div>
+                                 <button type="submit" class="btn btn-social-button btn-tumblr pull-left" style="margin-top:11.5px">
+                                     <i class="fa fa-cog"></i> Simpan perubahan</button>
+                             </div>
+                       </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="padding:5px;" class="col-md-9" >
+        <div style="padding:5px;" class="col-md-4" >
             <div class="well dash-box" style="background:#f2f2f2;">
                 {% if member.image != null %}
                     <img  style="margin-right:10px;" width="75" height="75" alt="Foto {{member.name}}"
@@ -35,12 +94,11 @@
                     Anggota
                     {% elseif member.status_member == 1 %}
                     PIC
-                    {% elseif member.status_member == 2 %}
-                    Wali
                     {% endif %}
                     <br><b>{{ member.registered_at }}</b><br>
                 </span>
             </div>
+        </div>
         </div>
         {% endfor %}
     </div>

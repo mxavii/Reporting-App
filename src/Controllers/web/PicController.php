@@ -128,6 +128,8 @@ class PicController extends BaseController
 
     public function createItem($request, $response)
     {
+        // var_dump($_FILES);die;
+
         if (empty($request->getParam('user_id'))) {
             $user_id = null;
         } else {
@@ -155,13 +157,41 @@ class PicController extends BaseController
         $contents = json_decode($content, true);
         // var_dump($contents); die();
         if ($contents['code'] == 201) {
+            if (!empty($_FILES['image']['name'])) {
+                $path = $_FILES['image']['tmp_name'];
+                $mime = $_FILES['image']['type'];
+                $name = $_FILES['image']['name'];
+                try {
+                    $result2 = $this->client->request('POST', 'item/add/image', [
+                        'multipart' => [
+                            [
+                                'name'     => 'image',
+                                'filename' => $name,
+                                'Mime-Type'=> $mime,
+                                'contents' => fopen( $path, 'r' )
+                            ],
+                            // [
+                            //     'name'     => 'description',
+                            //     'contents' => $request->getParam('description')
+                            // ],
+                            // [
+                            //     'name'     => 'user',
+                            //     'contents' => $_SESSION['login']['id']
+                            // ],
+                            [
+                                'name'     => 'item_id',
+                                'contents' => $contents['data']['id']
+                            ]
+                        ]
+                    ]);
+                } catch (Exception $e) {
+                    $result2 = $e->getResponse();
+                }
+            }
             $this->flash->addMessage('success', $contents['message']);
         } else {
-            // foreach ($contents['message'] as $value ) {
-            // }
             $_SESSION['errors'] = $contents['message'];
             $_SESSION['old']    = $request->getParams();
-            // var_dump($_SESSION['errors']); die();
         }
         if (!empty($request->getParam('member'))) {
             return $response->withRedirect($this->router->pathFor('unreported.item.user.group'));

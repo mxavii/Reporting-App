@@ -37,18 +37,24 @@
                 </tr>
                 <tr>
                     <th></th>
-                    <td><a href="
-                        #"><button type="button" class="btn btn-sm btn-primary" name="button">Edit</button></a>
+                    <td><a href="#">
+                        <button type="button" class="btn btn-sm btn-primary" name="button">Edit</button></a>
+                        <button type="button" class="btn btn-sm btn-danger" name="button">Hapus</button></a>
                     </td>
                 </tr>
             </tbody>
         </table>
         <div class="article-post">
             <div class="widget-content"><br>
+                {% if items.image is iterable %}
                 {% for image in items.image %}
-                <img height="200px" style="max-width: 300px;"alt="Image item"
+                <img height="200px" style="max-width: 300px;"
                 src="{{ base_url() }}/assets/images/{{ image }}">
                 {% endfor %}
+                {% else %}
+                <img height="200px" style="max-width: 300px;"
+                src="{{ base_url() }}/assets/images/{{ items.image }}">
+                {% endif %}
                 <hr style="border-top: 4px double #8c8b8b;">
                 <div class="row">
                     <div style="margin:0px 15px 0px 5px;" class="col-md-12">

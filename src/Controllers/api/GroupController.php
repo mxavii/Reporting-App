@@ -96,27 +96,38 @@ class GroupController extends BaseController
 	}
 
 	//Edit group
-	public function update(Request $request, Response $response, $args)
+	public function update(Request $request, Response $response)
 	{
+		// var_dump($request->getParams());die;
 		$group = new \App\Models\GroupModel($this->db);
+		$userGroup = new \App\Models\UserGroupModel($this->db);
 
 		$token = $request->getHeader('Authorization')[0];
-		$findGroup = $group->find('id', $args['id']);
-		$query = $request->getQueryParams();
-
+		$userId = $group->getUserByToken($token);
+		$groupId = $request->getParsedBody()['id'];
+		$findGroup = $group->find('id', $groupId);
+		$member = $userGroup->findTwo('group_id', $groupId, 'user_id', $userId['id']);
+	// 	var_dump($userId);
+	// var_dump($member[0]);die;
 		if ($findGroup) {
-			$group->updateData($request->getParsedBody(), $args['id']);
-			$afterUpdate = $group->find('id', $args['id']);
+			if ($userId['status'] == 1 || $member[0]['status'] == 1) {
+				$x = $group->updateData($request->getParsedBody(), $groupId);
+				$afterUpdate = $group->find('id', $groupId);
 
-			$data = $this->responseDetail(200, false, 'Data berhasil di perbaharui', [
+				return $this->responseDetail(201, false, 'Info grup berhasil diperbaharui', [
 					'data'	=>	$afterUpdate
 				]);
+			} else {
+				return $this->responseDetail(401, true, 'Anda tidak boleh mengubah info group');
+			}
 		} else {
-			$data = $this->responseDetail(404, true, 'Data tidak ditemukan');
+			return b;
+			return $this->responseDetail(404, true, 'Grup tidak ditemukan');
 		}
 
-		return $data;
 	}
+
+
 
 	// //Delete group
 	// public function delete(Request $request, Response $response, $args)
@@ -462,27 +473,31 @@ class GroupController extends BaseController
 
         $findGroup = $group->find('id', $args['id']);
         if (!$findGroup) {
-            return $this->responseDetail(404, 'Data tidak ditemukan');
+            return $this->responseDetail(404, 'Grup tidak ditemukan');
         }
 
         if (!empty($request->getUploadedFiles()['image'])) {
             $storage = new \Upload\Storage\FileSystem('assets/images');
             $image = new \Upload\File('image', $storage);
 
-            $image->setName(uniqid('img-'.date('Ymd').'-'));
+            $image->setName(uniqid('grp-'.date('Ymd').'-'));
             $image->addValidations(array(
                 new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
                 'image/jpg', 'image/jpeg')),
-                new \Upload\Validation\Size('5M')
+                new \Upload\Validation\Size('512K')
             ));
 
             $image->upload();
-            $data['image'] = $image->getNameWithExtension();
+			$data['image'] = $image->getNameWithExtension();
 
-            $group->updateData($data, $args['id']);
-            $newGroup = $group->find('id', $args['id']);
+			$x = $group->updateData($data, $args['id']);
+			$newGroup = $group->find('id', $args['id']);
+			if (file_exists('assets/images/'.$findGroup['image'])) {
+				unlink('assets/images/'.$findGroup['image']);
+			}
+			// return $this->responseDetail(404, 'G', $newGroup);
 
-            return  $this->responseDetail(200, false, 'Foto berhasil diunggah', [
+            return  $this->responseDetail(200, false, 'Foto grup berhasil diperbarui', [
                 'data' => $newGroup
             ]);
 

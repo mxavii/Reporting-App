@@ -54,5 +54,7 @@ return [
 
     'flysystem' => [
     	'path'	=> __DIR__ . "/../public/assets",
-     ]
+	],
+
+	 'imgUrl'	=> [$_SERVER['DOCUMENT_ROOT'].'/Reporting-App/public/assets/images/']
 ];

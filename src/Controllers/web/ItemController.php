@@ -32,7 +32,7 @@ class ItemController extends BaseController
                 }
 
         $data = json_decode($result->getBody()->getContents(), true);
-        var_dump($data);die();
+        //var_dump($data);die();
         if (!isset($data['pagination'])) {
         $data['pagination'] = null;
         }
@@ -70,7 +70,7 @@ class ItemController extends BaseController
 		}
 
         $content = json_decode($result->getBody()->getContents(), true);
-var_dump($content);die;
+// var_dump($content);die;
         // return $response->withRedirect($this->router->pathFor('unreported.item.user.group', [
         //     'user' 		=> 	$_SESSION['login']['id'],
         //     'group'     =>  $args['group']
@@ -328,12 +328,6 @@ var_dump($content);die;
                     'page' => $request->getQueryParam('page')
                     ]]);
 
-                // try {
-                //     $findGroup = $this->client->request('GET', 'group/find/'. $args['group']);
-                // } catch (GuzzleException $e) {
-                //     $findGroup = $e->getResponse();
-                // }
-                // $dataGroup = json_decode($findGroup->getBody()->getContents(), true);
         } catch (GuzzleException $e) {
             $result = $e->getResponse();
         }

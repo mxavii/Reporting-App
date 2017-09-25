@@ -31,14 +31,9 @@
                                             <i class="icon-fixed-width icon-pencil">
                                                 Buat tugas</i></a>
                                             </li>
-                                            <li><a href="#"><i class="icon-fixed-width icon-pencil">
-                                                Info grup</i></a></li>
                                                 <li><a href="{{path_for('get.group.member')}}"><i class="icon-fixed-width icon-pencil">
-                                                    Member grup</i></a></li>
-                                                    <li><a href="#" data-toggle="modal" data-target="#squarespaceModal"><i class="icon-fixed-width icon-pencil">
-                                                        Buat tugas</i></a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#"><i class="i"> Lihat semua tugas</i></a></li>
+                                                    Detail grup</i></a></li>
+
                                                     </ul>
                                                 </div>
                                             </span>
@@ -153,8 +148,7 @@
                      <div class="form-group {{ errors.description ? 'has-error' : '' }}">
                         <label for="description">Deskripsi :</label>
                      <input type="text" name="description" class="form-control">
-                         <textarea rows="5" name="description" class="form-control">
-                        </textarea>
+                         <textarea rows="5" name="description" class="form-control"></textarea>
                         {% if errors.description %}
                         <span class="help-block">{{ errors.description | first }}</span>
                         {% endif %}
@@ -200,8 +194,7 @@
                     <div class="form-group {{ errors.description ? 'has-error' : '' }}">
                         <label for="description">Deskripsi :</label>
                         <input type="text" name="description" class="form-control">
-                        <textarea rows="4" name="description" class="form-control">
-                        </textarea>
+                        <textarea rows="4" name="description" class="form-control"></textarea>
                         {% if errors.description %}
                         <span class="help-block">{{ errors.description | first }}</span>
                         {% endif %}
@@ -320,24 +313,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <!-- <div class="col-xs-12 col-sm-6 col-md-7">
-                    <div class="form-group {{ errors.user_id ? 'has-error' : '' }}">
-                        <label for="recurrent">Ditugaskan untuk :</label>
-                        <select class="form-control" name="user_id" >
-                            <option value="">Semua Anggota</option>
-                            {% for member in member %}
-                            <option {% if old.user_id == member.id %}
-                             selected="selected"{% endif %} value="{{ member.id}}">{{ member.username}}</option>
-                            {% endfor %}
-                        </select>
-                        {% if errors.user_id %}
-                        <span class="help-block">{{ errors.user_id | first }}</span>
-                        {% endif %}
-                    </div>
-                </div> -->
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-5 col-md-12">
+                <div class="col-xs-12 col-sm-6 col-md-7">
                     <div class="form-group {{ errors.image ? 'has-error' : '' }}">
                         <label for="image">Foto :</label>
                         <div class="input-group">
@@ -353,6 +329,23 @@
                     </div>
                 </div>
             </div>
+            <!-- <div class="row">
+                <div class="col-xs-12 col-sm-5 col-md-12">
+                    <div class="form-group {{ errors.image ? 'has-error' : '' }}">
+                        <label for="image">Foto :</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-image"></i>
+                            </div>
+                            <input type="file" id="file" class="form-control"
+                            name="image" placeholder="Item image">
+                        </div>
+                        {% if errors.image %}
+                        <span class="help-block">{{errors.image | first}}</span>
+                        {% endif %}<br />
+                    </div>
+                </div>
+            </div> -->
             <div class="modal-footer">
                 <div class="btn-group btn-group-justified" role="group" aria-label="group button">
                     <div class="btn-group" role="group">
@@ -418,8 +411,7 @@
                         <div class="form-group {{ errors.description ? 'has-error' : '' }}">
                             <label for="description">Deskripsi :</label>
                             <textarea rows="5" name="description" class="form-control"
-                            value="{{ item.description }}"> {{ item.description }}
-                            </textarea>
+                            value="{{ item.description }}">{{ item.description }}</textarea>
                                     <!-- <input type="text" name="description" class="form-control" id="coba"> -->
                             <input type="hidden" id="data-id" name="item_id"
                              value="{{ item.id }}">

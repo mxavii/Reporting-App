@@ -201,14 +201,6 @@ class UserController extends BaseController
 
     public function updateProfile($request, $response, $args)
     {
-        // var_dump($args['id']);die;
-        // $this->validator
-        //     ->rule('required', ['name', 'email', 'address', 'phone', 'gender'])
-        //     ->message('{field} tidak boleh kosong')
-        //     ->label('Nama', 'Email', 'Alamat', 'Nomor Telepon', 'Jenis kelamin');
-        // $this->validator->rule('email', 'email');
-        // $this->validator->rule('alphaNum', 'username');
-        // if ($this->validator->validate()) {
         $id = $_SESSION['login']['id'];
 
         try {

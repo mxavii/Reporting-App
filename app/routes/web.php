@@ -23,6 +23,7 @@ $app->group('', function() use ($app, $container) {
         $app->get('', 'App\Controllers\web\GroupController:index')->setName('group');
         $app->get('/{id}', 'App\Controllers\web\GroupController:enter')->setName('pic.group');
         $app->get('/enter/{id}', 'App\Controllers\web\GroupController:enterGroup')->setName('enter.group');
+        $app->post('/update', 'App\Controllers\web\GroupController:update')->setName('group.update');
         $app->post('/create', 'App\Controllers\web\GroupController:add')->setName('web.group.add');
         $app->post('/group/create', 'App\Controllers\web\GroupController:createByUser')->setName('pic.create.group');
         $app->get('/{id}/leave', 'App\Controllers\web\GroupController:leaveGroup')->setName('web.leave.group');
@@ -32,7 +33,8 @@ $app->group('', function() use ($app, $container) {
         $app->post('/search', 'App\Controllers\web\GroupController:searchGroup')->setName('web.search.group');
         $app->get('/join/{id}', 'App\Controllers\web\GroupController:joinGroup')->setName('web.join.group');
         $app->post('/setuser', 'App\Controllers\web\GroupController:setUserGroup')->setName('group.setuser');
-        // $app->get('/{id}/pics', 'App\Controllers\web\GroupController:getGroupPic')->setName('get.group.pic');
+        $app->get('/show/detail', 'App\Controllers\web\GroupController:getDetail')->setName('get.group.detail');
+        $app->post('/image/change', 'App\Controllers\web\GroupController:changeImage')->setName('group.change.image');
     });
     $app->group('/item', function() use ($app, $container) {
         $app->get('/show/{id}', 'App\Controllers\web\HomeController:showItem')->setName('show.item');
@@ -84,6 +86,7 @@ $app->group('', function() use ($app, $container) {
         $app->post('/comment', 'App\Controllers\web\CommentController:postPicComment')->setName('pic.post.comment');
         $app->get('/member/{group}', 'App\Controllers\web\PicController:getSearch')->setName('web.pic.search.member');
         $app->get('/comment/delete/{id}', 'App\Controllers\web\PicController:deleteComment')->setName('pic.delete.comment');
+        $app->post('/group/edit', 'App\Controllers\web\GroupController:setMemberGroup')->setName('web.pic.set.member');
         // $app->get('/search/user', 'App\Controllers\web\UserController:searchUser')->setName('web.pic.search.user');
         // $app->post('/setguard', 'App\Controllers\web\GuardController:createGuardian')->setName('pic.setguard');
     });

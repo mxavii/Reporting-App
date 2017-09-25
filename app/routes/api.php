@@ -22,7 +22,7 @@ $app->group('/api', function() use ($app, $container) {
         $app->get('/delete/{id}', 'App\Controllers\api\ItemController:deleteItem')->setname('api.item.delete');
         $app->get('/{item}/user', 'App\Controllers\api\ItemController:deleteItemByUser')->setname('api.user.delete.item');
         $app->post('/edit/{id}', 'App\Controllers\api\ItemController:updateItem')->setname('api.item.update');
-        $app->post('/upload/{item}', 'App\Controllers\api\ItemController:postImage')->setname('api.item.upload');
+        $app->post('/upload/{item}', 'App\Controllers\api\ItemController:postImages')->setname('api.item.upload');
         $app->get('/image/{item}', 'App\Controllers\api\ItemController:getImageItem')->setname('api.item.image');
         $app->get('/image/delete/{image}', 'App\Controllers\api\ItemController:deleteImageItem')->setname('api.delete.image');
         $app->post('/create', 'App\Controllers\api\ItemController:createItem')->setname('api.item.create');
@@ -38,6 +38,7 @@ $app->group('/api', function() use ($app, $container) {
         $app->post('/report/{item}', 'App\Controllers\api\ItemController:reportItem')->setname('api.report.item');
         $app->get('/show/{id}', 'App\Controllers\api\ItemController:showItemDetail')->setname('api.item.show');
         $app->get('/comment/{id}', 'App\Controllers\api\CommentController:getItemComment')->setname('api.item.comment');
+        $app->post('/add/image', 'App\Controllers\api\ItemController:postImage')->setname('api.item.upload');
     });
 
     $app->group('/user', function() use ($app, $container) {
@@ -53,7 +54,7 @@ $app->group('/api', function() use ($app, $container) {
 
     $app->group('/group', function() use ($app, $container) {
         $app->post('/create', 'App\Controllers\api\GroupController:add')->setName('api.group.add');
-        $app->post('/edit/{id}', 'App\Controllers\api\GroupController:update');
+        $app->post('/update', 'App\Controllers\api\GroupController:update')->setName('api.group.update');
         $app->get('/list', 'App\Controllers\api\GroupController:index')->setName('api.group.list');
         $app->get('/enter/{id}', 'App\Controllers\api\GroupController:enterGroup')->setName('api.enter.group');
         $app->get('/find/{id}', 'App\Controllers\api\GroupController:findGroup');

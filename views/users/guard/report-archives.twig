@@ -94,7 +94,6 @@
                                     <table id="example2" class="table table-bordered table-striped ">
                                         <thead>
                                             <tr>
-                                                <!-- <th>No</th> -->
                                                 <th>Nama</th>
                                                 <th>Pengulangan</th>
                                                 <th>Waktu lapor</th>
@@ -103,7 +102,9 @@
                                         <tbody>
                                             {% for key, item in data %}
                                             <tr>
-                                                <td class="taskDesc">{{ item.name }}</td>
+                                                <td class="taskDesc">
+                                                    <a href="{{ base_url() }}/item/show/{{item.id}}"
+                                                    title="Lihat detail item">{{ item.name }}</a></td>
                                                 <td class="taskStatus">{{ item.recurrent }}</td>
                                                 <td class="taskStatus"><span class="in-progress">{{ item.reported_at }}
                                                 </span></td>

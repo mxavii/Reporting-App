@@ -63,7 +63,7 @@ class UserController extends BaseController
                 $image->addValidations(array(
                 new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
                 'image/jpg', 'image/jpeg')),
-                new \Upload\Validation\Size('5M')
+                new \Upload\Validation\Size('512K')
                 ));
 
                 $image->upload();
@@ -176,16 +176,23 @@ class UserController extends BaseController
                 $image->addValidations(array(
                     new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
                     'image/jpg', 'image/jpeg')),
-                    new \Upload\Validation\Size('5M')
+                    new \Upload\Validation\Size('512K')
                 ));
 
-                $image->upload();
+                try {
+                    // Success!
+                    $image->upload();
+                } catch (\Exception $e) {
+                    $errors = $image->getErrors();
+                    return $this->responseDetail(400, true, $errors[0]);
+
+                }
                 $data['image'] = $image->getNameWithExtension();
 
                 $user->updateData($data, $args['id']);
                 $newUser = $user->getUser('id', $args['id']);
                 if (file_exists('assets/images/'.$findUser['image'])) {
-                    unlink('assets/images/'.$findUser['image']);die();
+                    unlink('assets/images/'.$findUser['image']);
                 }
                 return  $this->responseDetail(200, false, 'Foto berhasil diunggah', [
                     'result' => $newUser
@@ -212,7 +219,7 @@ class UserController extends BaseController
 
         if ($findUser) {
             if (file_exists('assets/images/'.$findUser['image'])) {
-                unlink('assets/images/'.$findUser['image']);die();
+                unlink('assets/images/'.$findUser['image']);
             }
             $user->hardDelete($args['id']);
             $data['id'] = $args['id'];

@@ -9,35 +9,38 @@
     <div class="span12">
         <div class="widget-box" style="margin-top:0px;">
             <div style="background:#ffffff" class="">
-                <div style="padding-bottom:0px; padding-top:0px; background:#24272E;" class="panel-heading">
+                <!-- <div style="padding-bottom:0px; padding-top:0px; background:#24272E;" class="panel-heading"> -->
                     <div class="widget-title span12">
                         <div class="btn-group btn-group-justified">
-                          <a href="{{ base_url()}}/pic/group/member" class="btn btn-primary">Anggota Group</a>
-                          <a href="{{ base_url()}}/pic/items/group" class="btn btn-primary">Tugas</a>
-                          <a href="{{ base_url() }}/pic/items/group/reported" class="btn btn-primary active">Laporan</a>
+                            <a href="{{ base_url() }}/pic/items/group/reported" class="btn btn-primary active">Laporan</a>
+                            <a href="{{ base_url()}}/pic/items/group" class="btn btn-primary">Tugas</a>
+                          <a href="{{ base_url()}}/pic/group/member" class="btn btn-primary">Anggota</a>
                         </div>
 
-                    <!-- <span style="float:right; margin-top:5px;">
-                        <div class="btn-group span4">
-                            <a class="btn btn-primary"><i class="icon-collapse"></i> Lainnya</a>
-                            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-sort-desc" aria-hidden="true"></i>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#"><i class="icon-fixed-width icon-pencil">
-                                     Buat tugas</i></a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><i class="i"> Lihat semua tugas</i></a></li>
-                            </ul>
-                        </div>
-                    </span> -->
-                    </div>
+                    <!-- </div> -->
                 </div>
-                <div class="panel-body" style="padding-top:0px; margin-top:29px">
+                <div class="panel-body" >
                     <div class="widget-content tab-content">
                         <div id="tab1" class="tab-pane active">
 
-                            <div class="widget-content" style="padding:20px;">
+                            <span style="float:right; margin-top:5px;">
+                                <div class="btn-group">
+                                    <a class="btn  btn-mini btn-primary dropdown-toggle" data-toggle="modal" data-target="#create">
+                                        <i class="icon-collapse"></i> Lainnya</a>
+                                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-caret-down"></i>
+                                    </a>
+                                    <ul style="font-size: larger" class="dropdown-menu">
+                                        <li><a style="font-size: medium" href="{{ path_for('get.group.detail')}}">
+                                            <i class="icon-fixed-width icon-pencil"> Info Grup</i></a>
+                                        </li>
+                                        <li><a style="font-size: medium" href="" data-toggle="modal" data-target="#squarespaceModal2">
+                                            <i class="icon-fixed-width icon-search"> Pengaturan</i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </span><br>
+                            <div class="widget-content" style="padding:0px; margin-top:30px">
                                 <ul style="padding-left:10px;" class="recent-posts">
                                     {% for item in items %}
                                     <hr style="height: 30px; border-style:solid; border-color: #8c8b8b;
@@ -67,36 +70,14 @@
                                             {% endif %}
                                         </span>
 
-
                                         <div class="article-post">
-
-                                            <br>
-                                            <!-- {% if item.reported_at == null %}
-                                            <span style="font-size: 14pt;" class="user-info"> <b>
-                                                <span class="label label-warning">{{ item.name }}
-                                                </span>&nbsp > &nbsp
-                                                <span class="label label-success">{{ item.group_name }}
-                                                </span></b>
-                                            </span>
-                                            {% else %}
-                                            <span style="font-size: 14pt;" class="user-info"> <b>
-                                                <span class="label label-warning">{{ item.name }}
-                                                </span>&nbsp > &nbsp
-                                                <span class="label label-success">{{ item.group_name }}
-                                                </span></b>
-                                            </span>
-                                            {% endif %}-->
-                                            <br>
-
-                                            <br>
-                                            <!-- <div style="margin-top:40px" class=""> -->
+                                            <br><br>
                                         {% if item.image != null %}
 
-                                        <img width="80%" style="max-width: 300px;"alt="Image item"
+                                        <img width="80%" style="max-width: 250px;"alt="Image item"
                                         src="{{ base_url() }}/assets/images/{{ item.image }}">
                                         <br><br>
                                         {% endif %}
-                                    <!-- </div> -->
                                         <p>{{ item.description }}</p>
                                          <p style="font-size: 10pt;"><i class="fa fa-clock-o" aria-hidden="true"></i>
                                          {{ item.updated_at | date('j F Y | H:i')}}</p>
@@ -105,7 +86,6 @@
                                          <hr style="height: 30px; margin-top: -11px; margin-bottom: 10px; border-style: solid;
                                          border-color: #8c8b8b; border-width: 0 0 1px 0; border-radius: 20px;">
                                     </div>
-                                <!-- </li> -->
 
                                 {% endfor %}
                                 {% if items != null %}
@@ -113,13 +93,17 @@
                                     <ul class="pager">
                                         <div class="pagination alternate">
                                             <ul>
-                                                <li class="{% if pagination.current <= 1 %}disabled{% endif %}">
-                                                    <a href="{{ base_url() }}/pic/items/group/{{ group}}/reported?page={{ pagination.current - 1 }}">
+                                                {% if pagination.current > 1 %}
+                                                <li class="">
+                                                    <a href="{{ base_url() }}/pic/items/group/reported?page={{ pagination.current - 1 }}">
                                                         Sebelumnya</a></li>
+                                                        {% endif %}
                                                 <li class="active"> <a>{{ pagination.current }}</a></li>
-                                                <li class="{% if pagination.current == pagination.total_page %}disabled{% endif %}">
-                                                    <a href="{{ base_url() }}/pic/items/group/{{ group}}/reported?page={{ pagination.current + 1 }}">
+                                                {% if pagination.current < pagination.total_page %}
+                                                <li class="">
+                                                    <a href="{{ base_url() }}/pic/items/group/reported?page={{ pagination.current + 1 }}">
                                                         Selanjutnya</a></li>
+                                                        {% endif %}
                                             </ul>
                                         </div>
                                     </ul>
@@ -275,8 +259,7 @@
                         <div class="form-group {{ errors.description ? 'has-error' : '' }}">
                             <label for="description">Deskripsi :</label>
                             <textarea rows="5" name="description" class="form-control"
-                            value="{{ item.description }}"> {{ item.description }}
-                            </textarea>
+                            value="{{ item.description }}">{{ item.description }}</textarea>
                                     <!-- <input type="text" name="description" class="form-control" id="coba"> -->
                             <input type="hidden" id="data-id" name="item_id"
                              value="{{ item.id }}">

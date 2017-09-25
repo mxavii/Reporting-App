@@ -257,7 +257,7 @@ class ItemController extends BaseController
                 $image->addValidations(array(
                     new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
                     'image/jpg', 'image/jpeg')),
-                    new \Upload\Validation\Size('5M')
+                    new \Upload\Validation\Size('1M')
                 ));
 
                 $image->upload();
@@ -597,7 +597,7 @@ class ItemController extends BaseController
 //
 //     }
 
-    public function postImage($request, $response, $args)
+    public function postImages($request, $response, $args)
     {
         $item = new Item($this->db);
         $imageItem = new \App\Models\ImageItem($this->db);
@@ -615,7 +615,7 @@ class ItemController extends BaseController
                     $validate = $image->addValidations(array(
                         new \Upload\Validation\Mimetype(['image/png', 'image/gif',
                          'image/jpg', 'image/jpeg']),
-                        new \Upload\Validation\Size('5M')));
+                        new \Upload\Validation\Size('1M')));
                     for ($i = 0; $i < count($image); $i++) {
                         $image[$i]->setName(uniqid('img-'.date('Ymd'). '-'));
                         $data = array(
@@ -650,7 +650,7 @@ class ItemController extends BaseController
 
                     $validate = $image->addValidations(array(
                         new \Upload\Validation\Mimetype(['image/png', 'image/gif', 'image/jpg', 'image/jpeg']),
-                        new \Upload\Validation\Size('5M')));
+                        new \Upload\Validation\Size('1M')));
                     $data = array(
                         'name'       => $image->getNameWithExtension(),
                         'extension'  => $image->getExtension(),
@@ -952,7 +952,7 @@ class ItemController extends BaseController
                      $image->addValidations(array(
                          new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
                          'image/jpg', 'image/jpeg')),
-                         new \Upload\Validation\Size('5M')
+                         new \Upload\Validation\Size('1M')
                      ));
 
                      $image->upload();
@@ -973,7 +973,7 @@ class ItemController extends BaseController
                      $image->addValidations(array(
                          new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
                          'image/jpg', 'image/jpeg')),
-                         new \Upload\Validation\Size('5M')
+                         new \Upload\Validation\Size('1M')
                      ));
 
                      $image->upload();
@@ -1029,121 +1029,41 @@ class ItemController extends BaseController
 
          }
      }
+
+     public function postImage($request, $response)
+     {
+         $item = new Item($this->db);
+         $imageItem = new \App\Models\ImageItem($this->db);
+
+         $itemId =  $request->getParsedBody()['item_id'];
+         $findItem = $item->find('id', $itemId);
+        //  var_dump($findItem);die;
+
+         if ($findItem) {
+             $storage = new \Upload\Storage\FileSystem('assets/images');
+             $image = new \Upload\File('image', $storage);
+             $image->setName(uniqid());
+             $image->addValidations(array(
+                 new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
+                 'image/jpg', 'image/jpeg')),
+                 new \Upload\Validation\Size('1M')
+             ));
+
+             $image->upload();
+             $imgName = $image->getNameWithExtension();
+
+             $dataImage = [
+                 'image'   => $imgName,
+                 'item_id' => $findItem['id']
+             ];
+             $imageItem->createData($dataImage);
+
+             return $this->responseDetail(200, false, 'Berhasil menambahkan foto');
+         } else {
+             return $this->responseDetail(404, true, 'Item tidak ditemukan');
+
+         }
+
+     }
+
 }
-
-// public function userReportItem($request, $response, $args)
-// {
-//     $item = new Item($this->db);
-//     $mailer = new \App\Extensions\Mailers\Mailer();
-//     $users = new \App\Models\Users\UserModel($this->db);
-//     $reportedItem = new \App\Models\ReportedItem($this->db);
-//     $guards  = new \App\Models\GuardModel($this->db);
-//     $userGroups = new \App\Models\UserGroupModel($this->db);
-//     // var_dump($token);die();
-//     $token = $request->getHeader('Authorization')[0];
-//     $user  = $item->getUserByToken($token);
-//     $userId = $user['id'];
-//     $userName = $user['username'];
-//     $guardian = $guards->find('user_id', $userId);
-//     $guard = $users->find('id', $guardian['guard_id']);
-//     $findItem = $item->find('id', $args['item']);
-//     $picGroup = $userGroups->findTwo('group_id', $findItem['group_id'], 'status', 1);
-//
-//     if (!empty($picGroup)) {
-//         $pic = $users->find('id', $picGroup[0]['user_id']);
-//     }
-//     // var_dump($findItem); die();
-//     if ($findItem) {
-//         $rules = [
-//             'required' => [
-//                 ['description']
-//             ],
-//         ];
-//
-//         $this->validator->rules($rules);
-//         $this->validator->labels([
-//             'description' => 'Description',
-//             'privacy'      => 'privacy',
-//         ]);
-//         // var_dump($this->validator); die();
-//
-//         if ($this->validator->validate()) {
-//             $date = date('Y-m-d H:i:s');
-//             $dataNewItem = [
-//                 'name'        => $findItem['name'],
-//                 'recurrent'   => $findItem['recurrent'],
-//                 'description' => $request->getParams()['description'],
-//                 'start_date'  => $findItem['start_date'],
-//                 'group_id'    => $findItem['group_id'],
-//                 'creator'     => $findItem['creator'],
-//                 'reported_at' => $date,
-//                 'privacy'      => $findItem['privacy'],
-//                 'status'      => 1,
-//                 'user_id'     => $userId,
-//             ];
-//             $updateData = [
-//                 'description' => $request->getParsedBody()['description'],
-//                 'status'      => 1,
-//                 'reported_at' => $date
-//             ];
-//
-//             if ($findItem['creator'] == $findItem['user_id']) {
-//                 $item->updateData($updateData, $args['item']);
-//                 $result = $findItem;
-//
-//
-//             } else {
-//                 $newItem = $item->create($dataNewItem);
-//                 $result= $item->find('id', $newItem);
-//                 $reportedItem->createData([
-//                     'user_id' => $userId,
-//                     'item_id' => $newItem
-//                 ]);
-//             }
-//
-//             $date = date('d M Y H:i:s');
-//             $content = $userName.' telah melaporkan '.$findItem['name'].' pada '.$date;
-//
-//             if ($guard) {
-//                 $dataGuard = [
-//                     'subject' => $userName.' laporan item',
-//                     'from'    =>'reportingmit@gmail.com',
-//                     'to'      => $guard['email'],
-//                     'sender'  => 'Reporting App',
-//                     'receiver'=> $guard['name'],
-//                     'content' => $content,
-//                 ];
-//
-//                 $mailer->send($dataGuard);
-//             }
-//
-//             if ($pic && $pic['id'] != $guard['id']) {
-//                 $dataPic = [
-//                     'subject' => $userName.'laporan item',
-//                     'from'    =>'reportingmit@gmail.com',
-//                     'to'      => $pic['email'],
-//                     'sender'  => 'Reporting App',
-//                     'receiver'=> $pic['name'],
-//                     'content' => $content,
-//                 ];
-//
-//                 $mailer->send($dataPic);
-//             }
-//
-//             $data = $this->responseDetail(200, false, 'Item telah berhasil dilaporkan',
-//             [
-//                 'data' => $result
-//             ]);
-//
-//         } else {
-//
-//             $data = $this->responseDetail(400, true, $this->validator->errors());
-//         }
-//
-//     } else {
-//         $data = $this->responseDetail(404, true, 'Item tidak ditemukan ');
-//     }
-
-//     return $data;
-//
-// }

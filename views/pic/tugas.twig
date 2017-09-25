@@ -22,9 +22,9 @@ $('#create').modal('show');
                 <!-- <div style="padding-bottom:0px; padding-top:0px; background:#24272E;" class="panel-heading"> -->
                     <div class="widget-title span12">
                         <div class="btn-group btn-group-justified">
-                          <a href="{{ base_url()}}/pic/group/member" class="btn btn-primary">Anggota Group</a>
-                          <a href="#" class="btn btn-primary active">Tugas</a>
-                          <a href="{{ base_url() }}/pic/items/group/reported" class="btn btn-primary">Laporan</a>
+                            <a href="{{ base_url() }}/pic/items/group/reported" class="btn btn-primary">Laporan</a>
+                            <a href="#" class="btn btn-primary active">Tugas</a>
+                          <a href="{{ base_url()}}/pic/group/member" class="btn btn-primary">Anggota</a>
                         </div>
                     <!-- </div> -->
                 </div>
@@ -51,6 +51,7 @@ $('#create').modal('show');
                                   <th>Nama</th>
                                   <th>Kepada</th>
                                   <th>Perulangan</th>
+                                  <th>Batas akhir</th>
                                   <th>Pilihan</th>
                                 </tr>
                               </thead>
@@ -65,8 +66,8 @@ $('#create').modal('show');
                                           {% else %}
                                           <td class="taskDesc">{{ item.username }}</td>
                                       {% endif %}
-                                      <td class="taskDesc">{{ item.recurrent }}
-                                      </span></td>
+                                      <td class="taskDesc">{{ item.recurrent }}</td>
+                                      <td class="taskDesc">{{ item.end_date }}</td>
                                       <td class="taskOptions">
                                           <div class="btn-group-sm">
                                               <a href="{{ base_url()}}/pic/items/delete/{{ item.id}}"
@@ -303,8 +304,7 @@ $('#create').modal('show');
                         <div class="form-group {{ errors.description ? 'has-error' : '' }}">
                             <label for="description">Deskripsi :</label>
                             <textarea rows="5" name="description" class="form-control"
-                            value="{{ item.description }}"> {{ item.description }}
-                            </textarea>
+                            value="{{ item.description }}">{{ item.description }}</textarea>
                                     <!-- <input type="text" name="description" class="form-control" id="coba"> -->
                             <input type="hidden" id="data-id" name="item_id"
                              value="{{ item.id }}">

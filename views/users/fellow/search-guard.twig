@@ -40,9 +40,10 @@
                                         <center><a href="#"><img src="{{ base_url() }}/assets/images/{{ user.image }}"
                                             height="151" width="151" style="margin-bottom:5px"></a></center>
                                             <center>
-                                                <div class="col-lg-12" style="margin:0 auto; position:relative;">
+                                                <div class="col-lg-12" style="margin-top:20px; auto; position:relative;">
                                                     <span class="text-center">
-                                                        {% if user.name == null %} Anonim
+                                                        {% if user.name == null %}
+                                                        {{user.username}}
                                                         {% else %}
                                                         {{user.name}}
                                                         {% endif %}

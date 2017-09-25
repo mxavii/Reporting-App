@@ -45,7 +45,8 @@
                                                  <div class="col-lg-12" style="margin:0 auto; position:relative;">
 
                                                  <span class="text-center">
-                                                     {% if user.name == null %} Anonim
+                                                     {% if user.name == null %}
+                                                     {{user.username}}
                                                      {% else %}
                                                      {{user.name}}
                                                      {% endif %}
